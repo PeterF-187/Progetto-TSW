@@ -38,16 +38,15 @@ public class UtenteDAO {
         return utenti;
     }
 
-    public Utente doRetrieveByUsernamePassword(String username, String password) {
+    public Utente doRetrieveByUsername(String username) {
 
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM Utente WHERE Username=? AND Password=?"
+                    "SELECT * FROM Utente WHERE Username = ?"
             );
 
             ps.setString(1, username);
-            ps.setString(2, password);
 
             ResultSet rs = ps.executeQuery();
 
@@ -57,14 +56,14 @@ public class UtenteDAO {
                 u.setNome(rs.getString("Nome"));
                 u.setCognome(rs.getString("Cognome"));
                 u.setEmail(rs.getString("Email"));
-                u.setPassword(rs.getString("Password"));
+                u.setPassword(rs.getString("Password")); // hash BCrypt
                 u.setData_di_nascita(rs.getDate("Data_di_nascita"));
                 u.setNumero(rs.getLong("Numero_di_telefono"));
                 return u;
             }
 
         } catch (SQLException e) {
-            throw new RuntimeException("Errore login: " + e.getMessage(), e);
+            throw new RuntimeException("Errore recupero utente: " + e.getMessage(), e);
         }
 
         return null;

@@ -31,7 +31,7 @@ public class LoginServlet extends HttpServlet {
 
         UtenteDAO dao = new UtenteDAO();
 
-        // 🔥 ORA SOLO USERNAME
+
         Utente u = dao.doRetrieveByUsername(username);
 
         // ❌ utente non trovato
