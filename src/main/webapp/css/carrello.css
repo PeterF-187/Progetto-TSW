@@ -1,0 +1,758 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background: #1e2228;
+    background-image:
+            linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0) 100%),
+            linear-gradient(135deg, #1e2228, #232830, #272d35, #2a2f38);
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-top: 85px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: white;
+}
+
+/* ========================================= */
+/* --- NAVBAR --- */
+/* ========================================= */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    background-color: rgba(47, 54, 60, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(163, 126, 215, 0.2);
+}
+
+/* --- LOGO --- */
+.titolo {
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Effetto riempimento per il testo (GameOrbit) */
+.titolo span {
+    background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
+    background-size: 100% 200%;
+    background-position: top;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+    transition: background-position 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.titolo:hover span {
+    background-position: bottom;
+}
+
+.titolo img {
+    height: 1.8em;
+    width: auto;
+    margin-right: -10px;
+    transition: filter 0.4s ease, transform 0.4s ease;
+    filter: brightness(0) saturate(100%) invert(56%) sepia(50%) saturate(550%) hue-rotate(220deg);
+}
+
+.titolo:hover img {
+    filter: brightness(0) saturate(100%) invert(75%) sepia(80%) saturate(350%) hue-rotate(130deg);
+    transform: translateY(-3px);
+}
+
+/* --- MENU E ICONE --- */
+.navbar nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    align-items: center;
+}
+
+.navbar nav ul li a {
+    text-decoration: none;
+    color: #a37ed7;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.navbar nav ul li a:hover {
+    color: #56cdce;
+}
+
+.suggestion-item.selected {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.search-container {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 30px;
+    position: relative;
+}
+
+.search-container form {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px 45px 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(163, 126, 215, 0.3);
+    border-radius: 25px;
+    color: white;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-container input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.search-container input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #56cdce;
+    box-shadow: 0 0 10px rgba(86, 205, 206, 0.2);
+}
+
+.search-container button {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #a37ed7;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.search-container input:focus + button {
+    color: #56cdce;
+}
+
+.search-container button:hover {
+    transform: scale(1.2);
+}
+
+/* DROPDOWN */
+#suggestions {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+    background: #2f363c;
+    border: 1px solid rgba(163, 126, 215, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 10000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    transition: 0.2s;
+}
+
+.suggestion-item:hover {
+    background: rgba(86, 205, 206, 0.15);
+}
+
+.suggestion-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion-img img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.suggestion-title {
+    font-size: 15px;
+}
+
+.suggestion-price {
+    font-size: 14px;
+    color: #56cdce;
+    white-space: nowrap;
+}
+
+.no-suggestion {
+    padding: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- EFFETTI ICONE --- */
+.icon-link {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    color: #a37ed7;
+    transition: all 0.3s ease;
+}
+
+.icon-link.carrello:hover {
+    color: #56cdce;
+    transform: scale(1.2);
+}
+
+.icon-link.preferiti:hover {
+    color: #ff4d4d;
+    animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+
+/* --- Sezione pagina carrello --- */
+
+.cart-main-container {
+    max-width: 1300px; /* Più largo della wishlist per far stare comodamente la sidebar */
+    margin: 40px auto;
+    padding: 0 30px;
+    display: flex;
+    align-items: flex-start; /* Allinea gli elementi in alto */
+    justify-content: space-between;
+    gap: 40px; /* Spazio tra la lista articoli e la barra laterale di riepilogo */
+    min-height: 60vh;
+}
+
+/* --- COLONNA SINISTRA: Lista dei prodotti --- */
+.cart-items-section {
+    flex: 2; /* Prende i 2/3 dello spazio disponibile */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart-items-section h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    letter-spacing: 0.5px;
+    color: white;
+}
+
+/* Riga del singolo articolo nel carrello */
+.cart-item-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(47, 54, 60, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid rgba(163, 126, 215, 0.4);
+    border-radius: 8px;
+    padding: 15px 25px;
+    height: 100px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-item-row:hover {
+    border-color: #a37ed7;
+    box-shadow: 0 0 15px rgba(163, 126, 215, 0.15);
+}
+
+/* Sotto-blocco info gioco (Immagine + Titolo) */
+.cart-item-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.cart-game-img {
+    width: 65px;
+    height: 65px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cart-game-title {
+    font-size: 19px;
+    font-weight: 600;
+    color: white;
+}
+
+/* Sotto-blocco azioni gioco (Prezzo + Cestino) */
+.cart-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.cart-item-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #56cdce; /* Neon Cyan */
+    white-space: nowrap;
+}
+
+/* Bottone per rimuovere l'elemento */
+.btn-remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.4);
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-remove-item:hover {
+    color: #ff4d4d; /* Diventa rosso al passaggio */
+    transform: scale(1.1);
+}
+
+
+/* --- Sidebar di Riepilogo e Controllo Saldo --- */
+
+.cart-summary-sidebar {
+    flex: 1; /* Prende 1/3 dello spazio disponibile */
+    min-width: 320px;
+    position: sticky; /* Rimane bloccata in alto durante lo scroll */
+    top: 120px;
+}
+
+.summary-card {
+    background: rgba(35, 40, 48, 0.8);
+    border: 2px solid #56cdce; /* Bordo ciano per differenziare la sezione di acquisto */
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.summary-card h3 {
+    font-size: 20px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.summary-divider {
+    border: none;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Righe di testo del calcolo prezzi */
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.text-total {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.total-amount {
+    font-size: 24px;
+    font-weight: 700;
+    color: #56cdce;
+}
+
+/* --- SEZIONE METODO DI PAGAMENTO --- */
+.payment-method-section {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.payment-method-section h4 {
+    font-size: 15px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.5px;
+    margin-bottom: 15px;
+}
+
+/* Box riepilogativo delle condizioni del saldo virtuale */
+.wallet-status-box {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.wallet-balance {
+    color: #56cdce;
+    font-weight: 700;
+}
+
+/* Badge dinamici legati all'Enum dello stato del conto */
+.status-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-badge.ATTIVO { background: rgba(40, 167, 69, 0.2); color: #28a745; }
+.status-badge.SOSPESO { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+.status-badge.BLOCCATO { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
+
+/* Checkbox personalizzato per la selezione */
+.payment-option {
+    margin: 15px 0;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    user-select: none;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 18px;
+    width: 18px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(163, 126, 215, 0.6);
+    border-radius: 4px;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #56cdce;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #56cdce;
+    border-color: #56cdce;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.checkbox-container .checkmark:after {
+    left: 5px;
+    top: 2px;
+    width: 4px;
+    height: 8px;
+    border: solid #1e2228;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-container input:disabled ~ .checkmark {
+    border-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    cursor: not-allowed;
+}
+
+/* Box di allerta per blocchi o info */
+.alert-box {
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.4;
+}
+
+.alert-box.error {
+    background: rgba(220, 53, 69, 0.15);
+    border: 1px solid rgba(220, 53, 69, 0.4);
+    color: #f8d7da;
+}
+
+.alert-box.info {
+    background: rgba(86, 205, 206, 0.1);
+    border: 1px solid rgba(86, 205, 206, 0.3);
+    color: #e2f8f8;
+}
+
+.alert-box.info a {
+    color: #56cdce;
+    text-decoration: underline;
+}
+
+/* --- PULSANTE DI PROCEDURA ACQUISTO --- */
+.checkout-form {
+    margin-top: 25px;
+}
+
+.btn-proceed-order {
+    width: 100%;
+    background: transparent;
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    border: 2px solid #56cdce;
+    border-radius: 50px; /* Forma ovale perfetta come da disegno */
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.btn-proceed-order:hover:not(:disabled) {
+    background: rgba(86, 205, 206, 0.1);
+    box-shadow: 0 0 20px rgba(86, 205, 206, 0.4);
+    transform: scale(1.02);
+}
+
+/* Disabilitazione estetica quando l'utente è bloccato o il carrello è vuoto */
+.btn-proceed-order:disabled {
+    border-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.2);
+    cursor: not-allowed;
+    background: transparent;
+    box-shadow: none;
+    transform: none;
+}
+
+
+
+/* --- RESPONSIVE DESIGN  --- */
+
+@media (max-width: 992px) {
+    .cart-main-container {
+        flex-direction: column; /* Incolonna le sezioni su schermi medi/piccoli */
+        align-items: stretch;
+    }
+
+    .cart-summary-sidebar {
+        position: static; /* Sblocca la sidebar dall'effetto sticky */
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .cart-item-row {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+
+
+/* --- Footer --- */
+.footer {
+    background-color: #2f363c;
+    border-top: 2px solid #a855f7;
+    padding: 60px 40px 20px;
+    margin-top: 50px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-column h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.footer-column p {
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #56cdce;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-column ul li a:hover {
+    color: #a855f7;
+    padding-left: 5px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 24px;
+}
+
+.social-icons a {
+    color: #56cdce;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #a855f7;
+    transform: translateY(-5px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+.footer-column .app-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    margin-top: 20px !important;
+    align-items: flex-start;
+}
+
+.footer-column .btn-app {
+    display: flex !important;
+    align-items: center !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #56cdce !important;
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+    text-decoration: none !important;
+    width: 220px !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+.footer-column .btn-app i {
+    font-size: 28px !important;
+    margin-right: 15px !important;
+    color: #56cdce !important;
+    min-width: 30px;
+    text-align: center;
+}
+
+.footer-column .btn-text {
+    display: flex !important;
+    flex-direction: column !important;
+    color: white !important;
+    text-align: left !important;
+}
+
+.footer-column .btn-text span {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+}
+
+.footer-column .btn-text strong {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+.footer-column .btn-app:hover {
+    background-color: rgba(168, 85, 247, 0.1) !important;
+    border-color: #a855f7 !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
+}
+
+.footer-column .btn-app:hover i,
+.footer-column .btn-app:hover .btn-text strong {
+    color: #a855f7 !important;
+}

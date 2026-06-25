@@ -1,0 +1,812 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background: #1e2228;
+    background-image:
+            linear-gradient(135deg, rgba(255,255,255,0.01) 0%, rgba(255,255,255,0) 100%),
+            linear-gradient(135deg, #1e2228, #232830, #272d35, #2a2f38);
+    background-attachment: fixed;
+    min-height: 100vh;
+    padding-top: 85px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: white;
+}
+
+/* ========================================= */
+/* --- NAVBAR --- */
+/* ========================================= */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 9999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    background-color: rgba(47, 54, 60, 0.8);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(163, 126, 215, 0.2);
+}
+
+/* --- LOGO --- */
+.titolo {
+    text-decoration: none;
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Effetto riempimento per il testo (GameOrbit) */
+.titolo span {
+    /* Creiamo un gradiente a due colori netti: sopra viola (#a37ed7), sotto azzurro (#56cdce) */
+    background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
+    background-size: 100% 200%;
+    background-position: top; /* Partiamo mostrando solo la metà superiore (viola) */
+
+    /* Ritagliamo il background a forma di testo */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    /* Gestiamo l'animazione */
+    transition: background-position 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Al passaggio del mouse sull'intero blocco, il gradiente sale */
+.titolo:hover span {
+    background-position: bottom;
+}
+
+/* Immagine del logo */
+.titolo img {
+    height: 1.8em;
+    width: auto;
+    margin-right: -10px;
+    /* Ho aggiunto un piccolo movimento (transform) per renderlo più dinamico */
+    transition: filter 0.4s ease, transform 0.4s ease;
+    filter: brightness(0) saturate(100%) invert(56%) sepia(50%) saturate(550%) hue-rotate(220deg);
+}
+
+.titolo:hover img {
+    filter: brightness(0) saturate(100%) invert(75%) sepia(80%) saturate(350%) hue-rotate(130deg);
+    /* L'immagine fa un piccolo saltino in alto mentre il testo si riempie */
+    transform: translateY(-3px);
+}
+/* --- MENU E ICONE --- */
+.navbar nav ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+    align-items: center;
+}
+
+.navbar nav ul li a {
+    text-decoration: none;
+    color: #a37ed7;
+    font-size: 14px;
+    font-weight: 500;
+    transition: 0.3s ease;
+}
+
+.navbar nav ul li a:hover {
+    color: #56cdce;
+}
+
+.search-container {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 30px;
+    position: relative; /* IMPORTANTE per dropdown */
+}
+
+.search-container form {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.search-container input {
+    width: 100%;
+    padding: 10px 45px 10px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(163, 126, 215, 0.3);
+    border-radius: 25px;
+    color: white;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-container input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.search-container input:focus {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: #56cdce;
+    box-shadow: 0 0 10px rgba(86, 205, 206, 0.2);
+}
+
+.search-container button {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #a37ed7;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+.search-container input:focus + button {
+    color: #56cdce;
+}
+
+.search-container button:hover {
+    transform: scale(1.2);
+}
+
+/* DROPDOWN */
+#suggestions {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    width: 100%;
+
+    background: #2f363c;
+    border: 1px solid rgba(163, 126, 215, 0.3);
+    border-radius: 15px;
+
+    overflow: hidden;
+    z-index: 10000;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.suggestion-item.selected {
+    background-color: #eee;
+    cursor: pointer;
+}
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+    padding: 12px;
+
+    cursor: pointer;
+
+    text-decoration: none;
+    color: white;
+
+    transition: 0.2s;
+}
+
+.suggestion-item:hover {
+    background: rgba(86, 205, 206, 0.15);
+}
+
+/* parte sinistra info */
+.suggestion-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* immagine */
+.suggestion-img img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* titolo */
+.suggestion-title {
+    font-size: 15px;
+}
+
+/* prezzo */
+.suggestion-price {
+    font-size: 14px;
+    color: #56cdce;
+    white-space: nowrap;
+}
+
+/* no results */
+.no-suggestion {
+    padding: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* --- EFFETTI ICONE --- */
+.icon-link {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    color: #a37ed7;
+    transition: all 0.3s ease;
+}
+
+/* Cometa Carrello */
+.icon-link.carrello:hover {
+    color: #56cdce;
+    transform:  scale(1.2);
+}
+
+/* Battito Cuore */
+.icon-link.preferiti:hover {
+    color: #ff4d4d;
+    animation: pulse 0.8s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+
+.hero {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    color: white;
+}
+
+/* VIDEO BACKGROUND */
+.hero-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    z-index: 0;
+}
+
+/* OVERLAY SCURO */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.55);
+
+    z-index: 1;
+}
+
+/* CONTENUTO TESTO */
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    padding: 20px;
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 50px;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    color: #a37ed7
+}
+
+.hero-content p {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: #56cdce;
+
+}
+
+/*sezione filtri*/
+.home-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px; /* Leggermente aumentato per dare più respiro */
+    padding: 40px; /* Allineato al padding della navbar e del footer */
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* sidebar */
+.filters-sidebar {
+    width: 280px; /* Un po' più larga per accogliere bene i testi */
+    background: rgba(47, 54, 60, 0.6); /* Sfondo coerente con la navbar */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: white;
+    padding: 25px;
+    border-radius: 15px;
+    border: 1px solid rgba(163, 126, 215, 0.2); /* Bordo viola sfumato */
+
+    /* Gestione sticky: la navbar è alta 80px, quindi mettiamo top 100px per lasciare spazio */
+    position: sticky;
+    top: 100px;
+    height: fit-content;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.filters-sidebar h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(86, 205, 206, 0.2);
+    padding-bottom: 10px;
+}
+
+.filter-group {
+    margin-bottom: 25px;
+}
+
+.filter-group h3 {
+    font-size: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    color: #a37ed7; /* Sostituito rosa con Viola Orbit */
+}
+
+.filter-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.filter-group label:hover {
+    color: #56cdce; /* Il testo della label si illumina al passaggio */
+}
+
+/* Customizzazione input numerico e text dei filtri */
+.filter-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(163, 126, 215, 0.3);
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.filter-group input[type="number"]:focus {
+    border-color: #56cdce;
+    box-shadow: 0 0 10px rgba(86, 205, 206, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* BOTTONE FILTRI */
+.filter-btn {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: 1px solid #56cdce; /* Stile coerente con i bottoni delle app nel footer */
+    color: #56cdce;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.filter-btn:hover {
+    background: rgba(86, 205, 206, 0.1);
+    box-shadow: 0 0 15px rgba(86, 205, 206, 0.3);
+    transform: translateY(-2px);
+}
+.home-container{
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+.filters-sidebar{
+    width: 280px;
+    min-width: 280px;
+
+    position: sticky;
+    top: 20px;
+
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+
+    padding: 20px;
+
+    background: #1e1e1e;
+    border-radius: 15px;
+}
+
+/* Scrollbar personalizzata */
+.filters-sidebar::-webkit-scrollbar{
+    width: 8px;
+}
+
+.filters-sidebar::-webkit-scrollbar-track{
+    background: #2a2a2a;
+    border-radius: 10px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb{
+    background: #666;
+    border-radius: 10px;
+}
+
+.filters-sidebar::-webkit-scrollbar-thumb:hover{
+    background: #888;
+}
+
+.products-area{
+    flex: 1;
+}
+
+.filter-btn{
+    position: sticky;
+    bottom: 0;
+
+    width: 100%;
+    padding: 15px;
+
+    background: #00bfff;
+    color: white;
+    border: none;
+    border-radius: 10px;
+}
+/* AREA PRODOTTI */
+.products-area {
+    flex: 1;
+    background: rgba(35, 40, 48, 0.5); /* Sostituito il grigio chiaro #f5f5f5 con un dark trasparente */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    border-radius: 15px;
+    min-height: 600px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive per schermi piccoli (Tablet / Smartphone) */
+@media (max-width: 992px) {
+    .home-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .filters-sidebar {
+        width: 100%;
+        position: relative;
+        top: 0; /* Rimuove lo sticky su mobile per fluidità */
+        margin-bottom: 20px;
+    }
+}
+
+/* --- Area giochi */
+
+.products-area h2 {
+    font-size: 28px;
+    color: white;
+    margin-bottom: 25px;
+    border-bottom: 2px solid rgba(163, 126, 215, 0.3); /* Sottolineatura viola Orbit */
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+/* --- PRODUCT CARD --- */
+.product-card {
+    background: rgba(47, 54, 60, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(163, 126, 215, 0.2); /* Bordo viola tenue */
+    border-radius: 15px;
+    display: flex;
+    overflow: hidden; /* Taglia gli spigoli dell'immagine se esce fuori */
+    flex-direction: column;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Effetto Hover sulla singola Card */
+.product-card:hover {
+    transform: translateY(-8px); /* Si solleva */
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(86, 205, 206, 0.2); /* Bagliore ciano */
+    border-color: rgba(86, 205, 206, 0.5);
+}
+
+/* Immagine del Gioco */
+.product-card img {
+    width: 100%;
+    height: 270px;
+    object-fit: cover; /* Ritaglia l'immagine senza deformarla */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.05); /* L'immagine fa un leggero zoom dentro la card */
+}
+
+/* --- INFORMAZIONI PRODOTTO --- */
+.product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Spinge il bottone sempre in fondo se le altezze variano */
+}
+
+.product-info h3 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+/* Descrizione Testuale */
+.product-info .description {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    flex-grow: 1;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-link{
+    text-decoration:none;
+    color:inherit;
+}
+
+/* Prezzo */
+.price-container {
+    margin-bottom: 15px;
+}
+
+.price {
+    font-size: 22px;
+    font-weight: 700;
+    color: #56cdce; /* Neon Cyan */
+    text-shadow: 0 0 10px rgba(86, 205, 206, 0.3);
+}
+
+/* --- BOTTONE AGGIUNGI AL CARRELLO --- */
+.btn-buy {
+    width: 100%;
+    background: transparent;
+    border: 1px solid #a37ed7; /* Bordo viola */
+    color: #a37ed7;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Spazio tra icona e testo */
+    transition: all 0.3s ease;
+}
+
+.btn-buy i {
+    font-size: 18px;
+}
+
+/* Hover sul bottone: Si riempie di Neon Cyan e il testo diventa scuro */
+.btn-buy:hover {
+    background: #56cdce;
+    border-color: #56cdce;
+    color: #1e2228;
+    box-shadow: 0 0 15px rgba(86, 205, 206, 0.4);
+    transform: translateY(-2px);
+}
+
+/* --- FOOTER --- */
+.footer {
+    background-color: #2f363c; /* Deep Space */
+    border-top: 2px solid #a855f7; /* Orbit Purple */
+    padding: 60px 40px 20px;
+    margin-top: 50px;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;         /* Attiva il posizionamento in colonna */
+    justify-content: space-between; /* Spazia le colonne uniformemente */
+    gap: 40px;            /* Spazio tra le colonne */
+    flex-wrap: wrap;      /* Se lo schermo è piccolo, le manda a capo */
+}
+
+.footer-column {
+    flex: 1;              /* Ogni colonna occupa lo stesso spazio */
+    min-width: 200px;     /* Impedisce alle colonne di diventare troppo strette */
+}
+
+/* Titoli */
+.footer-column h3 {
+    color: #ffffff;
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Liste e Testo */
+.footer-column p {
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #56cdce; /* Neon Cyan */
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-column ul li a:hover {
+    color: #a855f7; /* Orbit Purple */
+    padding-left: 5px; /* Piccolo effetto movimento */
+}
+
+/* Icone Social */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    font-size: 24px;
+}
+
+.social-icons a {
+    color: #56cdce;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #a855f7;
+    transform: translateY(-5px);
+}
+
+/* Copyright in basso */
+.footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive: sui telefoni le colonne tornano una sopra l'altra */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+}
+
+/* --- SEZIONE DOWNLOAD APP --- */
+
+/* Forza il contenitore dei bottoni a incolonnarli */
+.footer-column .app-buttons {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    margin-top: 20px !important;
+    align-items: flex-start; /* Allinea a sinistra */
+}
+
+/* Stile del singolo bottone (Usiamo .footer-column per dare più forza al selettore) */
+.footer-column .btn-app {
+    display: flex !important;
+    align-items: center !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid #56cdce !important; /* Neon Cyan */
+    border-radius: 10px !important;
+    padding: 10px 20px !important;
+    text-decoration: none !important;
+    width: 220px !important; /* Larghezza fissa per simmetria */
+    transition: all 0.3s ease-in-out !important;
+}
+
+/* Icona dentro il bottone */
+.footer-column .btn-app i {
+    font-size: 28px !important;
+    margin-right: 15px !important;
+    color: #56cdce !important;
+    min-width: 30px;
+    text-align: center;
+}
+
+/* Testo del bottone */
+.footer-column .btn-text {
+    display: flex !important;
+    flex-direction: column !important;
+    color: white !important;
+    text-align: left !important;
+}
+
+.footer-column .btn-text span {
+    font-size: 11px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px;
+    opacity: 0.8;
+}
+
+.footer-column .btn-text strong {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+}
+
+/* --- EFFETTI HOVER --- */
+
+.footer-column .btn-app:hover {
+    background-color: rgba(168, 85, 247, 0.1) !important; /* Sfondo Purple */
+    border-color: #a855f7 !important; /* Bordo Purple */
+    transform: translateY(-3px) !important;
+    box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
+}
+
+.footer-column .btn-app:hover i,
+.footer-column .btn-app:hover .btn-text strong {
+    color: #a855f7 !important; /* Tutto diventa Purple al passaggio */
+}
+

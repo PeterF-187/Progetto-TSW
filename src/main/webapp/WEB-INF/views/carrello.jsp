@@ -1,0 +1,220 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/carrello.css">
+    <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
+    <title>Game Orbit</title>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="${pageContext.request.contextPath}/home" class="titolo">
+        <img src="img/Logo.png" alt="Logo GameOrbit">
+        <span>GameOrbit</span>
+    </a>
+
+    <div class="search-container">
+        <form action="${pageContext.request.contextPath}/risultati" method="GET" autocomplete="off">
+            <input type="text"
+                   id="searchInput"
+                   name="q"
+                   placeholder="Cerca il tuo gioco..."
+                   autocomplete="off"
+                   spellcheck="false"/>
+
+            <button type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </form>
+        <div id="suggestions"></div>
+    </div>
+
+    <script>
+        const contextPath = "${pageContext.request.contextPath}";
+    </script>
+    <script src="${pageContext.request.contextPath}/JS/search.js"></script>
+
+    <nav>
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/wishlist" class="icon-link preferiti" title="Preferiti"><i class="fa-solid fa-heart icon"></i></a></li>
+            <li><a href="${pageContext.request.contextPath}/carrello" class="icon-link carrello" title="Carrello"><i class="fa-solid fa-cart-shopping icon"></i></a></li>
+            <%
+                String username = (String) session.getAttribute("username");
+            %>
+            <li>
+                <% if (username == null) { %>
+                <a href="${pageContext.request.contextPath}/login">Accedi | Registrati</a>
+                <% } else { %>
+                <span>Ciao, <%= username %></span>
+                <a href="${pageContext.request.contextPath}/logout">Logout</a>
+                <% } %>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+<!-- fine navbar, inizio sezione----------------------------------------------------------------------------------------------------- -->
+
+<main class="cart-main-container">
+
+    <section class="cart-items-section">
+        <h2>Il tuo Carrello</h2>
+
+        <c:if test="${empty prodottiCarrello}">
+            <p class="empty-message">Non ci sono articoli nel tuo carrello.</p>
+        </c:if>
+
+        <c:if test="${not empty prodottiCarrello}">
+            <c:forEach var="gioco" items="${prodottiCarrello}">
+                <div class="cart-item-row">
+                    <div class="cart-item-info">
+                        <c:choose>
+                            <c:when test="${not empty gioco.img}">
+                                <img src="${pageContext.request.contextPath}/img/${gioco.img}" alt="${gioco.titolo}" class="cart-game-img">
+                            </c:when>
+                            <c:otherwise>
+                                <img src="${pageContext.request.contextPath}/img/default-game.png" alt="Default" class="cart-game-img">
+                            </c:otherwise>
+                        </c:choose>
+                        <span class="cart-game-title">${gioco.titolo}</span>
+                    </div>
+
+                    <div class="cart-item-actions">
+                        <span class="cart-item-price">${gioco.prezzo} €</span>
+                        <form action="${pageContext.request.contextPath}/carrello" method="POST">
+                            <input type="hidden" name="idProdotto" value="${gioco.id_prodotto}">
+                            <input type="hidden" name="action" value="remove">
+                            <button type="submit" class="btn-remove-item" title="Rimuovi dal carrello">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </c:forEach>
+        </c:if>
+    </section>
+
+    <aside class="cart-summary-sidebar">
+        <div class="summary-card">
+            <h3>Riepilogo Ordine</h3>
+            <hr class="summary-divider">
+
+            <div class="summary-row text-total">
+                <span>Totale dell'Ordine:</span>
+                <span class="total-amount">${prezzoTotale} €</span>
+            </div>
+
+            <div class="payment-method-section">
+                <h4>Metodo di Pagamento</h4>
+
+                <c:choose>
+                    <c:when test="${not empty sessionScope.username}">
+                        <div class="wallet-status-box">
+                            <p>Account: <strong>${sessionScope.username}</strong></p>
+                            <p>Saldo Disponibile: <span class="wallet-balance">${saldoUtente.saldo} ${saldoUtente.valuta}</span></p>
+                            <p>Stato Portafoglio:
+                                <span class="status-badge ${saldoUtente.stato}">${saldoUtente.stato}</span>
+                            </p>
+                        </div>
+
+                        <div class="payment-option">
+                            <label class="checkbox-container">
+                                <input type="checkbox" name="useWallet" id="useWalletCheckbox"
+                                       <c:if test="${checkoutDisabilitato}">disabled</c:if>>
+                                <span class="checkmark"></span>
+                                Paga con il tuo Saldo Virtuale
+                            </label>
+                        </div>
+
+                        <c:if test="${checkoutDisabilitato}">
+                            <div class="alert-box error">
+                                <i class="fa-solid fa-triangle-exclamation"></i> ${motivoBlocco}
+                            </div>
+                        </c:if>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="alert-box info">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <a href="${pageContext.request.contextPath}/login">Accedi</a> per verificare e utilizzare il tuo saldo virtuale.
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+
+            <form action="${pageContext.request.contextPath}/checkout" method="POST" class="checkout-form">
+                <button type="submit" class="btn-proceed-order"
+                        <c:if test="${checkoutDisabilitato || empty prodottiCarrello}">disabled</c:if>>
+                    Procedi all'ordine
+                </button>
+            </form>
+        </div>
+    </aside>
+
+</main>
+
+
+<!-- fine sezione - inizio footer ----------------------------------------------------------------------------------------------------- -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-column">
+            <h3>Scarica la nostra app</h3>
+            <p>Scarica l'app ufficiale di GameOrbit per non perdere nessuna offerta.</p>
+            <div class="app-buttons">
+                <a href="#" class="btn-app">
+                    <i class="fa-brands fa-google-play"></i>
+                    <div class="btn-text">
+                        <span>Disponibile su</span>
+                        <strong>Google Play</strong>
+                    </div>
+                </a>
+                <a href="#" class="btn-app">
+                    <i class="fa-brands fa-apple"></i>
+                    <div class="btn-text">
+                        <span>Scarica da</span>
+                        <strong>App Store</strong>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="footer-column">
+            <h3>GameOrbit</h3>
+            <p>Il tuo portale verso l'infinito videoludico. Esplora, colleziona, gioca.</p>
+        </div>
+        <div class="footer-column">
+            <h3>Informazioni</h3>
+            <ul>
+                <li><a href="${pageContext.request.contextPath}/ChiSiamo">Chi siamo</a></li>
+                <li><a href="${pageContext.request.contextPath}/Contattaci">Contattaci</a></li>
+                <li><a href="${pageContext.request.contextPath}/affil">Diventa affiliato</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Assistenza</h3>
+            <ul>
+                <li><a href="${pageContext.request.contextPath}/Howto">Come acquistare</a></li>
+                <li><a href="${pageContext.request.contextPath}/FAQ">FAQ</a></li>
+                <li><a href="${pageContext.request.contextPath}/PReso">Politica di reso</a></li>
+                <li><a href="#">Crea ticket</a></li>
+            </ul>
+        </div>
+        <div class="footer-column">
+            <h3>Seguici</h3>
+            <div class="social-icons">
+                <a href="#"><i class="fa-brands fa-discord"></i></a>
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                <a href="#"><i class="fa-brands fa-twitch"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 GameOrbit - Tutti i diritti riservati.
+    </div>
+</footer>
+
+</body>
+</html>
