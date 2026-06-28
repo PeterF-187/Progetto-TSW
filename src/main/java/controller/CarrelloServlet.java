@@ -9,19 +9,27 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import model.DAO.VideogiocoDAO;
 import model.DAO.Saldo_virtualeDAO;
+import model.DAO.Metodo_pagamentoDAO;
 import model.Obj.Videogioco;
 import model.Obj.Saldo_virtuale;
 import model.Obj.Stato_saldo;
+import model.Obj.Metodo_pagamento;
 
 @WebServlet(name = "Carrello", value = "/carrello")
 public class CarrelloServlet extends HttpServlet {
 
     private final VideogiocoDAO videogiocoDAO = new VideogiocoDAO();
     private final Saldo_virtualeDAO saldoDAO = new Saldo_virtualeDAO();
+    private final Metodo_pagamentoDAO metodoDAO = new Metodo_pagamentoDAO();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        // 🔥 DISABILITA CACHE (fix back button / pagina vecchia)
+        response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
 
         HttpSession session = request.getSession();
 
@@ -36,17 +44,41 @@ public class CarrelloServlet extends HttpServlet {
                 .map(Videogioco::getPrezzo)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // Controllo del saldo virtuale se l'utente è loggato
+        // Controllo dell'utente loggato
         String username = (String) session.getAttribute("username");
         if (username != null) {
+            // 1. Gestione Saldo Virtuale
             Saldo_virtuale saldoUtente = saldoDAO.doRetrieveByUsername(username);
             request.setAttribute("saldoUtente", saldoUtente);
 
-            // Se lo stato è SOSPESO o BLOCCATO, disabilitiamo il check-out
+            // 2. Gestione Metodo di Pagamento
+            List<Metodo_pagamento> tuttiIMetodi = metodoDAO.doRetrieveAll();
+
+            Metodo_pagamento metodoUtente = tuttiIMetodi.stream()
+                    .filter(m -> m.getUsername() != null && m.getUsername().equalsIgnoreCase(username))
+                    .findFirst()
+                    .orElse(null);
+
+            boolean daConfigurare = false;
+
+            if (metodoUtente == null) {
+                daConfigurare = true;
+            } else {
+                if (metodoUtente.getTipoMetodo() == model.Obj.TipoMetodo.Da_configurare) {
+                    daConfigurare = true;
+                }
+            }
+
+            request.setAttribute("metodoDaConfigurare", daConfigurare);
+
             if (saldoUtente != null &&
-                    (saldoUtente.getStato() == Stato_saldo.Sospeso || saldoUtente.getStato() == Stato_saldo.Bloccato)) {
+                    (saldoUtente.getStato() == Stato_saldo.Sospeso ||
+                            saldoUtente.getStato() == Stato_saldo.Bloccato)) {
+
                 request.setAttribute("checkoutDisabilitato", true);
-                request.setAttribute("motivoBlocco", "Il tuo saldo virtuale è attualmente " + saldoUtente.getStato().name().toLowerCase() + ".");
+                request.setAttribute("motivoBlocco",
+                        "Il tuo saldo virtuale è attualmente " +
+                                saldoUtente.getStato().name().toLowerCase() + ".");
             }
         }
 

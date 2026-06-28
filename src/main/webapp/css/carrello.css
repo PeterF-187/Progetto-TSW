@@ -257,7 +257,7 @@ body {
 
 /* --- COLONNA SINISTRA: Lista dei prodotti --- */
 .cart-items-section {
-    flex: 2; /* Prende i 2/3 dello spazio disponibile */
+    flex: 2;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -410,6 +410,53 @@ body {
     margin-bottom: 15px;
 }
 
+/* --- NUOVO: Stile per il Menù a Tendina (Select) --- */
+.payment-selector-container {
+    margin-bottom: 15px;
+}
+
+.form-select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(163, 126, 215, 0.4);
+    border-radius: 6px;
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    /* Reset della freccia nativa per personalizzarla se necessario */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2356cdce' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.form-select:hover {
+    border-color: #56cdce;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.form-select:focus {
+    border-color: #56cdce;
+    box-shadow: 0 0 8px rgba(86, 205, 206, 0.3);
+}
+
+/* Stile delle opzioni interne al menù (dipende dal browser, ma aiuta lo stacco) */
+.form-select option {
+    background-color: #1e2228;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.form-select option:disabled {
+    color: rgba(255, 255, 255, 0.3);
+}
+
 /* Box riepilogativo delle condizioni del saldo virtuale */
 .wallet-status-box {
     background: rgba(0, 0, 0, 0.2);
@@ -419,6 +466,8 @@ body {
     line-height: 1.6;
     margin-bottom: 15px;
     border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Animazione fluida alla comparsa tramite JS */
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .wallet-balance {
@@ -435,80 +484,10 @@ body {
     text-transform: uppercase;
 }
 
-.status-badge.ATTIVO { background: rgba(40, 167, 69, 0.2); color: #28a745; }
-.status-badge.SOSPESO { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
-.status-badge.BLOCCATO { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
-
-/* Checkbox personalizzato per la selezione */
-.payment-option {
-    margin: 15px 0;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-    padding-left: 30px;
-    cursor: pointer;
-    font-size: 14px;
-    user-select: none;
-    color: rgba(255, 255, 255, 0.9);
-}
-
-.checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.checkmark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 18px;
-    width: 18px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: 2px solid rgba(163, 126, 215, 0.6);
-    border-radius: 4px;
-}
-
-.checkbox-container:hover input ~ .checkmark {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-color: #56cdce;
-}
-
-.checkbox-container input:checked ~ .checkmark {
-    background-color: #56cdce;
-    border-color: #56cdce;
-}
-
-.checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-}
-
-.checkbox-container input:checked ~ .checkmark:after {
-    display: block;
-}
-
-.checkbox-container .checkmark:after {
-    left: 5px;
-    top: 2px;
-    width: 4px;
-    height: 8px;
-    border: solid #1e2228;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-}
-
-.checkbox-container input:disabled ~ .checkmark {
-    border-color: rgba(255, 255, 255, 0.1);
-    background-color: rgba(255, 255, 255, 0.05);
-    cursor: not-allowed;
-}
+/* Gestione dei Badge sia in maiuscolo che minuscolo per sicurezza */
+.status-badge.ATTIVO, .status-badge.Attivo { background: rgba(40, 167, 69, 0.2); color: #28a745; }
+.status-badge.SOSPESO, .status-badge.Sospeso { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+.status-badge.BLOCCATO, .status-badge.Bloccato { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
 
 /* Box di allerta per blocchi o info */
 .alert-box {
@@ -520,6 +499,7 @@ body {
     align-items: center;
     gap: 10px;
     line-height: 1.4;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
 .alert-box.error {
@@ -537,6 +517,12 @@ body {
 .alert-box.info a {
     color: #56cdce;
     text-decoration: underline;
+}
+
+/* Animazione di comparsa per elementi dinamici */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* --- PULSANTE DI PROCEDURA ACQUISTO --- */

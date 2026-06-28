@@ -48,8 +48,9 @@ public class RegisterServlet extends HttpServlet {
 
             UtenteDAO dao = new UtenteDAO();
 
+            // Controllo univocità dell'username (Rimanda correttamente alla Servlet, non alla JSP)
             if (dao.existsByUsername(username)) {
-                response.sendRedirect(request.getContextPath() + "/auth.jsp?registerError=1");
+                response.sendRedirect(request.getContextPath() + "/register?registerError=1");
                 return;
             }
 
@@ -61,29 +62,32 @@ public class RegisterServlet extends HttpServlet {
             u.setNome(nome);
             u.setCognome(cognome);
             u.setEmail(email);
-            u.setPassword(hashedPassword); // ✔ password cifrata
+            u.setPassword(hashedPassword);
             u.setData_di_nascita(dataNascita);
             u.setNumero(numero);
 
+            // 1. Salvataggio del nuovo utente
             dao.doSave(u);
 
-            // saldo iniziale
+            // 2. Inizializzazione e salvataggio automatico del Saldo Virtuale associato
             Saldo_virtualeDAO saldoDAO = new Saldo_virtualeDAO();
             Saldo_virtuale nuovoSaldo = new Saldo_virtuale();
 
-            nuovoSaldo.setUsername(username);
+            nuovoSaldo.setUsername(username);            // Mappa su Username_account
             nuovoSaldo.setValuta(valuta.EUR);
-            nuovoSaldo.setSaldo(new BigDecimal("0.00"));
-            nuovoSaldo.setStato(Stato_saldo.Disponibile);
-            nuovoSaldo.setData(new Date());
+            nuovoSaldo.setSaldo(new BigDecimal("0.00")); // Saldo iniziale a 0.00
+            nuovoSaldo.setStato(Stato_saldo.Disponibile); // Stato impostato su Disponibile
+            nuovoSaldo.setData(new Date());              // Data corrente della creazione (Data_ultimo_aggiornamento)
 
+            // Esegue la query INSERT corretta nel DB tramite il DAO corretto
             saldoDAO.doSave(nuovoSaldo);
 
-            // sessione
+            // 3. Gestione della sessione utente
             HttpSession session = request.getSession();
             session.setAttribute("username", u.getUsername());
             session.setAttribute("user", u);
 
+            // 4. Configurazione Cookie di autenticazione
             Cookie cookie = new Cookie("username", u.getUsername());
             cookie.setMaxAge(60 * 60 * 24 * 30);
             cookie.setPath("/");
@@ -91,6 +95,7 @@ public class RegisterServlet extends HttpServlet {
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
 
+            // Reindirizzamento alla Home a processo completato
             response.sendRedirect(request.getContextPath() + "/home");
 
         } catch (Exception e) {

@@ -2,59 +2,39 @@ package controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.*;
 
 import java.io.IOException;
+import java.util.Map;
 
-@WebServlet({
+@WebServlet(urlPatterns = {
         "/ChiSiamo",
         "/Contattaci",
         "/affil",
-        "/Howto", // Modificato qui
+        "/HowTo",
         "/FAQ",
         "/PReso"
 })
 public class FooterPagesServlet extends HttpServlet {
 
+    private static final Map<String, String> PAGES = Map.of(
+            "/ChiSiamo", "/WEB-INF/views/footer/ChiSiamo.jsp",
+            "/Contattaci", "/WEB-INF/views/footer/Contattaci.jsp",
+            "/affil", "/WEB-INF/views/footer/affil.jsp",
+            "/HowTo", "/WEB-INF/views/footer/HowTo.jsp",
+            "/FAQ", "/WEB-INF/views/footer/FAQ.jsp",
+            "/PReso", "/WEB-INF/views/footer/PReso.jsp"
+    );
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String path = request.getServletPath();
+        String view = PAGES.get(request.getServletPath());
 
-        String view;
-
-        switch (path) {
-
-            case "/ChiSiamo":
-                view = "/WEB-INF/views/footer/ChiSiamo.jsp";
-                break;
-
-            case "/Contattaci":
-                view = "/WEB-INF/views/footer/Contattaci.jsp";
-                break;
-
-            case "/affil":
-                view = "/WEB-INF/views/footer/affil.jsp";
-                break;
-
-            case "/Howto":
-                view = "/WEB-INF/views/footer/HowTo.jsp";
-                break;
-
-            case "/FAQ":
-                view = "/WEB-INF/views/footer/FAQ.jsp";
-                break;
-
-            case "/PReso":
-                view = "/WEB-INF/views/footer/PReso.jsp";
-                break;
-
-            default:
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
-                return;
+        if (view == null) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
         }
 
         request.getRequestDispatcher(view).forward(request, response);

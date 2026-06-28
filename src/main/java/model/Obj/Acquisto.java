@@ -9,6 +9,7 @@ public class Acquisto {
     private Date Data_acquisto;
     private BigDecimal Prezzo_pagato;
     private String Metodo_di_pagamento;
+    private int Id_key;
 
     //getter
     public String getUsername(){
@@ -26,6 +27,9 @@ public class Acquisto {
     public String getMetodo_di_pagamento(){
         return Metodo_di_pagamento;
     }
+    public int getId_key(){
+        return Id_key;
+    }
 
     //setter
     public void setUsername(String Username_Account){
@@ -42,5 +46,8 @@ public class Acquisto {
     }
     public void setMetodo_di_pagamento(String Metodo_di_pagamento){
         this.Metodo_di_pagamento = Metodo_di_pagamento;
+    }
+    public void setId_key(int Id_key){
+        this.Id_key = Id_key;
     }
 }

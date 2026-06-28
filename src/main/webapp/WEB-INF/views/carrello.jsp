@@ -73,7 +73,7 @@
                     <div class="cart-item-info">
                         <c:choose>
                             <c:when test="${not empty gioco.img}">
-                                <img src="${pageContext.request.contextPath}/img/${gioco.img}" alt="${gioco.titolo}" class="cart-game-img">
+                                <img src="${pageContext.request.contextPath}/img/giochi/${gioco.img}" alt="${gioco.titolo}" class="cart-game-img">
                             </c:when>
                             <c:otherwise>
                                 <img src="${pageContext.request.contextPath}/img/default-game.png" alt="Default" class="cart-game-img">
@@ -112,25 +112,33 @@
 
                 <c:choose>
                     <c:when test="${not empty sessionScope.username}">
-                        <div class="wallet-status-box">
-                            <p>Account: <strong>${sessionScope.username}</strong></p>
+                        <p>Account: <strong>${sessionScope.username}</strong></p>
+
+                        <div class="payment-selector-container" style="margin-bottom: 15px;">
+                            <select name="paymentMethod" id="paymentMethodSelect" class="form-select" style="width: 100%; padding: 8px; border-radius: 4px;">
+                                <option value="" disabled selected>-- Seleziona Metodo --</option>
+                                <option value="saldo">Paga con Saldo Virtuale</option>
+
+                                <c:choose>
+                                    <c:when test="${metodoDaConfigurare}">
+                                        <option value="aggiungi_metodo">Aggiungi metodo...</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option value="carta">Carta di Credito / Altro</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </select>
+                        </div>
+
+                        <div class="wallet-status-box" id="walletDetailsBox" style="display: none; margin-top: 10px;">
                             <p>Saldo Disponibile: <span class="wallet-balance">${saldoUtente.saldo} ${saldoUtente.valuta}</span></p>
                             <p>Stato Portafoglio:
                                 <span class="status-badge ${saldoUtente.stato}">${saldoUtente.stato}</span>
                             </p>
                         </div>
 
-                        <div class="payment-option">
-                            <label class="checkbox-container">
-                                <input type="checkbox" name="useWallet" id="useWalletCheckbox"
-                                       <c:if test="${checkoutDisabilitato}">disabled</c:if>>
-                                <span class="checkmark"></span>
-                                Paga con il tuo Saldo Virtuale
-                            </label>
-                        </div>
-
                         <c:if test="${checkoutDisabilitato}">
-                            <div class="alert-box error">
+                            <div class="alert-box error" id="checkoutAlertBox" style="display: none; margin-top: 10px;">
                                 <i class="fa-solid fa-triangle-exclamation"></i> ${motivoBlocco}
                             </div>
                         </c:if>
@@ -145,13 +153,58 @@
             </div>
 
             <form action="${pageContext.request.contextPath}/checkout" method="POST" class="checkout-form">
-                <button type="submit" class="btn-proceed-order"
-                        <c:if test="${checkoutDisabilitato || empty prodottiCarrello}">disabled</c:if>>
+                <input type="hidden" name="selectedPayment" id="selectedPaymentHidden" value="">
+
+                <button type="submit" id="btnProceedOrder" class="btn-proceed-order"
+                        <c:if test="${empty prodottiCarrello}">disabled</c:if>>
                     Procedi all'ordine
                 </button>
             </form>
         </div>
     </aside>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const selectMethod = document.getElementById("paymentMethodSelect");
+            const walletBox = document.getElementById("walletDetailsBox");
+            const alertBox = document.getElementById("checkoutAlertBox");
+            const btnProceed = document.getElementById("btnProceedOrder");
+            const hiddenInput = document.getElementById("selectedPaymentHidden");
+
+            // Controlliamo se il checkout è disabilitato lato server per il saldo
+            const isSaldoBloccato = ${checkoutDisabilitato ? true : false};
+            const carrelloVuoto = ${empty prodottiCarrello ? true : false};
+
+            // Disabilita il bottone finché non viene scelto un metodo valido
+            if(btnProceed && !carrelloVuoto) {
+                btnProceed.disabled = true;
+            }
+
+            if (selectMethod) {
+                selectMethod.addEventListener("change", function() {
+                    const value = this.value;
+                    hiddenInput.value = value; // Salva il valore nel form
+
+                    // Reset visibilità
+                    walletBox.style.display = "none";
+                    if(alertBox) alertBox.style.display = "none";
+                    if(!carrelloVuoto) btnProceed.disabled = false;
+
+                    if (value === "saldo") {
+                        // Mostra dettagli del saldo
+                        walletBox.style.display = "block";
+                        if (isSaldoBloccato) {
+                            if(alertBox) alertBox.style.display = "block";
+                            btnProceed.disabled = true; // Blocca se il saldo ha problemi
+                        }
+                    } else if (value === "aggiungi_metodo") {
+                        // Rimanda al link di configurazione (al momento #)
+                        window.location.href = "#";
+                    }
+                });
+            }
+        });
+    </script>
 
 </main>
 

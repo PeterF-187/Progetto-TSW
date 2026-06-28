@@ -1,0 +1,132 @@
+package model.DAO;
+
+import model.ConPool;
+import model.Obj.Metodo_pagamento;
+import model.Obj.TipoMetodo;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Metodo_pagamentoDAO {
+
+    // Helper method privato interno per mappare le stringhe del DB all'Enum in modo sicuro
+    private TipoMetodo mapStringToEnum(String tipoMetodoDb) {
+        if (tipoMetodoDb == null) return null;
+
+        // Rimuove gli spazi e mette l'underscore (es: "Da configurare" -> "Da_configurare")
+        String enumFormat = tipoMetodoDb.replace(" ", "_");
+        try {
+            return TipoMetodo.valueOf(enumFormat);
+        } catch (IllegalArgumentException e) {
+            try {
+                // Tenta il fallback tutto in MAIUSCOLO (es: "DA_CONFIGURARE")
+                return TipoMetodo.valueOf(enumFormat.toUpperCase());
+            } catch (IllegalArgumentException ex) {
+                // Se la stringa nel DB non corrisponde a nulla, restituisce null evitando il crash
+                return null;
+            }
+        }
+    }
+
+    public List<Metodo_pagamento> doRetrieveAll() {
+        List<Metodo_pagamento> metodi = new ArrayList<>();
+
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT IdMetodo, Username, TipoMetodo, Provider, TokenPagamento, " +
+                            "Ultime4Cifre, ScadenzaMese, ScadenzaAnno, Predefinito, Attivo, DataCreazione " +
+                            "FROM Metodo_pagamento"
+            );
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Metodo_pagamento m = new Metodo_pagamento();
+
+                m.setIdMetodo(rs.getInt(1));
+                m.setUsername(rs.getString(2));
+
+                // Ora che i dati sono allineati, il valueOf standard funzionerà perfettamente!
+                String tipoMetodoDb = rs.getString(3);
+                if (tipoMetodoDb != null) {
+                    m.setTipoMetodo(TipoMetodo.valueOf(tipoMetodoDb));
+                }
+
+                m.setProvider(rs.getString(4));
+                m.setTokenPagamento(rs.getString(5));
+                m.setUltime4Cifre(rs.getString(6));
+                m.setScadenzaMese(rs.getInt(7));
+                m.setScadenzaAnno(rs.getInt(8));
+                m.setPredefinito(rs.getBoolean(9));
+                m.setAttivo(rs.getBoolean(10));
+                m.setDataCreazione(rs.getDate(11));
+
+                metodi.add(m);
+            }
+
+            return metodi;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<TipoMetodo> getTipoMetodo(String username) {
+        List<TipoMetodo> tipi = new ArrayList<>();
+
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT DISTINCT TipoMetodo FROM Metodo_pagamento WHERE Username = ?"
+            );
+
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                TipoMetodo tm = mapStringToEnum(rs.getString(1));
+                if (tm != null) {
+                    tipi.add(tm);
+                }
+            }
+
+            return tipi;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doSave(Metodo_pagamento m) {
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO Metodo_pagamento " +
+                            "(Username, TipoMetodo, Provider, TokenPagamento, Ultime4Cifre, " +
+                            "ScadenzaMese, ScadenzaAnno, Predefinito, Attivo, DataCreazione) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+            );
+
+            ps.setString(1, m.getUsername());
+            // Gestione di sicurezza se l'enum è null durante il salvataggio
+            ps.setString(2, m.getTipoMetodo() != null ? m.getTipoMetodo().name() : "Da configurare");
+            ps.setString(3, m.getProvider());
+            ps.setString(4, m.getTokenPagamento());
+            ps.setString(5, m.getUltime4Cifre());
+            ps.setInt(6, m.getScadenzaMese());
+            ps.setInt(7, m.getScadenzaAnno());
+            ps.setBoolean(8, m.isPredefinito());
+            ps.setBoolean(9, m.isAttivo());
+            ps.setTimestamp(10, new java.sql.Timestamp(m.getDataCreazione().getTime()));
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("Errore INSERT Metodo_pagamento");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+}
