@@ -73,26 +73,79 @@ public class Metodo_pagamentoDAO {
         }
     }
 
-    public List<TipoMetodo> getTipoMetodo(String username) {
-        List<TipoMetodo> tipi = new ArrayList<>();
+    public Metodo_pagamento doRetrieveByUsername(String username) {
 
         try (Connection con = ConPool.getConnection()) {
 
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT DISTINCT TipoMetodo FROM Metodo_pagamento WHERE Username = ?"
+                    "SELECT IdMetodo, Username, TipoMetodo, Provider, TokenPagamento, " +
+                            "Ultime4Cifre, ScadenzaMese, ScadenzaAnno, Predefinito, Attivo, DataCreazione " +
+                            "FROM Metodo_pagamento WHERE Username = ? LIMIT 1"
             );
 
             ps.setString(1, username);
+
             ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                TipoMetodo tm = mapStringToEnum(rs.getString(1));
-                if (tm != null) {
-                    tipi.add(tm);
+            if (rs.next()) {
+                Metodo_pagamento m = new Metodo_pagamento();
+
+                m.setIdMetodo(rs.getInt("IdMetodo"));
+                m.setUsername(rs.getString("Username"));
+
+                String tipo = rs.getString("TipoMetodo");
+                if (tipo != null) {
+                    try {
+                        m.setTipoMetodo(TipoMetodo.valueOf(tipo));
+                    } catch (Exception e) {
+                        m.setTipoMetodo(TipoMetodo.Da_configurare);
+                    }
                 }
+
+                m.setProvider(rs.getString("Provider"));
+                m.setTokenPagamento(rs.getString("TokenPagamento"));
+                m.setUltime4Cifre(rs.getString("Ultime4Cifre"));
+                m.setScadenzaMese(rs.getInt("ScadenzaMese"));
+                m.setScadenzaAnno(rs.getInt("ScadenzaAnno"));
+                m.setPredefinito(rs.getBoolean("Predefinito"));
+                m.setAttivo(rs.getBoolean("Attivo"));
+                m.setDataCreazione(rs.getTimestamp("DataCreazione"));
+
+                return m;
             }
 
-            return tipi;
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doUpdate(Metodo_pagamento m) {
+
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement(
+                    "UPDATE Metodo_pagamento SET " +
+                            "TipoMetodo=?, Provider=?, TokenPagamento=?, Ultime4Cifre=?, " +
+                            "ScadenzaMese=?, ScadenzaAnno=?, Predefinito=?, Attivo=?, DataCreazione=? " +
+                            "WHERE Username=?"
+            );
+
+            ps.setString(1, m.getTipoMetodo().name());
+            ps.setString(2, m.getProvider());
+            ps.setString(3, m.getTokenPagamento());
+            ps.setString(4, m.getUltime4Cifre());
+            ps.setInt(5, m.getScadenzaMese());
+            ps.setInt(6, m.getScadenzaAnno());
+            ps.setBoolean(7, m.isPredefinito());
+            ps.setBoolean(8, m.isAttivo());
+            ps.setTimestamp(9, new java.sql.Timestamp(m.getDataCreazione().getTime()));
+            ps.setString(10, m.getUsername());
+
+            if (ps.executeUpdate() != 1) {
+                throw new RuntimeException("Errore UPDATE Metodo_pagamento");
+            }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

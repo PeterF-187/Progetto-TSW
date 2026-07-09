@@ -2,7 +2,7 @@ package model.DAO;
 
 import model.ConPool;
 import model.Obj.Acquisto;
-
+import model.Obj.Videogioco;
 import java.sql.*;
 import java.util.*;
 
@@ -39,6 +39,35 @@ public class AcquistoDAO {
 
         return list;
     }
+
+    public List<Videogioco> doRetrieveVideogiochiByUsername(String username) {
+        List<Videogioco> lista = new ArrayList<>();
+        String sql = "SELECT v.Id_prodotto, v.Titolo, v.Prezzo, v.Data_rilascio, v.Descrizione_testuale, v.immagine " +
+                "FROM Acquisto a JOIN Videogioco v ON a.Id_prodotto = v.Id_prodotto " +
+                "WHERE a.Username_Account = ?";
+
+        try (Connection con = model.ConPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Videogioco v = new Videogioco();
+                v.setId_prodotto(rs.getInt("Id_prodotto"));
+                v.setTitolo(rs.getString("Titolo"));
+                v.setPrezzo(rs.getBigDecimal("Prezzo"));
+                v.setData_rilascio(rs.getDate("Data_rilascio"));
+                v.setDesc(rs.getString("Descrizione_testuale"));
+                v.setImg(rs.getString("immagine"));
+                lista.add(v);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore recupero acquisti utente: " + e.getMessage(), e);
+        }
+        return lista;
+    }
+
 
     public void doSave(Acquisto a) {
 

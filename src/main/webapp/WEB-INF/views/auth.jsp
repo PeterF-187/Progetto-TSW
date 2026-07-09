@@ -32,6 +32,13 @@
                     Password o username errati
                 </p>
                 <% } %>
+                <% if (request.getParameter("checkMail") != null) { %>
+
+                <p style="color:green; margin-top:8px;">
+                    Controlla la tua email e conferma l'accesso.
+                </p>
+
+                <% } %>
                 <button type="submit">Login</button>
             </form>
 
@@ -88,7 +95,7 @@
 </script>
 
 
-<! fine sezione - inizio footer ----------------------------------------------------------------------------------------------------- >
+<!-- Footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

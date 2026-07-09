@@ -54,7 +54,9 @@
                     Accedi | Registrati
                 </a>
                 <% } else { %>
-                <span>Ciao, <%= username %></span>
+                <a href="${pageContext.request.contextPath}/dashboard" class="username-link">
+                    Ciao, <%= username %>
+                </a>
                 <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 <% } %>
             </li>

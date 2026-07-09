@@ -36,7 +36,6 @@
         const contextPath = "${pageContext.request.contextPath}";
     </script>
     <script src="${pageContext.request.contextPath}/JS/search.js"></script>
-
     <nav>
         <ul>
             <li><a href="${pageContext.request.contextPath}/wishlist" class="icon-link preferiti" title="Preferiti"><i class="fa-solid fa-heart icon"></i></a></li>
@@ -44,11 +43,16 @@
             <%
                 String username = (String) session.getAttribute("username");
             %>
+
             <li>
                 <% if (username == null) { %>
-                <a href="${pageContext.request.contextPath}/login">Accedi | Registrati</a>
+                <a href="${pageContext.request.contextPath}/login">
+                    Accedi | Registrati
+                </a>
                 <% } else { %>
-                <span>Ciao, <%= username %></span>
+                <a href="${pageContext.request.contextPath}/dashboard" class="username-link">
+                    Ciao, <%= username %>
+                </a>
                 <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 <% } %>
             </li>
@@ -164,12 +168,14 @@
     </aside>
 
     <script>
+
         document.addEventListener("DOMContentLoaded", function() {
             const selectMethod = document.getElementById("paymentMethodSelect");
             const walletBox = document.getElementById("walletDetailsBox");
             const alertBox = document.getElementById("checkoutAlertBox");
             const btnProceed = document.getElementById("btnProceedOrder");
             const hiddenInput = document.getElementById("selectedPaymentHidden");
+            const checkoutForm = document.querySelector(".checkout-form");
 
             // Controlliamo se il checkout è disabilitato lato server per il saldo
             const isSaldoBloccato = ${checkoutDisabilitato ? true : false};
@@ -183,9 +189,9 @@
             if (selectMethod) {
                 selectMethod.addEventListener("change", function() {
                     const value = this.value;
-                    hiddenInput.value = value; // Salva il valore nel form
+                    hiddenInput.value = value; // Salva il valore nel form nascosto
 
-                    // Reset visibilità
+                    // Reset visibilità standard
                     walletBox.style.display = "none";
                     if(alertBox) alertBox.style.display = "none";
                     if(!carrelloVuoto) btnProceed.disabled = false;
@@ -197,14 +203,28 @@
                             if(alertBox) alertBox.style.display = "block";
                             btnProceed.disabled = true; // Blocca se il saldo ha problemi
                         }
-                    } else if (value === "aggiungi_metodo") {
-                        // Rimanda al link di configurazione (al momento #)
-                        window.location.href = "#";
                     }
+                    // Nota: se seleziona 'aggiungi_metodo' o 'carta', sblocca semplicemente il bottone per permettere l'azione al click
+                });
+            }
+
+            // INTERCETTAZIONE DEL PULSANTE "PROCEDI ALL'ORDINE"
+            if (checkoutForm) {
+                checkoutForm.addEventListener("submit", function(e) {
+                    const currentPayment = hiddenInput.value;
+
+                    if (currentPayment === "aggiungi_metodo") {
+                        e.preventDefault(); // Blocca l'invio del form di checkout
+                        // Reindirizza l'utente direttamente al pannello saldo della dashboard
+                        window.location.href = "${pageContext.request.contextPath}/dashboard?tab=saldo";
+                    }
+                    // Se invece è "carta" o "saldo", lascia che il form esegua il POST standard verso /checkout
                 });
             }
         });
+
     </script>
+
 
 </main>
 
