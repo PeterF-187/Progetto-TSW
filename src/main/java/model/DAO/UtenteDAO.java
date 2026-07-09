@@ -69,6 +69,33 @@ public class UtenteDAO {
         return null;
     }
 
+    public boolean doUpdate(String username, String nuovaPassword) {
+
+        String sql = "UPDATE Utente SET Password = ? WHERE Username = ?";
+
+        try (Connection con = ConPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+
+            ps.setString(1, nuovaPassword);
+            ps.setString(2, username);
+
+
+            int rows = ps.executeUpdate();
+
+
+            return rows == 1;
+
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(
+                    "Errore doUpdate password: " + e.getMessage(),
+                    e
+            );
+        }
+    }
+
     public void doSave(Utente u) {
 
         String sql = "INSERT INTO Utente " +

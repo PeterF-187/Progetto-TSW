@@ -50,7 +50,9 @@
                     Accedi | Registrati
                 </a>
                 <% } else { %>
-                <span>Ciao, <%= username %></span>
+                <a href="${pageContext.request.contextPath}/dashboard" class="username-link">
+                    Ciao, <%= username %>
+                </a>
                 <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 <% } %>
             </li>
@@ -250,7 +252,7 @@
                 <li><a href="${pageContext.request.contextPath}/HowTo">Come acquistare</a></li>
                 <li><a href="${pageContext.request.contextPath}/FAQ">FAQ</a></li>
                 <li><a href="${pageContext.request.contextPath}/PReso">Politica di reso</a></li>
-                <li><a href="#">Crea ticket</a></li>
+                <li><a href="${pageContext.request.contextPath}/dashboard?tab=ticket">Crea ticket</a></li>
             </ul>
         </div>
         <div class="footer-column">

@@ -44,11 +44,16 @@
             <%
                 String username = (String) session.getAttribute("username");
             %>
+
             <li>
                 <% if (username == null) { %>
-                <a href="${pageContext.request.contextPath}/login">Accedi | Registrati</a>
+                <a href="${pageContext.request.contextPath}/login">
+                    Accedi | Registrati
+                </a>
                 <% } else { %>
-                <span>Ciao, <%= username %></span>
+                <a href="${pageContext.request.contextPath}/dashboard" class="username-link">
+                    Ciao, <%= username %>
+                </a>
                 <a href="${pageContext.request.contextPath}/logout">Logout</a>
                 <% } %>
             </li>
