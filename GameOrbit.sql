@@ -17,15 +17,6 @@
 SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
 SET @@SESSION.SQL_LOG_BIN= 0;
 
---
--- GTID state at the beginning of the backup 
---
-
-SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '3b0ab64e-29d9-11f1-bbc1-0a0027000006:1-491';
-
---
--- Table structure for table `acquisto`
---
 
 DROP TABLE IF EXISTS `acquisto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
