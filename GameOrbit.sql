@@ -1,13 +1,13 @@
--- MySQL dump 10.13  Distrib 8.0.45, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 9.6.0, for Win64 (x86_64)
 --
--- Host: localhost    Database: gameorbit
+-- Host: 127.0.0.1    Database: gameorbit
 -- ------------------------------------------------------
 -- Server version	9.6.0
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!50503 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -17,6 +17,15 @@
 SET @MYSQLDUMP_TEMP_LOG_BIN = @@SESSION.SQL_LOG_BIN;
 SET @@SESSION.SQL_LOG_BIN= 0;
 
+--
+-- GTID state at the beginning of the backup 
+--
+
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '3b0ab64e-29d9-11f1-bbc1-0a0027000006:1-527';
+
+--
+-- Table structure for table `acquisto`
+--
 
 DROP TABLE IF EXISTS `acquisto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -225,6 +234,31 @@ INSERT INTO `genere` VALUES ('Avventura'),('Azione'),('Horror'),('Picchiaduro'),
 UNLOCK TABLES;
 
 --
+-- Table structure for table `impostazioni_utente`
+--
+
+DROP TABLE IF EXISTS `impostazioni_utente`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `impostazioni_utente` (
+  `Username` varchar(30) NOT NULL,
+  `Due_Fattori` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`Username`),
+  CONSTRAINT `impostazioni_utente_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `utente` (`Username`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `impostazioni_utente`
+--
+
+LOCK TABLES `impostazioni_utente` WRITE;
+/*!40000 ALTER TABLE `impostazioni_utente` DISABLE KEYS */;
+INSERT INTO `impostazioni_utente` VALUES ('averdi',0),('DaddyP',0),('dgallo',0),('ecosta',0),('fesposito',0),('gneri',0),('lbianchi',0),('mgreco',0),('mrossi',0),('Peter',1),('rferretti',0),('sconti',0);
+/*!40000 ALTER TABLE `impostazioni_utente` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `lingua`
 --
 
@@ -257,7 +291,7 @@ DROP TABLE IF EXISTS `metodo_pagamento`;
 CREATE TABLE `metodo_pagamento` (
   `IdMetodo` int NOT NULL AUTO_INCREMENT,
   `Username` varchar(50) NOT NULL,
-  `TipoMetodo` varchar(30) NOT NULL,
+  `TipoMetodo` enum('Da_configurare','Carta','Paypal','Bonifico','Apple_pay','Google_pay','Saldo') DEFAULT NULL,
   `Provider` varchar(30) DEFAULT NULL,
   `TokenPagamento` varchar(255) DEFAULT NULL,
   `Ultime4Cifre` char(4) DEFAULT NULL,
@@ -269,7 +303,7 @@ CREATE TABLE `metodo_pagamento` (
   PRIMARY KEY (`IdMetodo`),
   KEY `FK_MetodoPagamento_Utente` (`Username`),
   CONSTRAINT `FK_MetodoPagamento_Utente` FOREIGN KEY (`Username`) REFERENCES `utente` (`Username`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -278,7 +312,7 @@ CREATE TABLE `metodo_pagamento` (
 
 LOCK TABLES `metodo_pagamento` WRITE;
 /*!40000 ALTER TABLE `metodo_pagamento` DISABLE KEYS */;
-INSERT INTO `metodo_pagamento` VALUES (1,'averdi','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(2,'DaddyP','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(3,'dgallo','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(4,'ecosta','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(5,'fesposito','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(6,'gneri','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(7,'lbianchi','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(8,'mgreco','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(9,'mrossi','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(11,'rferretti','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(12,'sconti','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32');
+INSERT INTO `metodo_pagamento` VALUES (1,'averdi','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(2,'DaddyP','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(3,'dgallo','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(4,'ecosta','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(5,'fesposito','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(6,'gneri','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(7,'lbianchi','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(8,'mgreco','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(9,'mrossi','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(11,'rferretti','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(12,'sconti','Da_configurare',NULL,NULL,NULL,NULL,NULL,_binary '',_binary '','2026-06-25 23:42:32'),(13,'Peter','Carta','Mastercard','5333333333333333','1234',1,2030,_binary '\0',_binary '','2026-07-05 18:30:54');
 /*!40000 ALTER TABLE `metodo_pagamento` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -330,7 +364,7 @@ CREATE TABLE `product_keys` (
 
 LOCK TABLES `product_keys` WRITE;
 /*!40000 ALTER TABLE `product_keys` DISABLE KEYS */;
-INSERT INTO `product_keys` VALUES (1,1,'P1A1-B2C3-D4E5-F6G7','Disponibile'),(2,1,'P1H8-I9J0-K1L2-M3N4','Disponibile'),(3,1,'P1O5-P6Q7-R8S9-T0U1','Disponibile'),(4,1,'P1V2-W3X4-Y5Z6-A7B8','Disponibile'),(5,1,'P1C9-D0E1-F2G3-H4I5','Disponibile'),(6,1,'P1J6-K7L8-M9N0-O1P2','Disponibile'),(7,1,'P1Q3-R4S5-T6U7-V8W9','Disponibile'),(8,1,'P1X0-Y1Z2-A3B4-C5D6','Disponibile'),(9,1,'P1E7-F8G9-H0I1-J2K3','Disponibile'),(10,1,'P1L4-M5N6-O7P8-Q9R0','Disponibile'),(11,2,'P2A1-B2C3-D4E5-F6G7','Disponibile'),(12,2,'P2H8-I9J0-K1L2-M3N4','Disponibile'),(13,2,'P2O5-P6Q7-R8S9-T0U1','Disponibile'),(14,2,'P2V2-W3X4-Y5Z6-A7B8','Disponibile'),(15,2,'P2C9-D0E1-F2G3-H4I5','Disponibile'),(16,2,'P2J6-K7L8-M9N0-O1P2','Disponibile'),(17,2,'P2Q3-R4S5-T6U7-V8W9','Disponibile'),(18,2,'P2X0-Y1Z2-A3B4-C5D6','Disponibile'),(19,2,'P2E7-F8G9-H0I1-J2K3','Disponibile'),(20,2,'P2L4-M5N6-O7P8-Q9R0','Disponibile'),(21,3,'P3A1-B2C3-D4E5-F6G7','Disponibile'),(22,3,'P3H8-I9J0-K1L2-M3N4','Disponibile'),(23,3,'P3O5-P6Q7-R8S9-T0U1','Disponibile'),(24,3,'P3V2-W3X4-Y5Z6-A7B8','Disponibile'),(25,3,'P3C9-D0E1-F2G3-H4I5','Disponibile'),(26,3,'P3J6-K7L8-M9N0-O1P2','Disponibile'),(27,3,'P3Q3-R4S5-T6U7-V8W9','Disponibile'),(28,3,'P3X0-Y1Z2-A3B4-C5D6','Disponibile'),(29,3,'P3E7-F8G9-H0I1-J2K3','Disponibile'),(30,3,'P3L4-M5N6-O7P8-Q9R0','Disponibile'),(31,4,'P4A1-B2C3-D4E5-F6G7','Disponibile'),(32,4,'P4H8-I9J0-K1L2-M3N4','Disponibile'),(33,4,'P4O5-P6Q7-R8S9-T0U1','Disponibile'),(34,4,'P4V2-W3X4-Y5Z6-A7B8','Disponibile'),(35,4,'P4C9-D0E1-F2G3-H4I5','Disponibile'),(36,4,'P4J6-K7L8-M9N0-O1P2','Disponibile'),(37,4,'P4Q3-R4S5-T6U7-V8W9','Disponibile'),(38,4,'P4X0-Y1Z2-A3B4-C5D6','Disponibile'),(39,4,'P4E7-F8G9-H0I1-J2K3','Disponibile'),(40,4,'P4L4-M5N6-O7P8-Q9R0','Disponibile'),(41,5,'P5A1-B2C3-D4E5-F6G7','Disponibile'),(42,5,'P5H8-I9J0-K1L2-M3N4','Disponibile'),(43,5,'P5O5-P6Q7-R8S9-T0U1','Disponibile'),(44,5,'P5V2-W3X4-Y5Z6-A7B8','Disponibile'),(45,5,'P5C9-D0E1-F2G3-H4I5','Disponibile'),(46,5,'P5J6-K7L8-M9N0-O1P2','Disponibile'),(47,5,'P5Q3-R4S5-T6U7-V8W9','Disponibile'),(48,5,'P5X0-Y1Z2-A3B4-C5D6','Disponibile'),(49,5,'P5E7-F8G9-H0I1-J2K3','Disponibile'),(50,5,'P5L4-M5N6-O7P8-Q9R0','Disponibile'),(51,6,'P6A1-B2C3-D4E5-F6G7','Disponibile'),(52,6,'P6H8-I9J0-K1L2-M3N4','Disponibile'),(53,6,'P6O5-P6Q7-R8S9-T0U1','Disponibile'),(54,6,'P6V2-W3X4-Y5Z6-A7B8','Disponibile'),(55,6,'P6C9-D0E1-F2G3-H4I5','Disponibile'),(56,6,'P6J6-K7L8-M9N0-O1P2','Disponibile'),(57,6,'P6Q3-R4S5-T6U7-V8W9','Disponibile'),(58,6,'P6X0-Y1Z2-A3B4-C5D6','Disponibile'),(59,6,'P6E7-F8G9-H0I1-J2K3','Disponibile'),(60,6,'P6L4-M5N6-O7P8-Q9R0','Disponibile'),(61,7,'P7A1-B2C3-D4E5-F6G7','Venduto'),(62,7,'P7H8-I9J0-K1L2-M3N4','Disponibile'),(63,7,'P7O5-P6Q7-R8S9-T0U1','Disponibile'),(64,7,'P7V2-W3X4-Y5Z6-A7B8','Disponibile'),(65,7,'P7C9-D0E1-F2G3-H4I5','Disponibile'),(66,7,'P7J6-K7L8-M9N0-O1P2','Disponibile'),(67,7,'P7Q3-R4S5-T6U7-V8W9','Disponibile'),(68,7,'P7X0-Y1Z2-A3B4-C5D6','Disponibile'),(69,7,'P7E7-F8G9-H0I1-J2K3','Disponibile'),(70,7,'P7L4-M5N6-O7P8-Q9R0','Disponibile'),(71,8,'P8A1-B2C3-D4E5-F6G7','Venduto'),(72,8,'P8H8-I9J0-K1L2-M3N4','Disponibile'),(73,8,'P8O5-P6Q7-R8S9-T0U1','Disponibile'),(74,8,'P8V2-W3X4-Y5Z6-A7B8','Disponibile'),(75,8,'P8C9-D0E1-F2G3-H4I5','Disponibile'),(76,8,'P8J6-K7L8-M9N0-O1P2','Disponibile'),(77,8,'P8Q3-R4S5-T6U7-V8W9','Disponibile'),(78,8,'P8X0-Y1Z2-A3B4-C5D6','Disponibile'),(79,8,'P8E7-F8G9-H0I1-J2K3','Disponibile'),(80,8,'P8L4-M5N6-O7P8-Q9R0','Disponibile'),(81,9,'P9A1-B2C3-D4E5-F6G7','Disponibile'),(82,9,'P9H8-I9J0-K1L2-M3N4','Disponibile'),(83,9,'P9O5-P6Q7-R8S9-T0U1','Disponibile'),(84,9,'P9V2-W3X4-Y5Z6-A7B8','Disponibile'),(85,9,'P9C9-D0E1-F2G3-H4I5','Disponibile'),(86,9,'P9J6-K7L8-M9N0-O1P2','Disponibile'),(87,9,'P9Q3-R4S5-T6U7-V8W9','Disponibile'),(88,9,'P9X0-Y1Z2-A3B4-C5D6','Disponibile'),(89,9,'P9E7-F8G9-H0I1-J2K3','Disponibile'),(90,9,'P9L4-M5N6-O7P8-Q9R0','Disponibile'),(91,10,'P10A-B2C3-D4E5-F6G7','Disponibile'),(92,10,'P10H-I9J0-K1L2-M3N4','Disponibile'),(93,10,'P10O-P6Q7-R8S9-T0U1','Disponibile'),(94,10,'P10V-W3X4-Y5Z6-A7B8','Disponibile'),(95,10,'P10C-D0E1-F2G3-H4I5','Disponibile'),(96,10,'P10J-K7L8-M9N0-O1P2','Disponibile'),(97,10,'P10Q-R4S5-T6U7-V8W9','Disponibile'),(98,10,'P10X-Y1Z2-A3B4-C5D6','Disponibile'),(99,10,'P10E-F8G9-H0I1-J2K3','Disponibile'),(100,10,'P10L-M5N6-O7P8-Q9R0','Disponibile'),(101,11,'P11A-B2C3-D4E5-F6G7','Disponibile'),(102,11,'P11H-I9J0-K1L2-M3N4','Disponibile'),(103,11,'P11O-P6Q7-R8S9-T0U1','Disponibile'),(104,11,'P11V-W3X4-Y5Z6-A7B8','Disponibile'),(105,11,'P11C-D0E1-F2G3-H4I5','Disponibile'),(106,11,'P11J-K7L8-M9N0-O1P2','Disponibile'),(107,11,'P11Q-R4S5-T6U7-V8W9','Disponibile'),(108,11,'P11X-Y1Z2-A3B4-C5D6','Disponibile'),(109,11,'P11E-F8G9-H0I1-J2K3','Disponibile'),(110,11,'P11L-M5N6-O7P8-Q9R0','Disponibile'),(111,12,'P12A-B2C3-D4E5-F6G7','Disponibile'),(112,12,'P12H-I9J0-K1L2-M3N4','Disponibile'),(113,12,'P12O-P6Q7-R8S9-T0U1','Disponibile'),(114,12,'P12V-W3X4-Y5Z6-A7B8','Disponibile'),(115,12,'P12C-D0E1-F2G3-H4I5','Disponibile'),(116,12,'P12J-K7L8-M9N0-O1P2','Disponibile'),(117,12,'P12Q-R4S5-T6U7-V8W9','Disponibile'),(118,12,'P12X-Y1Z2-A3B4-C5D6','Disponibile'),(119,12,'P12E-F8G9-H0I1-J2K3','Disponibile'),(120,12,'P12L-M5N6-O7P8-Q9R0','Disponibile'),(121,13,'P13A-B2C3-D4E5-F6G7','Disponibile'),(122,13,'P13H-I9J0-K1L2-M3N4','Disponibile'),(123,13,'P13O-P6Q7-R8S9-T0U1','Disponibile'),(124,13,'P13V-W3X4-Y5Z6-A7B8','Disponibile'),(125,13,'P13C-D0E1-F2G3-H4I5','Disponibile'),(126,13,'P13J-K7L8-M9N0-O1P2','Disponibile'),(127,13,'P13Q-R4S5-T6U7-V8W9','Disponibile'),(128,13,'P13X-Y1Z2-A3B4-C5D6','Disponibile'),(129,13,'P13E-F8G9-H0I1-J2K3','Disponibile'),(130,13,'P13L-M5N6-O7P8-Q9R0','Disponibile');
+INSERT INTO `product_keys` VALUES (1,1,'P1A1-B2C3-D4E5-F6G7','Venduto'),(2,1,'P1H8-I9J0-K1L2-M3N4','Disponibile'),(3,1,'P1O5-P6Q7-R8S9-T0U1','Disponibile'),(4,1,'P1V2-W3X4-Y5Z6-A7B8','Disponibile'),(5,1,'P1C9-D0E1-F2G3-H4I5','Disponibile'),(6,1,'P1J6-K7L8-M9N0-O1P2','Disponibile'),(7,1,'P1Q3-R4S5-T6U7-V8W9','Disponibile'),(8,1,'P1X0-Y1Z2-A3B4-C5D6','Disponibile'),(9,1,'P1E7-F8G9-H0I1-J2K3','Disponibile'),(10,1,'P1L4-M5N6-O7P8-Q9R0','Disponibile'),(11,2,'P2A1-B2C3-D4E5-F6G7','Disponibile'),(12,2,'P2H8-I9J0-K1L2-M3N4','Disponibile'),(13,2,'P2O5-P6Q7-R8S9-T0U1','Disponibile'),(14,2,'P2V2-W3X4-Y5Z6-A7B8','Disponibile'),(15,2,'P2C9-D0E1-F2G3-H4I5','Disponibile'),(16,2,'P2J6-K7L8-M9N0-O1P2','Disponibile'),(17,2,'P2Q3-R4S5-T6U7-V8W9','Disponibile'),(18,2,'P2X0-Y1Z2-A3B4-C5D6','Disponibile'),(19,2,'P2E7-F8G9-H0I1-J2K3','Disponibile'),(20,2,'P2L4-M5N6-O7P8-Q9R0','Disponibile'),(21,3,'P3A1-B2C3-D4E5-F6G7','Disponibile'),(22,3,'P3H8-I9J0-K1L2-M3N4','Disponibile'),(23,3,'P3O5-P6Q7-R8S9-T0U1','Disponibile'),(24,3,'P3V2-W3X4-Y5Z6-A7B8','Disponibile'),(25,3,'P3C9-D0E1-F2G3-H4I5','Disponibile'),(26,3,'P3J6-K7L8-M9N0-O1P2','Disponibile'),(27,3,'P3Q3-R4S5-T6U7-V8W9','Disponibile'),(28,3,'P3X0-Y1Z2-A3B4-C5D6','Disponibile'),(29,3,'P3E7-F8G9-H0I1-J2K3','Disponibile'),(30,3,'P3L4-M5N6-O7P8-Q9R0','Disponibile'),(31,4,'P4A1-B2C3-D4E5-F6G7','Disponibile'),(32,4,'P4H8-I9J0-K1L2-M3N4','Disponibile'),(33,4,'P4O5-P6Q7-R8S9-T0U1','Disponibile'),(34,4,'P4V2-W3X4-Y5Z6-A7B8','Disponibile'),(35,4,'P4C9-D0E1-F2G3-H4I5','Disponibile'),(36,4,'P4J6-K7L8-M9N0-O1P2','Disponibile'),(37,4,'P4Q3-R4S5-T6U7-V8W9','Disponibile'),(38,4,'P4X0-Y1Z2-A3B4-C5D6','Disponibile'),(39,4,'P4E7-F8G9-H0I1-J2K3','Disponibile'),(40,4,'P4L4-M5N6-O7P8-Q9R0','Disponibile'),(41,5,'P5A1-B2C3-D4E5-F6G7','Disponibile'),(42,5,'P5H8-I9J0-K1L2-M3N4','Disponibile'),(43,5,'P5O5-P6Q7-R8S9-T0U1','Disponibile'),(44,5,'P5V2-W3X4-Y5Z6-A7B8','Disponibile'),(45,5,'P5C9-D0E1-F2G3-H4I5','Disponibile'),(46,5,'P5J6-K7L8-M9N0-O1P2','Disponibile'),(47,5,'P5Q3-R4S5-T6U7-V8W9','Disponibile'),(48,5,'P5X0-Y1Z2-A3B4-C5D6','Disponibile'),(49,5,'P5E7-F8G9-H0I1-J2K3','Disponibile'),(50,5,'P5L4-M5N6-O7P8-Q9R0','Disponibile'),(51,6,'P6A1-B2C3-D4E5-F6G7','Disponibile'),(52,6,'P6H8-I9J0-K1L2-M3N4','Disponibile'),(53,6,'P6O5-P6Q7-R8S9-T0U1','Disponibile'),(54,6,'P6V2-W3X4-Y5Z6-A7B8','Disponibile'),(55,6,'P6C9-D0E1-F2G3-H4I5','Disponibile'),(56,6,'P6J6-K7L8-M9N0-O1P2','Disponibile'),(57,6,'P6Q3-R4S5-T6U7-V8W9','Disponibile'),(58,6,'P6X0-Y1Z2-A3B4-C5D6','Disponibile'),(59,6,'P6E7-F8G9-H0I1-J2K3','Disponibile'),(60,6,'P6L4-M5N6-O7P8-Q9R0','Disponibile'),(61,7,'P7A1-B2C3-D4E5-F6G7','Venduto'),(62,7,'P7H8-I9J0-K1L2-M3N4','Disponibile'),(63,7,'P7O5-P6Q7-R8S9-T0U1','Disponibile'),(64,7,'P7V2-W3X4-Y5Z6-A7B8','Disponibile'),(65,7,'P7C9-D0E1-F2G3-H4I5','Disponibile'),(66,7,'P7J6-K7L8-M9N0-O1P2','Disponibile'),(67,7,'P7Q3-R4S5-T6U7-V8W9','Disponibile'),(68,7,'P7X0-Y1Z2-A3B4-C5D6','Disponibile'),(69,7,'P7E7-F8G9-H0I1-J2K3','Disponibile'),(70,7,'P7L4-M5N6-O7P8-Q9R0','Disponibile'),(71,8,'P8A1-B2C3-D4E5-F6G7','Venduto'),(72,8,'P8H8-I9J0-K1L2-M3N4','Disponibile'),(73,8,'P8O5-P6Q7-R8S9-T0U1','Disponibile'),(74,8,'P8V2-W3X4-Y5Z6-A7B8','Disponibile'),(75,8,'P8C9-D0E1-F2G3-H4I5','Disponibile'),(76,8,'P8J6-K7L8-M9N0-O1P2','Disponibile'),(77,8,'P8Q3-R4S5-T6U7-V8W9','Disponibile'),(78,8,'P8X0-Y1Z2-A3B4-C5D6','Disponibile'),(79,8,'P8E7-F8G9-H0I1-J2K3','Disponibile'),(80,8,'P8L4-M5N6-O7P8-Q9R0','Disponibile'),(81,9,'P9A1-B2C3-D4E5-F6G7','Disponibile'),(82,9,'P9H8-I9J0-K1L2-M3N4','Disponibile'),(83,9,'P9O5-P6Q7-R8S9-T0U1','Disponibile'),(84,9,'P9V2-W3X4-Y5Z6-A7B8','Disponibile'),(85,9,'P9C9-D0E1-F2G3-H4I5','Disponibile'),(86,9,'P9J6-K7L8-M9N0-O1P2','Disponibile'),(87,9,'P9Q3-R4S5-T6U7-V8W9','Disponibile'),(88,9,'P9X0-Y1Z2-A3B4-C5D6','Disponibile'),(89,9,'P9E7-F8G9-H0I1-J2K3','Disponibile'),(90,9,'P9L4-M5N6-O7P8-Q9R0','Disponibile'),(91,10,'P10A-B2C3-D4E5-F6G7','Disponibile'),(92,10,'P10H-I9J0-K1L2-M3N4','Disponibile'),(93,10,'P10O-P6Q7-R8S9-T0U1','Disponibile'),(94,10,'P10V-W3X4-Y5Z6-A7B8','Disponibile'),(95,10,'P10C-D0E1-F2G3-H4I5','Disponibile'),(96,10,'P10J-K7L8-M9N0-O1P2','Disponibile'),(97,10,'P10Q-R4S5-T6U7-V8W9','Disponibile'),(98,10,'P10X-Y1Z2-A3B4-C5D6','Disponibile'),(99,10,'P10E-F8G9-H0I1-J2K3','Disponibile'),(100,10,'P10L-M5N6-O7P8-Q9R0','Disponibile'),(101,11,'P11A-B2C3-D4E5-F6G7','Disponibile'),(102,11,'P11H-I9J0-K1L2-M3N4','Disponibile'),(103,11,'P11O-P6Q7-R8S9-T0U1','Disponibile'),(104,11,'P11V-W3X4-Y5Z6-A7B8','Disponibile'),(105,11,'P11C-D0E1-F2G3-H4I5','Disponibile'),(106,11,'P11J-K7L8-M9N0-O1P2','Disponibile'),(107,11,'P11Q-R4S5-T6U7-V8W9','Disponibile'),(108,11,'P11X-Y1Z2-A3B4-C5D6','Disponibile'),(109,11,'P11E-F8G9-H0I1-J2K3','Disponibile'),(110,11,'P11L-M5N6-O7P8-Q9R0','Disponibile'),(111,12,'P12A-B2C3-D4E5-F6G7','Disponibile'),(112,12,'P12H-I9J0-K1L2-M3N4','Disponibile'),(113,12,'P12O-P6Q7-R8S9-T0U1','Disponibile'),(114,12,'P12V-W3X4-Y5Z6-A7B8','Disponibile'),(115,12,'P12C-D0E1-F2G3-H4I5','Disponibile'),(116,12,'P12J-K7L8-M9N0-O1P2','Disponibile'),(117,12,'P12Q-R4S5-T6U7-V8W9','Disponibile'),(118,12,'P12X-Y1Z2-A3B4-C5D6','Disponibile'),(119,12,'P12E-F8G9-H0I1-J2K3','Disponibile'),(120,12,'P12L-M5N6-O7P8-Q9R0','Disponibile'),(121,13,'P13A-B2C3-D4E5-F6G7','Disponibile'),(122,13,'P13H-I9J0-K1L2-M3N4','Disponibile'),(123,13,'P13O-P6Q7-R8S9-T0U1','Disponibile'),(124,13,'P13V-W3X4-Y5Z6-A7B8','Disponibile'),(125,13,'P13C-D0E1-F2G3-H4I5','Disponibile'),(126,13,'P13J-K7L8-M9N0-O1P2','Disponibile'),(127,13,'P13Q-R4S5-T6U7-V8W9','Disponibile'),(128,13,'P13X-Y1Z2-A3B4-C5D6','Disponibile'),(129,13,'P13E-F8G9-H0I1-J2K3','Disponibile'),(130,13,'P13L-M5N6-O7P8-Q9R0','Disponibile');
 /*!40000 ALTER TABLE `product_keys` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -604,6 +638,32 @@ INSERT INTO `ticket` VALUES (1,'mrossi',1,'2025-01-01 00:00:00','Codice non rice
 UNLOCK TABLES;
 
 --
+-- Table structure for table `token_2fa`
+--
+
+DROP TABLE IF EXISTS `token_2fa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `token_2fa` (
+  `Username` varchar(30) NOT NULL,
+  `Token` varchar(100) NOT NULL,
+  `Scadenza` timestamp NOT NULL,
+  PRIMARY KEY (`Username`),
+  UNIQUE KEY `Token` (`Token`),
+  CONSTRAINT `token_2fa_ibfk_1` FOREIGN KEY (`Username`) REFERENCES `utente` (`Username`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `token_2fa`
+--
+
+LOCK TABLES `token_2fa` WRITE;
+/*!40000 ALTER TABLE `token_2fa` DISABLE KEYS */;
+/*!40000 ALTER TABLE `token_2fa` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `utente`
 --
 
@@ -629,7 +689,7 @@ CREATE TABLE `utente` (
 
 LOCK TABLES `utente` WRITE;
 /*!40000 ALTER TABLE `utente` DISABLE KEYS */;
-INSERT INTO `utente` VALUES ('averdi','Anna','Verdi','anna@email.it','$2a$10$ho.rBl9vZyMg9kNNeckrTO4Hl8zJmf5njDKjxl05x7uHwVV9AJuTK','1997-03-01','3331111113'),('DaddyP','Padre','Pio','jegiwin517@icubik.com','$2a$10$4lGdTxPIc1vs4Q/.fBUhyO4F6lyuEZVYN1VErxqBnFL9uqkN674vu','2014-07-08','3713452348'),('dgallo','Davide','Gallo','davide@email.it','$2a$10$4l/BbsoZZtnrQBd6LSyhIOJJzwmXy9Ttd3IZGQxpsjXI0nNJUawYG','2000-07-30','3331111120'),('ecosta','Elena','Costa','elena@email.it','$2a$10$WtowQZceUmgMgrmlu4dc6.KbuwcZOR7wUkMc4BBb0hRdRgFST6Q4q','1993-12-02','3331111119'),('fesposito','Franco','Esposito','franco@email.it','$2a$10$uLe0iNFN0xhoakTb7v7t1emibgLHszeM33Cjl4VgrFHmdQeRoj5iW','1990-02-20','3331111115'),('gneri','Giulia','Neri','giulia@email.it','$2a$10$0Asfaoe5DemPK0Oor/SWIuD/QxA7l6iz5HhiZaElyLmMuXOfgX0t6','1999-11-18','3331111114'),('lbianchi','Luca','Bianchi','luca@email.it','$2a$10$wIIc877bXM60b8vSKSm1UuTSwLBvdx09d9gf6NIzF.wybSFKHy.Xm','1998-08-15','3331111112'),('mgreco','Marco','Greco','marco@email.it','$2a$10$Uvc7QwJ94Yll7f4QRKZqrubN/NYa1niOUELEcqzTn27cpHB7wD8jy','1996-01-11','3331111118'),('mrossi','Mario','Rossi','mario@email.it','$2a$10$qPeoUG3eY.QF66ABWls.XecfS/YxTMqCcO8NfgGlbxp9mRzScPkTO','1995-04-12','3331111111'),('Peter','Pietro','Fiore','fpietro187@gmail.com','$2a$10$0soQqvKYUvb..rQyiYbaveqDz31a9AvBgaS0dcM5T975nuA6jiLzC','2004-08-27','3883587794'),('rferretti','Roberto','Ferretti','roberto@email.it','$2a$10$XZMwK6M.D4LEVvb9GGqTWecFTXPnGOxCwdTBaiUK2L4lrpTjCAjYm','1989-06-14','3331111117'),('sconti','Sara','Conti','sara@email.it','$2a$10$6FNBhW9082vSxcFOs0j.FOtNIy74QPP9EGYc2X3QA5qZ6XI19zEnS','1994-09-05','3331111116');
+INSERT INTO `utente` VALUES ('averdi','Anna','Verdi','anna@email.it','$2a$10$ho.rBl9vZyMg9kNNeckrTO4Hl8zJmf5njDKjxl05x7uHwVV9AJuTK','1997-03-01','3331111113'),('DaddyP','Padre','Pio','jegiwin517@icubik.com','$2a$10$4lGdTxPIc1vs4Q/.fBUhyO4F6lyuEZVYN1VErxqBnFL9uqkN674vu','2014-07-08','3713452348'),('dgallo','Davide','Gallo','davide@email.it','$2a$10$4l/BbsoZZtnrQBd6LSyhIOJJzwmXy9Ttd3IZGQxpsjXI0nNJUawYG','2000-07-30','3331111120'),('ecosta','Elena','Costa','elena@email.it','$2a$10$WtowQZceUmgMgrmlu4dc6.KbuwcZOR7wUkMc4BBb0hRdRgFST6Q4q','1993-12-02','3331111119'),('fesposito','Franco','Esposito','franco@email.it','$2a$10$uLe0iNFN0xhoakTb7v7t1emibgLHszeM33Cjl4VgrFHmdQeRoj5iW','1990-02-20','3331111115'),('gneri','Giulia','Neri','giulia@email.it','$2a$10$0Asfaoe5DemPK0Oor/SWIuD/QxA7l6iz5HhiZaElyLmMuXOfgX0t6','1999-11-18','3331111114'),('lbianchi','Luca','Bianchi','luca@email.it','$2a$10$wIIc877bXM60b8vSKSm1UuTSwLBvdx09d9gf6NIzF.wybSFKHy.Xm','1998-08-15','3331111112'),('mgreco','Marco','Greco','marco@email.it','$2a$10$Uvc7QwJ94Yll7f4QRKZqrubN/NYa1niOUELEcqzTn27cpHB7wD8jy','1996-01-11','3331111118'),('mrossi','Mario','Rossi','mario@email.it','$2a$10$qPeoUG3eY.QF66ABWls.XecfS/YxTMqCcO8NfgGlbxp9mRzScPkTO','1995-04-12','3331111111'),('Peter','Pietro','Fiore','fpietro187@gmail.com','$2a$10$NyRzmGMkPJnpSIrYggR.quUU4wZpmtgzLsEu34/Oio6plzWqfh05W','2004-08-27','3883587794'),('rferretti','Roberto','Ferretti','roberto@email.it','$2a$10$XZMwK6M.D4LEVvb9GGqTWecFTXPnGOxCwdTBaiUK2L4lrpTjCAjYm','1989-06-14','3331111117'),('sconti','Sara','Conti','sara@email.it','$2a$10$6FNBhW9082vSxcFOs0j.FOtNIy74QPP9EGYc2X3QA5qZ6XI19zEnS','1994-09-05','3331111116');
 /*!40000 ALTER TABLE `utente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -671,4 +731,4 @@ SET @@SESSION.SQL_LOG_BIN = @MYSQLDUMP_TEMP_LOG_BIN;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-06-30 17:57:43
+-- Dump completed on 2026-07-09 13:17:22
