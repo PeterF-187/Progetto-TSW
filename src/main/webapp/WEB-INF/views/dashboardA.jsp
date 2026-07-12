@@ -1,0 +1,153 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
+  <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
+  <title>Dashboard Admin - GameOrbit</title>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="titolo">
+    <a href="${pageContext.request.contextPath}/admin" class="titolo">
+      <img src="img/Logo.png" alt="Logo GameOrbit">
+      <span>GameOrbit</span>
+    </a>
+  </div>
+</div>
+
+
+<div class="dashboard-container">
+
+  <aside class="sidebar">
+    <button onclick="showSection('panoramica')" class="tab-btn active">Panoramica</button>
+    <button onclick="showSection('impostazioni')" class="tab-btn">Impostazioni</button>
+    <button onclick="showSection('ticket')" class="tab-btn">Ticket</button>
+  </aside>
+
+  <main class="main-content">
+
+    <!-- Panoramica -->
+    <section id="panoramica" class="dashboard-section">
+      <div class="panoramica-box">
+        <div class="info-utente">
+          <div class="info-riga"><strong>Nome:</strong> ${utente.nome} ${utente.cognome}</div>
+          <div class="info-riga"><strong>Email:</strong> ${utente.email}</div>
+          <div class="info-riga"><strong>Telefono:</strong> ${utente.numero > 0 ? utente.numero : 'Non inserito'}</div>
+          <div class="info-riga">
+            <strong>Data di Nascita:</strong>
+            <fmt:formatDate value="${utente.data_di_nascita}" pattern="dd/MM/yyyy"/>
+          </div>
+        </div>
+
+        <div class="logout-wrapper">
+          <a href="${pageContext.request.contextPath}/logout" class="btn-logout">Log out</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impostazioni -->
+    <section id="impostazioni" class="dashboard-section hidden">
+      <h1 class="section-title">Impostazioni Account</h1>
+
+      <c:if test="${not empty param.status}">
+        <div class="box-notifica ${param.status == 'success' ? 'notifica-successo':'notifica-errore'}">
+          <c:choose>
+            <c:when test="${param.status == 'success'}">
+              <i class="fa-solid fa-circle-check"></i> Modifica salvata con successo!
+            </c:when>
+            <c:when test="${param.status == 'wrong_pass'}">
+              <i class="fa-solid fa-circle-xmark"></i> Password attuale errata.
+            </c:when>
+            <c:when test="${param.status == 'no_match'}">
+              <i class="fa-solid fa-triangle-exclamation"></i> Le password non coincidono.
+            </c:when>
+            <c:otherwise>
+              <i class="fa-solid fa-circle-xmark"></i> Errore durante la modifica.
+            </c:otherwise>
+          </c:choose>
+        </div>
+      </c:if>
+
+      <div class="contenitore-impostazioni">
+        <!-- CAMBIO PASSWORD -->
+        <div class="scheda-impostazioni">
+          <h3 class="subsection-title">
+            <i class="fa-solid fa-lock icona-sezione"></i> Cambio Password
+          </h3>
+          <p class="section-description">
+            Inserisci la password attuale prima di scegliere quella nuova.
+          </p>
+
+          <form action="${pageContext.request.contextPath}/impostazioni" method="POST" class="form-impostazioni">
+            <input type="hidden" name="action" value="cambioPassword">
+            <input type="password" name="oldPassword" placeholder="Password attuale" required class="info-riga input-fullwidth">
+            <input type="password" name="newPassword" placeholder="Nuova password" required class="info-riga input-fullwidth">
+            <input type="password" name="confirmPassword" placeholder="Conferma nuova password" required class="info-riga input-fullwidth">
+            <button type="submit" class="tab-btn active btn-invia-impostazioni">Aggiorna Password</button>
+          </form>
+        </div>
+
+        <hr class="divisore-impostazioni">
+
+        <!-- 2FA -->
+        <div class="scheda-impostazioni">
+          <h3 class="subsection-title">
+            <i class="fa-solid fa-shield-halved icona-sezione"></i> Autenticazione a due fattori
+          </h3>
+          <p class="section-description">
+            Ricevi una mail di conferma ad ogni nuovo accesso.
+          </p>
+
+          <form action="${pageContext.request.contextPath}/impostazioni" method="POST" class="form-impostazioni-linea">
+            <input type="hidden" name="action" value="toggle2FA">
+            <select name="stato2FA" class="info-riga select-personalizzata-impostazioni">
+              <option value="false" <c:if test="${!impostazioni.dueFattori}">selected</c:if>>Disattivata</option>
+              <option value="true" <c:if test="${impostazioni.dueFattori}">selected</c:if>>Attiva (Email)</option>
+            </select>
+            <button type="submit" class="tab-btn active btn-invia-linea-impostazioni">Salva Preferenza</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ticket -->
+    <section id="ticket" class="dashboard-section hidden">
+      <h1 class="section-title">Pannello Gestione Ticket</h1>
+
+      <div class="panoramica-box">
+        <!-- Sotto-sezione Ticket Aperti -->
+        <h2 class="subsection-title">
+          <i class="fa-solid fa-folder-open"></i> Ticket Aperti
+        </h2>
+        <p>Nessun ticket da gestire al momento.</p>
+
+        <!-- Sotto-sezione Ticket Chiusi -->
+        <h2 class="subsection-title">
+          <i class="fa-solid fa-folder-closed"></i> Ticket Chiusi
+        </h2>
+        <p>Storico dei ticket vuoto.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  const contextPath = "${pageContext.request.contextPath}";
+</script>
+<script src="${pageContext.request.contextPath}/JS/dashboard.js"></script>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-bottom">
+    &copy; 2026 GameOrbit - Tutti i diritti riservati.
+  </div>
+</footer>
+
+</body>
+</html>

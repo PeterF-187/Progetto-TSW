@@ -15,37 +15,61 @@
         <span>GameOrbit</span>
     </a>
 </div>
-
+<!-- Pagina -->
 <section class="auth-section">
-
     <div class="auth-container">
 
         <!-- LOGIN -->
         <div class="auth-box" id="loginBox">
+
+            <% if (request.getParameter("checkMail") == null) { %>
             <h2>Accedi</h2>
 
             <form action="${pageContext.request.contextPath}/login" method="post">
                 <input type="text" placeholder="Username" name="username" required>
                 <input type="password" placeholder="Password" name="password" required>
+
                 <% if (request.getParameter("loginError") != null) { %>
-                <p style="color:red; margin-top:8px;">
-                    Password o username errati
-                </p>
+                <p class="error-text">Password o username errati</p>
                 <% } %>
-                <% if (request.getParameter("checkMail") != null) { %>
 
-                <p style="color:green; margin-top:8px;">
-                    Controlla la tua email e conferma l'accesso.
-                </p>
-
-                <% } %>
                 <button type="submit">Login</button>
             </form>
 
-            <p>
-                Non hai un account?
-                <a onclick="showRegister()">Registrati</a>
+            <p class="switch-auth">
+                Non hai un account? <a onclick="showRegister()">Registrati</a>
             </p>
+
+            <% } else { %>
+            <!-- FASE 2: Inserimento codice 2FA ricevuto via Email -->
+            <h2>Verifica 2FA</h2>
+
+            <form action="${pageContext.request.contextPath}/verify2fa" method="post">
+                <p class="info-text">
+                    Controlla la tua casella e-mail e inserisci il codice di verifica a 6 cifre per completare l'accesso.
+                </p>
+
+                <input type="text"
+                       placeholder="000000"
+                       name="code"
+                       required
+                       maxlength="6"
+                       pattern="[0-9]{6}"
+                       inputmode="numeric"
+                       autocomplete="off"
+                       class="code-input">
+
+                <% if (request.getParameter("codeError") != null) { %>
+                <p class="error-text">Codice errato o scaduto. Riprova.</p>
+                <% } %>
+
+                <button type="submit">Conferma Codice</button>
+            </form>
+
+            <p class="switch-auth">
+                <a href="${pageContext.request.contextPath}/login">Torna al login standard</a>
+            </p>
+            <% } %>
         </div>
 
         <!-- REGISTRAZIONE -->

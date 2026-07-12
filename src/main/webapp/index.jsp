@@ -18,12 +18,7 @@
 
     <div class="search-container">
         <form action="${pageContext.request.contextPath}/risultati" method="GET" autocomplete="off">
-            <input type="text"
-                   id="searchInput"
-                   name="q"
-                   placeholder="Cerca il tuo gioco..."
-                   autocomplete="off"
-                   spellcheck="false"/>
+            <input type="text" id="searchInput" name="q" placeholder="Cerca il tuo gioco..." autocomplete="off" spellcheck="false"/>
 
             <button type="submit">
                 <i class="fa-solid fa-magnifying-glass"></i>

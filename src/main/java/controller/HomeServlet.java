@@ -3,7 +3,6 @@ package controller;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-
 import model.DAO.VideogiocoDAO;
 import model.Obj.Videogioco;
 
@@ -32,11 +31,23 @@ public class HomeServlet extends HttpServlet {
         String min = request.getParameter("minPrice");
         String max = request.getParameter("maxPrice");
 
-        if (min != null && !min.isEmpty())
-            minPrice = new BigDecimal(min);
+        // Parsing sicuro per il prezzo minimo
+        if (min != null && !min.trim().isEmpty()) {
+            try {
+                minPrice = new BigDecimal(min.trim());
+            } catch (NumberFormatException e) {
+                System.err.println("Bypass rilevato sul filtro prezzo minimo, valore ignorato: " + min);
+            }
+        }
 
-        if (max != null && !max.isEmpty())
-            maxPrice = new BigDecimal(max);
+        // Parsing sicuro per il prezzo massimo
+        if (max != null && !max.trim().isEmpty()) {
+            try {
+                maxPrice = new BigDecimal(max.trim());
+            } catch (NumberFormatException e) {
+                System.err.println("Bypass rilevato sul filtro prezzo massimo, valore ignorato: " + max);
+            }
+        }
 
         List<Videogioco> videogiochiList;
 

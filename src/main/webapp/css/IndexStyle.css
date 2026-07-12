@@ -84,6 +84,8 @@ body {
     /* L'immagine fa un piccolo saltino in alto mentre il testo si riempie */
     transform: translateY(-3px);
 }
+
+
 /* --- MENU E ICONE --- */
 .navbar nav ul {
     display: flex;

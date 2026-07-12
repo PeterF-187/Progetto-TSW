@@ -14,53 +14,60 @@ import model.Obj.Utente;
 public class Verify2FAServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
-        String token = request.getParameter("token");
+        HttpSession session = request.getSession();
+        // Recuperiamo l'utente che era rimasto in sospeso al primo step del login
+        Utente u = (Utente) session.getAttribute("pending2FAUser");
+
+        if (u == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+
+        String codeInserito = request.getParameter("code");
         Token2FADAO dao = new Token2FADAO();
-        Token2FA t = dao.findByToken(token);
 
-        // Se il token non esiste o qualcuno ha alterato il link
-        if (t == null) {
-            response.sendRedirect(request.getContextPath() + "/login?loginError=1");
+        // Cerchiamo il token associato a questo specifico utente
+        Token2FA t = dao.findByUsername(u.getUsername());
+
+        // Se il token non esiste o il codice inserito non corrisponde
+        if (t == null || !t.getToken().equals(codeInserito)) {
+            response.sendRedirect(request.getContextPath() + "/login?checkMail=1&codeError=1");
             return;
         }
 
-        // Se l'utente ha cliccato dopo i 10 minuti di scadenza della mail
+        // Se il codice è scaduto (oltre i 10 minuti previsti)
         if (t.getScadenza().before(new java.util.Date())) {
-            dao.deleteByUsername(t.getUsername());
+            dao.deleteByUsername(u.getUsername());
+            session.removeAttribute("pending2FAUser");
             response.sendRedirect(request.getContextPath() + "/login?loginError=1");
             return;
         }
 
-        /* 🔥 IL MOMENTO DEL CLICK: L'utente ha confermato l'identità.
-           Aggiorniamo la scadenza di questo record sul DB a 30 giorni da adesso.
-           Grazie alla query ON DUPLICATE KEY UPDATE del tuo DAO, questo sovrascriverà il vecchio record.
-        */
+        // 1. AGGIORNA LA TABELLA DEI TOKEN (Estensione della validità a 30 giorni)
         long trentaGiorni = 30L * 24 * 60 * 60 * 1000;
         t.setScadenza(new Timestamp(System.currentTimeMillis() + trentaGiorni));
+        dao.save(t); // Fa l'ON DUPLICATE KEY UPDATE impostando la nuova scadenza a 30gg
 
-        // Salviamo l'aggiornamento sul DB
-        dao.save(t);
-
-        // Recuperiamo l'utente completo per metterlo in sessione
-        UtenteDAO utenteDAO = new UtenteDAO();
-        Utente u = utenteDAO.doRetrieveByUsername(t.getUsername());
-
-        // Loggiamo l'utente creando la sessione e il cookie nella scheda del browser in cui ha cliccato
-        HttpSession session = request.getSession();
-        session.setAttribute("username", t.getUsername());
+        // Pulizia della sessione temporanea e login definitivo dell'utente
+        session.removeAttribute("pending2FAUser");
+        session.setAttribute("username", u.getUsername());
         session.setAttribute("user", u);
 
-        // Generiamo anche qui il cookie persistente per mantenere l'utente loggato su questa scheda
+        // Creazione del cookie persistente per la sessione standard
         Cookie cookie = new Cookie("username", u.getUsername());
         cookie.setMaxAge(60 * 60 * 24 * 30);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
-        // Mandiamo l'utente direttamente alla home
-        response.sendRedirect(request.getContextPath() + "/home");
+        // 2. SMISTAMENTO ALLA HOME O DASHBOARD IN BASE AL RUOLO
+        if (u.isAdmin()) {
+            response.sendRedirect(request.getContextPath() + "/admin");
+        } else {
+            response.sendRedirect(request.getContextPath() + "/home");
+        }
     }
 }

@@ -18,9 +18,9 @@ body {
     color: white;
 }
 
-/* ========================================= */
+
 /* --- NAVBAR --- */
-/* ========================================= */
+
 .navbar {
     position: fixed;
     top: 0;
@@ -87,9 +87,7 @@ body {
 }
 
 
-/* =============================== */
 /* AUTH SECTION */
-/* =============================== */
 
 .auth-section {
     display: flex;
@@ -148,6 +146,15 @@ body {
     box-shadow: 0 0 10px rgba(86,205,206,0.3);
 }
 
+/* Specifico per il campo inserimento codice 2FA (Aggiunto) */
+.auth-box .code-input {
+    font-size: 22px;
+    text-align: center;
+    letter-spacing: 6px;
+    font-weight: bold;
+    color: #56cdce;
+}
+
 /* BUTTON */
 .auth-box button {
     width: 100%;
@@ -170,11 +177,28 @@ body {
     box-shadow: 0 5px 15px rgba(168,85,247,0.3);
 }
 
-/* LINK SWITCH */
+/* LINK SWITCH E TESTI */
 .auth-box p {
     margin-top: 15px;
     font-size: 14px;
     color: rgba(255,255,255,0.6);
+}
+
+/* Testo descrittivo interno al form 2FA (Aggiunto) */
+.auth-box .info-text {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 13px;
+    line-height: 1.4;
+    margin-bottom: 15px;
+}
+
+/* Gestione degli errori (Aggiunto) */
+.auth-box .error-text {
+    color: #ff6b6b; /* Rosso morbido per non contrastare male sul fondo scuro */
+    font-size: 13px;
+    margin-top: 4px;
+    margin-bottom: 8px;
+    display: block;
 }
 
 .auth-box a {
@@ -189,7 +213,7 @@ body {
 
 /* HIDE */
 .hidden {
-    display: none;
+    display: none !important;
 }
 
 /* RESPONSIVE */

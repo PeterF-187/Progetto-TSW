@@ -13,8 +13,9 @@ public class UtenteDAO {
 
         try (Connection con = ConPool.getConnection()) {
 
+            // 🔥 AGGIUNTO: is_admin nella SELECT
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT Username, Nome, Cognome, Email, Password, Data_di_nascita, Numero_di_telefono FROM Utente"
+                    "SELECT Username, Nome, Cognome, Email, Password, Data_di_nascita, Numero_di_telefono, is_admin FROM Utente"
             );
 
             ResultSet rs = ps.executeQuery();
@@ -28,6 +29,10 @@ public class UtenteDAO {
                 u.setPassword(rs.getString("Password"));
                 u.setData_di_nascita(rs.getDate("Data_di_nascita"));
                 u.setNumero(rs.getLong("Numero_di_telefono"));
+
+                // 🔥 AGGIUNTO: Settiamo il ruolo
+                u.setAdmin(rs.getBoolean("is_admin"));
+
                 utenti.add(u);
             }
 
@@ -59,6 +64,10 @@ public class UtenteDAO {
                 u.setPassword(rs.getString("Password")); // hash BCrypt
                 u.setData_di_nascita(rs.getDate("Data_di_nascita"));
                 u.setNumero(rs.getLong("Numero_di_telefono"));
+
+                // 🔥 AGGIUNTO: Settiamo il ruolo anche qui
+                u.setAdmin(rs.getBoolean("is_admin"));
+
                 return u;
             }
 
@@ -76,19 +85,14 @@ public class UtenteDAO {
         try (Connection con = ConPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
 
-
             ps.setString(1, nuovaPassword);
             ps.setString(2, username);
 
-
             int rows = ps.executeUpdate();
-
 
             return rows == 1;
 
-
         } catch (SQLException e) {
-
             throw new RuntimeException(
                     "Errore doUpdate password: " + e.getMessage(),
                     e
@@ -111,14 +115,12 @@ public class UtenteDAO {
             ps.setString(4, u.getEmail());
             ps.setString(5, u.getPassword());
 
-            // DATE sicura
             if (u.getData_di_nascita() != null) {
                 ps.setDate(6, new java.sql.Date(u.getData_di_nascita().getTime()));
             } else {
                 ps.setNull(6, Types.DATE);
             }
 
-            // TELEFONO più robusto
             if (u.getNumero() > 0) {
                 ps.setLong(7, u.getNumero());
             } else {

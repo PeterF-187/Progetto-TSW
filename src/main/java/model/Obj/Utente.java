@@ -11,6 +11,7 @@ public class Utente {
     private String Password;
     private Date Data_di_nascita;
     private long Numero_di_telefono;
+    private boolean is_admin;
 
     //getter
     public String getUsername() {
@@ -34,6 +35,9 @@ public class Utente {
     public long getNumero() {
         return Numero_di_telefono;
     }
+    public boolean isAdmin() {
+        return is_admin;
+    }
 
     //setter
     public void setUsername(String username) {
@@ -56,5 +60,9 @@ public class Utente {
     }
     public void setNumero(long numero) {
         Numero_di_telefono = numero;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.is_admin = admin;
     }
 }

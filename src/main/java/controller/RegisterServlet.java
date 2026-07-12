@@ -22,8 +22,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        request.getRequestDispatcher("/WEB-INF/views/auth.jsp")
-                .forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/auth.jsp").forward(request, response);
     }
 
     @Override
@@ -36,19 +35,44 @@ public class RegisterServlet extends HttpServlet {
             String cognome = request.getParameter("cognome");
             String email = request.getParameter("email");
             String password = request.getParameter("password");
-
             String dataNascitaStr = request.getParameter("data_nascita");
+            String telefonoStr = request.getParameter("telefono");
+
+            // 1. RIGIDO CONTROLLO LATO SERVER SUI CAMPI OBBLIGATORI VUOTI
+            if (username == null || username.trim().isEmpty() ||
+                    nome == null || nome.trim().isEmpty() ||
+                    cognome == null || cognome.trim().isEmpty() ||
+                    email == null || email.trim().isEmpty() ||
+                    password == null || password.trim().isEmpty() ||
+                    dataNascitaStr == null || dataNascitaStr.trim().isEmpty()) {
+
+                // Rimandiamo indietro l'utente segnalando un errore di campi obbligatori mancanti
+                response.sendRedirect(request.getContextPath() + "/register?registerError=2");
+                return;
+            }
+
+            // Pulizia spazi bianchi sui dati sensibili di testo
+            username = username.trim();
+            email = email.trim();
+
+            // Conversione sicura della data di nascita
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date dataNascita = sdf.parse(dataNascitaStr);
 
-            String telefonoStr = request.getParameter("telefono");
-            long numero = (telefonoStr != null && !telefonoStr.isEmpty())
-                    ? Long.parseLong(telefonoStr)
-                    : 0;
+            // Parsing sicuro e controllato per il numero di telefono opzionale
+            long numero = 0;
+            if (telefonoStr != null && !telefonoStr.trim().isEmpty()) {
+                try {
+                    numero = Long.parseLong(telefonoStr.trim());
+                } catch (NumberFormatException e) {
+                    System.err.println("Formato numero di telefono non valido in registrazione: " + telefonoStr);
+                    // Prosegue impostando il valore di default a 0 senza interrompere il processo
+                }
+            }
 
             UtenteDAO dao = new UtenteDAO();
 
-            // Controllo univocità dell'username (Rimanda correttamente alla Servlet, non alla JSP)
+            // Controllo univocità dell'username
             if (dao.existsByUsername(username)) {
                 response.sendRedirect(request.getContextPath() + "/register?registerError=1");
                 return;
@@ -59,35 +83,34 @@ public class RegisterServlet extends HttpServlet {
 
             Utente u = new Utente();
             u.setUsername(username);
-            u.setNome(nome);
-            u.setCognome(cognome);
+            u.setNome(nome.trim());
+            u.setCognome(cognome.trim());
             u.setEmail(email);
             u.setPassword(hashedPassword);
             u.setData_di_nascita(dataNascita);
             u.setNumero(numero);
 
-            // 1. Salvataggio del nuovo utente
+            // Salvataggio sul Database
             dao.doSave(u);
 
-            // 2. Inizializzazione e salvataggio automatico del Saldo Virtuale associato
+            // Inizializzazione automatica del Saldo Virtuale associato
             Saldo_virtualeDAO saldoDAO = new Saldo_virtualeDAO();
             Saldo_virtuale nuovoSaldo = new Saldo_virtuale();
 
-            nuovoSaldo.setUsername(username);            // Mappa su Username_account
+            nuovoSaldo.setUsername(username);
             nuovoSaldo.setValuta(valuta.EUR);
-            nuovoSaldo.setSaldo(new BigDecimal("0.00")); // Saldo iniziale a 0.00
-            nuovoSaldo.setStato(Stato_saldo.Disponibile); // Stato impostato su Disponibile
-            nuovoSaldo.setData(new Date());              // Data corrente della creazione (Data_ultimo_aggiornamento)
+            nuovoSaldo.setSaldo(new BigDecimal("0.00"));
+            nuovoSaldo.setStato(Stato_saldo.Disponibile);
+            nuovoSaldo.setData(new Date());
 
-            // Esegue la query INSERT corretta nel DB tramite il DAO corretto
             saldoDAO.doSave(nuovoSaldo);
 
-            // 3. Gestione della sessione utente
+            // Apertura e gestione della sessione utente
             HttpSession session = request.getSession();
             session.setAttribute("username", u.getUsername());
             session.setAttribute("user", u);
 
-            // 4. Configurazione Cookie di autenticazione
+            // Generazione del Cookie di autenticazione persistente
             Cookie cookie = new Cookie("username", u.getUsername());
             cookie.setMaxAge(60 * 60 * 24 * 30);
             cookie.setPath("/");
@@ -95,12 +118,15 @@ public class RegisterServlet extends HttpServlet {
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
 
-            // Reindirizzamento alla Home a processo completato
+            // Successo: Accesso alla Home Page
             response.sendRedirect(request.getContextPath() + "/home");
 
         } catch (Exception e) {
+            System.err.println("Errore imprevisto intercettato in RegisterServlet: " + e.getMessage());
             e.printStackTrace();
-            throw new ServletException(e);
+            // ❌ RIMOSSO IL THROW SERVLETEXCEPTION (Evita la schermata d'errore nativa di Tomcat)
+            // Reindirizziamo l'utente in sicurezza mostrando una notifica di errore generico controllato
+            response.sendRedirect(request.getContextPath() + "/register?registerError=3");
         }
     }
 }

@@ -27,40 +27,33 @@ public class CarrelloServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // 🔥 Disabilita cache per evitare problemi con il tasto "Indietro" del browser
         response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
         response.setHeader("Pragma", "no-cache");
         response.setDateHeader("Expires", 0);
 
         HttpSession session = request.getSession();
 
-        // Recupera il carrello in modo sicuro
         List<Videogioco> carrello = (List<Videogioco>) session.getAttribute("carrello_oggetti");
         if (carrello == null) {
             carrello = new ArrayList<>();
         }
 
-        // Calcolo del prezzo totale dell'ordine
         BigDecimal totale = carrello.stream()
                 .map(Videogioco::getPrezzo)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        // Controllo utente loggato
         String sessionUser = (String) session.getAttribute("username");
         if (sessionUser != null) {
             String username = sessionUser.trim();
 
-            // 1. Gestione del Saldo Virtuale
             Saldo_virtuale saldoUtente = saldoDAO.doRetrieveByUsername(username);
             request.setAttribute("saldoUtente", saldoUtente);
 
-            // 2. Controllo Stato del Conto (Sospeso o Bloccato)
             if (saldoUtente != null && (saldoUtente.getStato() == Stato_saldo.Sospeso || saldoUtente.getStato() == Stato_saldo.Bloccato)) {
                 request.setAttribute("checkoutDisabilitato", true);
                 request.setAttribute("motivoBlocco", "Il tuo saldo virtuale è attualmente " + saldoUtente.getStato().name().toLowerCase() + ".");
             }
 
-            // 3. Gestione Metodo di Pagamento dell'utente
             List<Metodo_pagamento> tuttiIMetodi = metodoDAO.doRetrieveAll();
             Metodo_pagamento metodoUtente = null;
 
@@ -71,12 +64,10 @@ public class CarrelloServlet extends HttpServlet {
                         .orElse(null);
             }
 
-            // Se l'utente non ha metodi o il metodo è impostato su 'Da_configurare', forziamo la riconfigurazione
             boolean daConfigurare = (metodoUtente == null || metodoUtente.getTipoMetodo() == TipoMetodo.Da_configurare);
             request.setAttribute("metodoDaConfigurare", daConfigurare);
         }
 
-        // Passaggio degli attributi alla JSP
         request.setAttribute("prodottiCarrello", carrello);
         request.setAttribute("prezzoTotale", totale);
 
@@ -96,23 +87,27 @@ public class CarrelloServlet extends HttpServlet {
         String idProdottoStr = request.getParameter("idProdotto");
         String action = request.getParameter("action");
 
-        if (idProdottoStr != null && !idProdottoStr.isEmpty()) {
-            int idProdotto = Integer.parseInt(idProdottoStr);
+        if (idProdottoStr != null && !idProdottoStr.trim().isEmpty()) {
+            try {
+                // Protetti da NumberFormatException tramite blocco di cattura mirato
+                int idProdotto = Integer.parseInt(idProdottoStr.trim());
 
-            if ("remove".equals(action)) {
-                // Rimuove solo la prima corrispondenza trovata dell'oggetto (evita di svuotare duplicati dello stesso gioco)
-                for (int i = 0; i < carrello.size(); i++) {
-                    if (carrello.get(i).getId_prodotto() == idProdotto) {
-                        carrello.remove(i);
-                        break;
+                if ("remove".equals(action)) {
+                    for (int i = 0; i < carrello.size(); i++) {
+                        if (carrello.get(i).getId_prodotto() == idProdotto) {
+                            carrello.remove(i);
+                            break;
+                        }
+                    }
+                } else {
+                    Videogioco v = videogiocoDAO.doRetrieveById(idProdotto);
+                    if (v != null) {
+                        carrello.add(v);
                     }
                 }
-            } else {
-                // Aggiunta di un gioco al carrello
-                Videogioco v = videogiocoDAO.doRetrieveById(idProdotto);
-                if (v != null) {
-                    carrello.add(v);
-                }
+            } catch (NumberFormatException e) {
+                System.err.println("Tentativo di inserimento ID prodotto non valido rintracciato: " + idProdottoStr);
+                // Impedisce il crash rimandando l'utente alla schermata iniziale del carrello
             }
         }
 

@@ -10,8 +10,7 @@ public class EmailService {
     private final String mittente = "gameorbit.noreplay@gmail.com";
     private final String password = "irejjkodhfptqgrn";
 
-    // Aggiungi il parametro HttpServletRequest al metodo
-    public void send2FAEmail(HttpServletRequest request, String destinatario, String token)
+    public void send2FAEmail(HttpServletRequest request, String destinatario, String codice)
             throws MessagingException {
 
         Properties props = new Properties();
@@ -30,24 +29,15 @@ public class EmailService {
         Message message = new MimeMessage(session);
         message.setFrom(new InternetAddress(mittente));
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
-        message.setSubject("Conferma accesso account");
-
-        /* 🔥 RE-INDIRIZZAMENTO DINAMICO CORRETTO:
-           Costruisce l'URL prendendo esattamente il protocollo (http/https) e la porta corretta del tuo server locale
-        */
-        String schema = request.getScheme();             // http o https
-        String nomeServer = request.getServerName();     // localhost
-        int portaServer = request.getServerPort();       // 8080 o 8443
-        String contesto = request.getContextPath();      // /Progetto_war_exploded
-
-        String baseURLLink = schema + "://" + nomeServer + ":" + portaServer + contesto + "/verify2fa?token=" + token;
+        message.setSubject("Codice di verifica 2FA");
 
         String html = "<h2>Nuovo accesso rilevato</h2>"
-                + "<p>Se sei stato tu a effettuare l'accesso, clicca sul pulsante qui sotto per confermare il dispositivo:</p>"
-                + "<a href=\"" + baseURLLink + "\" style=\"display: inline-block; background: #a855f7; color: white; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold;\">"
-                + "SONO IO"
-                + "</a>"
-                + "<p style=\"color: gray; font-size: 12px; margin-top: 15px;\">Questo link scadrà tra 10 minuti.</p>";
+                + "<p>Inserisci il seguente codice di verifica nella pagina di login per completare l'accesso:</p>"
+                + "<div style=\"display: inline-block; background: #f3f4f6; color: #a855f7; padding: 15px 30px; "
+                + "font-size: 24px; font-weight: bold; letter-spacing: 5px; border-radius: 8px; border: 1px solid #e5e7eb;\">"
+                + codice
+                + "</div>"
+                + "<p style=\"color: gray; font-size: 12px; margin-top: 15px;\">Questo codice scadrà tra 10 minuti.</p>";
 
         message.setContent(html, "text/html; charset=UTF-8");
         Transport.send(message);
