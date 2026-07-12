@@ -160,7 +160,7 @@
         <div class="footer-column">
             <h3>Assistenza</h3>
             <ul>
-                <li><a href="${pageContext.request.contextPath}/Howto">Come acquistare</a></li>
+                <li><a href="${pageContext.request.contextPath}/HowTo">Come acquistare</a></li>
                 <li><a href="${pageContext.request.contextPath}/FAQ">FAQ</a></li>
                 <li><a href="${pageContext.request.contextPath}/PReso">Politica di reso</a></li>
                 <li><a href="#">Crea ticket</a></li>
