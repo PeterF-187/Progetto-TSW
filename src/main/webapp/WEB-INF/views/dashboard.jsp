@@ -226,9 +226,118 @@
         </section>
 
         <!-- Ticket -->
-        <section id="ticket" class="dashboard-section hidden">
-            <h1>I tuoi Ticket</h1>
-            <p>Sezione in lavorazione...</p>
+        <section id="ticket" class="dashboard-section sezione-dashboard hidden">
+            <h1 class="titolo-sezione">Assistenza e Ticket</h1>
+
+            <!-- Form Nuovo Ticket -->
+            <div class="scatola-gestione scatola-ticket">
+                <h3 class="titolo-sottosezione">
+                    <i class="fa-solid fa-envelope-open-text icona-sezione"></i>
+                    Apri Nuovo Ticket
+                </h3>
+
+                <form action="${pageContext.request.contextPath}/inviaTicket" method="POST" class="modulo-amministrazione">
+                    <div class="riga-modulo-doppia">
+                        <div class="gruppo-modulo">
+                            <label class="etichetta-gruppo" for="selettoreTipoTicket">
+                                Tipo di Problema
+                            </label>
+                            <select name="tipoTicket" id="selettoreTipoTicket" class="selettore-personalizzato" required onchange="gestisciMenuProdotti()">
+                                <option value="" disabled selected>-- Seleziona una categoria --</option>
+                                <option value="generico">Domanda Generica</option>
+                                <option value="Account">Problemi con l'Account</option>
+                                <option value="acquisto">Problemi con un Acquisto</option>
+                            </select>
+                        </div>
+
+                        <!-- 🔥 MODIFICATO: Cambiato da "hidden" a "nascosto" per allinearsi al JS inline e al CSS -->
+                        <div class="gruppo-modulo nascosto" id="divSelezioneProdotto">
+                            <label class="etichetta-gruppo" for="idProdottoTicket">
+                                Relativo al Gioco
+                            </label>
+                            <select name="idProdottoTicket" id="idProdottoTicket" class="selettore-personalizzato">
+                                <option value="" disabled selected>-- Seleziona il gioco --</option>
+                                <c:forEach var="gioco" items="${acquistiUtente}">
+                                    <option value="${gioco.id_prodotto}">${gioco.titolo}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="gruppo-modulo">
+                        <label class="etichetta-gruppo" for="ticketMotivazione">
+                            Descrivi il problema
+                        </label>
+                        <textarea id="ticketMotivazione" name="motivazione" rows="4" class="input-testo-personalizzato textarea-ticket" placeholder="Spiega nel dettaglio di cosa hai bisogno..." required></textarea>
+                    </div>
+
+                    <div class="azioni-modulo">
+                        <button type="submit" class="pulsante-invia">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            Invia Ticket all'Assistenza
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Script in linea per il toggle del prodotto -->
+                <script>
+                    function gestisciMenuProdotti() {
+                        var selettore = document.getElementById("selettoreTipoTicket");
+                        var divProdotto = document.getElementById("divSelezioneProdotto");
+                        var inputProdotto = document.getElementById("idProdottoTicket");
+
+                        // 🔥 MODIFICATO: Ora rimuove e aggiunge coerentemente la classe "nascosto"
+                        if (selettore.value === "acquisto") {
+                            divProdotto.classList.remove("nascosto");
+                            inputProdotto.required = true;
+                        } else {
+                            divProdotto.classList.add("nascosto");
+                            inputProdotto.required = false;
+                            inputProdotto.value = "";
+                        }
+                    }
+                </script>
+            </div>
+
+            <!-- Storico Ticket -->
+            <div class="scatola-gestione">
+                <h3 class="titolo-sottosezione">
+                    <i class="fa-solid fa-clock-rotate-left icona-sezione"></i>
+                    I tuoi Ticket
+                </h3>
+                <c:choose>
+                    <c:when test="${empty ticketUtente}">
+                        <p class="descrizione-sezione">
+                            Non hai ancora aperto nessun ticket di assistenza.
+                        </p>
+                    </c:when>
+                    <c:otherwise>
+                        <div class="lista-ticket-contenitore">
+                            <c:forEach var="t" items="${ticketUtente}">
+                                <article class="scheda-ticket">
+                                    <div class="intestazione-ticket">
+                                        <span class="tipo-ticket">${t.tipo}</span>
+                                        <span class="data-ticket">
+                                    <fmt:formatDate value="${t.data}" pattern="dd/MM/yyyy"/>
+                                </span>
+                                        <c:choose>
+                                            <c:when test="${t.stato == 'Aperto'}">
+                                                <span class="etichetta-stato ticket-aperto">Aperto</span>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <span class="etichetta-stato ticket-chiuso">Chiuso</span>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                    <div class="corpo-ticket">
+                                        <p>${t.motivazione}</p>
+                                    </div>
+                                </article>
+                            </c:forEach>
+                        </div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </section>
     </main>
 </div>

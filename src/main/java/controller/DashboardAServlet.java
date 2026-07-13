@@ -1,13 +1,19 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
 import model.DAO.UtenteDAO;
 import model.DAO.ImpostazioniDAO;
+import model.DAO.TicketDAO;
 import model.Obj.Utente;
 import model.Obj.ImpostazioniUtente;
+import model.Obj.Ticket;
+import model.Obj.Stato;
 
 @WebServlet(name = "DashboardA", value = "/dashboardA")
 public class DashboardAServlet extends HttpServlet {
@@ -29,9 +35,10 @@ public class DashboardAServlet extends HttpServlet {
         System.out.println("===== DASHBOARD ADMIN =====");
         System.out.println("Username sessione: " + username);
 
-        // Inizializzazione dei soli DAO necessari per la Dashboard Admin
+        // Inizializzazione dei DAO necessari
         UtenteDAO utenteDAO = new UtenteDAO();
         ImpostazioniDAO impostazioniDAO = new ImpostazioniDAO();
+        TicketDAO ticketDAO = new TicketDAO();
 
         /* UTENTE */
         Utente utente = utenteDAO.doRetrieveByUsername(username);
@@ -49,14 +56,34 @@ public class DashboardAServlet extends HttpServlet {
             System.out.println("2FA attiva per l'Admin: " + impostazioni.isDueFattori());
         }
 
+        /* GESTIONE E SMISTAMENTO TICKET GLOBALI */
+        List<Ticket> tuttiITicket = ticketDAO.doRetrieveAll();
+        List<Ticket> ticketAperti = new ArrayList<>();
+        List<Ticket> ticketChiusi = new ArrayList<>();
+
+        if (tuttiITicket != null) {
+            for (Ticket t : tuttiITicket) {
+                if (t.getStato() == Stato.Aperto) {
+                    ticketAperti.add(t);
+                } else {
+                    ticketChiusi.add(t);
+                }
+            }
+        }
+
+        System.out.println("Ticket aperti contati: " + ticketAperti.size());
+        System.out.println("Ticket chiusi contati: " + ticketChiusi.size());
+
         /* ATTRIBUTI RICHIESTI DA dashboardA.jsp */
         request.setAttribute("utente", utente);
         request.setAttribute("impostazioni", impostazioni);
+        request.setAttribute("ticketAperti", ticketAperti);  // Fornisce l'elenco delle pratiche da risolvere
+        request.setAttribute("ticketChiusi", ticketChiusi);  // Fornisce l'elenco dello storico d'archivio
 
         System.out.println("Forward verso dashboardA.jsp");
         System.out.println("============================");
 
-        // Reindirizzamento alla nuova pagina jsp degli Admin
+        // Reindirizzamento alla pagina jsp degli Admin
         request.getRequestDispatcher("/WEB-INF/views/dashboardA.jsp").forward(request, response);
     }
 }

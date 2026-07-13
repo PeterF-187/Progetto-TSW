@@ -16,9 +16,9 @@ body {
     color: white;
 }
 
-
-/* --- NAVBAR --- */
-
+/* ========================================= */
+/* --- BARRA DI NAVIGAZIONE (NAVBAR) --- */
+/* ========================================= */
 .navbar {
     position: fixed;
     top: 0;
@@ -36,7 +36,6 @@ body {
     border-bottom: 1px solid rgba(163, 126, 215, 0.2);
 }
 
-/* --- LOGO --- */
 .titolo {
     text-decoration: none;
     font-size: 32px;
@@ -74,9 +73,9 @@ body {
     transform: translateY(-3px);
 }
 
-
+/* ========================================= */
 /* --- LAYOUT STRUTTURALE GLOBALE --- */
-
+/* ========================================= */
 .hidden {
     display: none !important;
 }
@@ -91,15 +90,19 @@ body {
     width: 100%;
 }
 
-/* --- TITOLI GLOBALI COERENTI --- */
-.section-title {
+/* ========================================= */
+/* --- TITOLI E TESTI GLOBALI --- */
+/* ========================================= */
+.section-title,
+.titolo-sezione {
     font-size: 42px;
     margin-bottom: 30px;
     color: #ffffff;
     font-weight: 700;
 }
 
-.subsection-title {
+.subsection-title,
+.titolo-sottosezione {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -109,25 +112,31 @@ body {
     font-weight: 600;
 }
 
-.subsection-title i {
+.subsection-title i,
+.titolo-sottosezione i {
     font-size: 22px;
 }
 
-/* Icone specifiche dei Ticket (Neon e Viola) */
-.subsection-title .fa-folder-open { color: #56cdce; }
-.subsection-title .fa-folder-closed { color: #a37ed7; }
+.subsection-title .fa-folder-open {
+    color: #56cdce;
+}
 
-.section-description {
+.subsection-title .fa-folder-closed {
+    color: #a37ed7;
+}
+
+.section-description,
+.descrizione-sezione {
     color: rgba(255, 255, 255, 0.65);
     line-height: 1.5;
     max-width: 650px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-size: 14px;
 }
 
-
-/* --- SIDEBAR --- */
-
+/* ========================================= */
+/* --- BARRA LATERALE (SIDEBAR) --- */
+/* ========================================= */
 .sidebar {
     width: 260px;
     min-width: 260px;
@@ -170,9 +179,9 @@ body {
     box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
 }
 
-
-/* --- CONTENUTO PRINCIPALE --- */
-
+/* ========================================= */
+/* --- CONTENUTO PRINCIPALE E PANNELLI --- */
+/* ========================================= */
 .main-content {
     flex: 1;
     min-width: 0;
@@ -180,7 +189,8 @@ body {
     flex-direction: column;
 }
 
-.panoramica-box {
+.panoramica-box,
+.box-gestione {
     background: rgba(35, 40, 48, 0.4);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -192,19 +202,12 @@ body {
     box-sizing: border-box;
 }
 
-/* Testo segnaposto per liste vuote (es. Ticket) */
 .panoramica-box p {
     font-style: italic;
     color: rgba(255, 255, 255, 0.5);
     font-size: 14px;
 }
 
-/* Separazione logica tra i blocchi ticket */
-.panoramica-box .subsection-title:not(:first-of-type) {
-    margin-top: 35px;
-}
-
-/* --- DETTAGLI UTENTE / CAMPI INPUT --- */
 .info-utente {
     display: flex;
     flex-direction: column;
@@ -228,9 +231,99 @@ body {
     margin-right: 6px;
 }
 
+/* ========================================= */
+/* --- COSTRUZIONE MODULI (FORM) --- */
+/* ========================================= */
+.modulo-amministrazione,
+.form-impostazioni {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
 
-/* --- SEZIONE IMPOSTAZIONI --- */
+.riga-modulo-doppia {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+}
 
+.gruppo-modulo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.etichetta-gruppo {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.selettore-personalizzato,
+.input-testo-personalizzato,
+.select-personalizzata-impostazioni {
+    width: 100%;
+    padding: 14px 20px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 15px;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.selettore-personalizzato:focus,
+.input-testo-personalizzato:focus,
+.select-personalizzata-impostazioni:focus {
+    border-color: #56cdce;
+    box-shadow: 0 0 12px rgba(86, 205, 206, 0.25);
+}
+
+.selettore-personalizzato option,
+.select-personalizzata-impostazioni option {
+    background: #232830;
+    color: white;
+}
+
+.textarea-ticket {
+    resize: vertical;
+    min-height: 110px;
+    font-family: inherit;
+}
+
+.pulsante-invia,
+.btn-invia-impostazioni,
+.btn-invia-linea-impostazioni {
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(90deg, #56cdce, #a855f7);
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    border-radius: 10px;
+    padding: 14px 30px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.pulsante-invia:hover,
+.btn-invia-impostazioni:hover,
+.btn-invia-linea-impostazioni:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.35);
+}
+
+/* ========================================= */
+/* --- COMPONENTI SEZIONE IMPOSTAZIONI --- */
+/* ========================================= */
 .contenitore-impostazioni {
     background: rgba(35, 40, 48, 0.4);
     backdrop-filter: blur(15px);
@@ -258,25 +351,6 @@ body {
     box-shadow: 0 10px 25px rgba(86, 205, 206, 0.08);
 }
 
-.icona-sezione {
-    color: #56cdce;
-    font-size: 22px;
-}
-
-.form-impostazioni {
-    margin-top: 25px;
-    max-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.input-fullwidth {
-    max-width: 100%;
-    background: rgba(255, 255, 255, 0.04);
-    color: #ffffff;
-}
-
 .form-impostazioni input:focus {
     outline: none;
     border-color: #56cdce;
@@ -292,68 +366,206 @@ body {
     gap: 15px;
 }
 
-.select-personalizzata-impostazioni {
-    appearance: none;
-    -webkit-appearance: none;
-    cursor: pointer;
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-    padding: 14px 20px;
-    min-width: 250px;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.select-personalizzata-impostazioni:focus {
-    outline: none;
-    border-color: #a855f7;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
-}
-
-.select-personalizzata-impostazioni option {
-    background: #232830;
-    color: white;
-}
-
-.btn-invia-impostazioni,
-.btn-invia-linea-impostazioni {
-    border: none;
-    cursor: pointer;
-    background: linear-gradient(90deg, #56cdce, #a855f7);
-    color: white;
-    font-weight: bold;
-    font-size: 15px;
-    border-radius: 10px;
-    padding: 14px 30px;
-    transition: transform .25s ease, box-shadow .25s ease;
-}
-
-.btn-invia-impostazioni:hover,
-.btn-invia-linea-impostazioni:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(168, 85, 247, 0.35);
-}
-
 .divisore-impostazioni {
     margin: 10px 0;
     border: 0;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* --- NOTIFICHE SCRIPT --- */
+/* ========================================= */
+/* --- STRUTTURA LOGISTICA TICKET ASSISTENZA --- */
+/* ========================================= */
+.lista-ticket-contenitore {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.lista-ticket-contenitore.aperti-admin {
+    max-height: none;
+    overflow: visible;
+}
+
+.lista-ticket-contenitore::-webkit-scrollbar {
+    width: 4px;
+}
+
+.lista-ticket-contenitore::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.3);
+    border-radius: 4px;
+}
+
+.scheda-ticket {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 18px 22px;
+    transition: transform 0.2s, background 0.2s;
+}
+
+.scheda-ticket:hover {
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateX(4px);
+}
+
+.scheda-ticket.aperto-admin {
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.scheda-ticket.chiuso-admin {
+    opacity: 0.65;
+}
+
+.intestazione-ticket {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
+}
+
+.tipo-ticket {
+    color: #56cdce;
+    font-weight: bold;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.tipo-ticket.chiuso {
+    color: gray;
+}
+
+.data-ticket {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+/* Dettagli dello storico dei ticket chiusi */
+.corpo-ticket-storico {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 5px;
+}
+
+.messaggio-originale-utente strong,
+.risposta-ufficiale-admin strong {
+    font-size: 13px;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.messaggio-originale-utente strong {
+    color: #56cdce;
+}
+
+.messaggio-originale-utente p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.risposta-ufficiale-admin {
+    background: rgba(168, 85, 247, 0.05);
+    border-left: 3px solid #a37ed7;
+    padding: 10px 15px;
+    border-radius: 0 8px 8px 0;
+}
+
+.risposta-ufficiale-admin strong {
+    color: #a37ed7;
+}
+
+.risposta-ufficiale-admin p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.corpo-ticket.admin {
+    margin-bottom: 20px;
+    padding: 10px 5px;
+}
+
+.corpo-ticket.admin p {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.modulo-amministrazione.modulo-ticket-admin {
+    max-width: 100%;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 20px;
+}
+
+.azioni-modulo.admin-ticket {
+    margin-top: 10px;
+}
+
+.titolo-sottosezione.sezione-chiusi {
+    margin-top: 50px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 30px;
+}
+
+/* --- BADGE STATO TICKET --- */
+.etichetta-stato {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    margin-left: auto;
+}
+
+.ticket-aperto {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.ticket-chiuso {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* ========================================= */
+/* --- GESTIONE NOTIFICHE E MESSAGGI --- */
+/* ========================================= */
 .box-notifica {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    font-size: 15px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     animation: comparsaNotifica .35s ease forwards;
 }
 
-@keyframes comparsaNotifica {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
+.notifica-successo {
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid #22c55e;
+    color: #22c55e;
 }
 
+.notifica-errore {
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid #ef4444;
+    color: #ef4444;
+}
 
-/* --- PULSANTE DI LOGOUT --- */
-
+/* ========================================= */
+/* --- SISTEMA DI LOGOUT E UTILITY --- */
+/* ========================================= */
 .logout-wrapper {
     margin-top: 45px;
     display: flex;
@@ -384,17 +596,26 @@ body {
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
 }
 
-
-/* --- FOOTER --- */
-
+/* ========================================= */
+/* --- PIÈ DI PAGINA (FOOTER) --- */
+/* ========================================= */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
-    padding: 60px 40px 20px;
+    padding: 40px;
     margin-top: 50px;
+    width: 100%;
 }
 
+.footer-bottom {
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+}
 
+/* ========================================= */
+/* --- ADATTAMENTO MULTI-SCHERMO (MEDIA) --- */
+/* ========================================= */
 @media (max-width: 900px) {
     .dashboard-container {
         flex-direction: column;
@@ -412,18 +633,25 @@ body {
 }
 
 @media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
+    .riga-modulo-doppia {
+        grid-template-columns: 1fr;
+        gap: 16px;
     }
 
-    .social-icons {
-        justify-content: center;
+    .intestazione-ticket {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .etichetta-stato {
+        margin-left: 0;
     }
 }
 
-@media(max-width: 700px){
-    .contenitore-impostazioni, .scheda-impostazioni {
+@media(max-width: 700px) {
+    .contenitore-impostazioni,
+    .scheda-impostazioni,
+    .box-gestione {
         padding: 20px;
     }
 
@@ -432,9 +660,7 @@ body {
         align-items: stretch;
     }
 
-    .select-personalizzata-impostazioni,
-    .btn-invia-linea-impostazioni,
-    .btn-invia-impostazioni {
+    .select-personalizzata-impostazioni {
         max-width: 100%;
         width: 100%;
     }

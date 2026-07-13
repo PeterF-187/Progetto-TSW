@@ -5,7 +5,7 @@
 <html lang="it">
 <head>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboardA.css">
   <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
   <title>Dashboard Admin - GameOrbit</title>
 </head>
@@ -115,23 +115,110 @@
       </div>
     </section>
 
-    <!-- Ticket -->
-    <section id="ticket" class="dashboard-section hidden">
-      <h1 class="section-title">Pannello Gestione Ticket</h1>
+    <!-- Ticket Admin -->
+    <section id="ticket" class="dashboard-section sezione-dashboard hidden">
+      <h1 class="titolo-sezione">Pannello Gestione Ticket</h1>
 
-      <div class="panoramica-box">
-        <!-- Sotto-sezione Ticket Aperti -->
-        <h2 class="subsection-title">
-          <i class="fa-solid fa-folder-open"></i> Ticket Aperti
+      <div class="box-gestione">
+        <!-- 1. Sotto-sezione Ticket Aperti -->
+        <h2 class="titolo-sottosezione">
+          <i class="fa-solid fa-folder-open"></i> Ticket Aperti (In Attesa)
         </h2>
-        <p>Nessun ticket da gestire al momento.</p>
 
-        <!-- Sotto-sezione Ticket Chiusi -->
-        <h2 class="subsection-title">
-          <i class="fa-solid fa-folder-closed"></i> Ticket Chiusi
+        <c:choose>
+          <c:when test="${empty ticketAperti}">
+            <p class="descrizione-sezione">Nessun ticket da gestire al momento.</p>
+          </c:when>
+          <c:otherwise>
+            <div class="lista-ticket-contenitore aperti-admin">
+              <c:forEach var="t" items="${ticketAperti}">
+                <article class="scheda-ticket aperto-admin">
+                  <div class="intestazione-ticket">
+                    <span class="tipo-ticket">[${t.tipo}]</span>
+                    <span class="data-ticket">
+                  Aperto da: <strong><c:out value="${t.username}"/></strong> in data:
+                  <fmt:formatDate value="${t.data}" pattern="dd/MM/yyyy"/>
+                </span>
+                    <span class="etichetta-stato ticket-aperto">Aperto</span>
+                  </div>
+
+                  <div class="corpo-ticket admin">
+                    <p>
+                      <strong>Messaggio Utente:</strong><br>
+                      <c:out value="${t.motivazione}"/>
+                    </p>
+                  </div>
+
+                  <!-- Modulo di evasione e risposta via email -->
+                  <form action="${pageContext.request.contextPath}/rispondiTicket" method="POST" class="modulo-amministrazione modulo-ticket-admin">
+                    <input type="hidden" name="idTicket" value="${t.id_Ticket}">
+
+                    <div class="riga-modulo-doppia">
+                      <div class="gruppo-modulo">
+                        <label class="etichetta-gruppo">Testo della Risposta da inviare via Mail:</label>
+                        <textarea name="rispostaAdmin" rows="3" class="input-testo-personalizzato textarea-ticket" placeholder="Scrivi qui le istruzioni o la risoluzione per l'utente..." required></textarea>
+                      </div>
+                      <div class="gruppo-modulo">
+                        <label class="etichetta-gruppo">Cambia Stato Pratica:</label>
+                        <select name="nuovoStato" class="selettore-personalizzato" required>
+                          <option value="Aperto">Lascia in gestione (Rimani Aperto)</option>
+                          <option value="Chiuso">Risolto (Invia mail e Chiudi Ticket)</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="azioni-modulo admin-ticket">
+                      <button type="submit" class="pulsante-invia">
+                        <i class="fa-solid fa-reply"></i> Spedisci Risposta all'Utente
+                      </button>
+                    </div>
+                  </form>
+                </article>
+              </c:forEach>
+            </div>
+          </c:otherwise>
+        </c:choose>
+
+        <!-- 2. Sotto-sezione Ticket Chiusi -->
+        <h2 class="titolo-sottosezione sezione-chiusi">
+          <i class="fa-solid fa-folder-closed"></i> Storico Ticket Chiusi
         </h2>
-        <p>Storico dei ticket vuoto.</p>
-      </div>
+
+        <c:choose>
+        <c:when test="${empty ticketChiusi}">
+        <p class="descrizione-sezione">Storico dei ticket vuoto.</p>
+        </c:when>
+        <c:otherwise>
+        <div class="lista-ticket-contenitore">
+          <c:forEach var="t" items="${ticketChiusi}">
+            <article class="scheda-ticket chiuso-admin">
+
+              <div class="intestazione-ticket">
+                <span class="tipo-ticket chiuso">[${t.tipo}]</span>
+                <span class="data-ticket">
+              Gestito per: <strong><c:out value="${t.username}"/></strong> -
+              <fmt:formatDate value="${t.data}" pattern="dd/MM/yyyy"/>
+            </span>
+                <span class="etichetta-stato ticket-chiuso">Chiuso</span>
+              </div>
+
+              <div class="corpo-ticket-storico">
+                <div class="messaggio-originale-utente">
+                  <strong>Richiesta dell'utente:</strong>
+                  <p><c:out value="${t.motivazione}"/></p>
+                </div>
+
+                <div class="risposta-ufficiale-admin">
+                  <strong>Risolto da: <c:out value="${t.usernameAdmin}"/></strong>
+                  <p><c:out value="${t.rispostaAdmin}"/></p>
+                </div>
+              </div>
+
+            </article>
+          </c:forEach>
+        </div>
+        </c:otherwise>
+        </c:choose>
     </section>
 
   </main>

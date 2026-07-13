@@ -594,7 +594,6 @@ body {
 
 /* --- Impostazioni --- */
 
-/* --- CONTENITORE PRINCIPALE --- */
 .contenitore-impostazioni {
     background: rgba(35, 40, 48, 0.4);
     backdrop-filter: blur(15px);
@@ -770,9 +769,264 @@ body {
     }
 }
 
+/* ==========================================================================
+   SEZIONE TICKET & ASSISTENZA (Struttura, Form e Liste)
+   ========================================================================== */
 
-/* --- Ticket --- */
+/* Utility di visibilità */
+.nascosto {
+    display: none !important;
+}
 
+/* Contenitore principale della sezione */
+.sezione-dashboard {
+    padding: 20px;
+    color: #ffffff;
+}
+
+.titolo-sezione {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 28px;
+    color: #ffffff;
+}
+
+/* Scatola di gestione (Card bianche trasparenti sul tema scuro) */
+.scatola-gestione {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+.titolo-sottosezione {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+}
+
+.icona-sezione {
+    color: #56cdce; /* Cyan coordinato al tuo stile */
+}
+
+/* ---------- Form e Input ---------- */
+
+.modulo-amministrazione {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.riga-modulo-doppia {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.gruppo-modulo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.etichetta-gruppo {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.7),
+}
+
+/* Stile comune per Select e Textarea */
+.selettore-personalizzato,
+.input-testo-personalizzato {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.selettore-personalizzato:focus,
+.input-testo-personalizzato:focus {
+    outline: none;
+    border-color: rgba(168, 85, 247, 0.8); /* Purple focus */
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.25);
+}
+
+/* Select option styling base */
+.selettore-personalizzato option {
+    background: #1e1e24; /* Sfondo scuro per le opzioni del menu a tendina */
+    color: #ffffff;
+}
+
+.textarea-ticket {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* Bottone di invio */
+.azioni-modulo {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.pulsante-invia {
+    background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.pulsante-invia:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+}
+
+.pulsante-invia:active {
+    transform: translateY(0);
+}
+
+/* ---------- Lista Storico Ticket ---------- */
+
+.descrizione-sezione {
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+.lista-ticket-contenitore {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    max-height: 450px;
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Scrollbar Personalizzata */
+.lista-ticket-contenitore::-webkit-scrollbar {
+    width: 6px;
+}
+.lista-ticket-contenitore::-webkit-scrollbar-track {
+    background: transparent;
+}
+.lista-ticket-contenitore::-webkit-scrollbar-thumb {
+    background: rgba(168, 85, 247, 0.35);
+    border-radius: 20px;
+}
+.lista-ticket-contenitore::-webkit-scrollbar-thumb:hover {
+    background: rgba(168, 85, 247, 0.6);
+}
+
+/* Singola Scheda Ticket */
+.scheda-ticket {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    padding: 18px 22px;
+    transition: transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+
+.scheda-ticket:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(168, 85, 247, 0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,.25);
+}
+
+.intestazione-ticket {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.tipo-ticket {
+    color: #56cdce;
+    font-size: .85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+}
+
+.data-ticket {
+    color: rgba(255,255,255,.55);
+    font-size: .85rem;
+}
+
+.intestazione-ticket .etichetta-stato {
+    margin-left: auto;
+}
+
+.corpo-ticket p {
+    margin: 0;
+    color: rgba(255,255,255,.88);
+    font-size: .95rem;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Badge di Stato */
+.etichetta-stato {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .3px;
+}
+
+.ticket-aperto {
+    background: rgba(34,197,94,.18);
+    color: #67e58d;
+    border: 1px solid rgba(34,197,94,.35);
+}
+
+.ticket-chiuso {
+    background: rgba(239,68,68,.18);
+    color: #ff8a8a;
+    border: 1px solid rgba(239,68,68,.35);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .riga-modulo-doppia {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .intestazione-ticket {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .intestazione-ticket .etichetta-stato {
+        margin-left: 0;
+    }
+    .scheda-ticket {
+        padding: 16px;
+    }
+}
 
 /* --- FOOTER --- */
 .footer {

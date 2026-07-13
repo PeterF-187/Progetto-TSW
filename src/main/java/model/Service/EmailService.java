@@ -42,4 +42,43 @@ public class EmailService {
         message.setContent(html, "text/html; charset=UTF-8");
         Transport.send(message);
     }
+
+    public void sendTicketReplyEmail(String destinatario, int idTicket, String richiestaUtente, String rispostaAdmin, String statoFinale)
+            throws MessagingException {
+
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication(){
+                return new PasswordAuthentication(mittente, password);
+            }
+        });
+
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(mittente));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
+        message.setSubject("Aggiornamento Ticket Assistenza GameOrbit #" + idTicket);
+
+        String html = "<div style=\"font-family: sans-serif; color: #1f2937; max-width: 600px; margin: 0 auto;\">"
+                + "<h2 style=\"color: #a855f7;\">Risposta dal Supporto GameOrbit</h2>"
+                + "<p>Un amministratore ha risposto alla tua richiesta di assistenza (Ticket #" + idTicket + ").</p>"
+                + "<div style=\"background: #fafafa; border-left: 4px solid #56cdce; padding: 12px; margin: 15px 0; font-style: italic;\">"
+                + "<strong>Il tuo messaggio originario:</strong><br>" + richiestaUtente + "</div>"
+                + "<div style=\"background: #f3f4f6; border-left: 4px solid #a855f7; padding: 15px; margin: 15px 0; font-size: 16px;\">"
+                + "<strong>Risposta del Team di Assistenza:</strong><br>" + rispostaAdmin + "</div>"
+                + "<p>Lo stato attuale della tua segnalazione è impostato su: "
+                + "<span style=\"font-weight: bold; color: " + ("Aperto".equalsIgnoreCase(statoFinale) ? "#22c55e" : "#ef4444") + ";\">"
+                + statoFinale.toUpperCase() + "</span></p>"
+                + "<hr style=\"border: 0; border-top: 1px solid #e5e7eb; margin-top: 30px;\">"
+                + "<p style=\"font-size: 12px; color: gray;\">Questa è una notifica automatica inviata da GameOrbit. Si prega di non rispondere direttamente a questo indirizzo email.</p>"
+                + "</div>";
+
+        message.setContent(html, "text/html; charset=UTF-8");
+        Transport.send(message);
+    }
 }
