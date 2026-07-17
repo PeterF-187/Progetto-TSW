@@ -33,7 +33,6 @@ public class SearchServlet extends HttpServlet {
 
         query = query.trim();
 
-
         VideogiocoDAO videogioco = new VideogiocoDAO();
         List<Videogioco> suggerimenti = videogioco.cercaPerTitolo(query);
 
@@ -54,9 +53,7 @@ public class SearchServlet extends HttpServlet {
                 json.append(",");
             }
         }
-
         json.append("]");
-
 
         out.print(json.toString());
         out.flush();

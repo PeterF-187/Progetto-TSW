@@ -71,7 +71,7 @@ public class WishlistServlet extends HttpServlet {
         // Aggiorna la lista in sessione
         session.setAttribute("wishlist", wishlist);
 
-        // Redirect alla servlet stessa (in GET) per mostrare la pagina aggiornata ed evitare doppi invii del form
+        // Redirect alla servlet stessa (in GET) per mostrare la pagina aggiornata
         response.sendRedirect(request.getContextPath() + "/wishlist");
     }
 }

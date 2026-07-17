@@ -7,14 +7,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.util.Map;
 
-@WebServlet(urlPatterns = {
-        "/ChiSiamo",
-        "/Contattaci",
-        "/affil",
-        "/HowTo",
-        "/FAQ",
-        "/PReso"
-})
+@WebServlet(urlPatterns = {"/ChiSiamo", "/Contattaci", "/affil", "/HowTo", "/FAQ", "/PReso"})
 public class FooterPagesServlet extends HttpServlet {
 
     private static final Map<String, String> PAGES = Map.of(

@@ -12,6 +12,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <!-- Logo statico non cliccabile per l'Admin -->
     <div class="titolo" style="cursor: default;">
@@ -36,6 +37,7 @@
     </div>
 </div>
 
+<!-- fine navbar, inizio sezione -->
 <div class="contenitore-amministrazione">
     <main class="principale-amministrazione">
         <h1 class="titolo-pagina">Pannello di Controllo Admin</h1>
@@ -54,7 +56,7 @@
 
         <div class="griglia-amministrazione">
 
-            <%-- SEZIONE 1: MODIFICA UTENTI --%>
+            <!-- Utente permessi -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
                     <i class="fa-solid fa-user-gear"></i> Modifica Permessi e Stato Conto
@@ -117,7 +119,7 @@
                 </form>
             </section>
 
-            <%-- SEZIONE 2: INSERIMENTO SOFTWARE HOUSE --%>
+            <!-- Inserimento SH -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
                     <i class="fa-solid fa-building"></i> Nuova Software House
@@ -146,7 +148,7 @@
                 </form>
             </section>
 
-            <%-- SEZIONE 3: INSERIMENTO PUBLISHER --%>
+            <!-- Inserimento publisher -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
                     <i class="fa-solid fa-rectangle-ad"></i> Nuovo Publisher
@@ -187,7 +189,7 @@
                 </form>
             </section>
 
-            <%-- SEZIONE 4: INSERIMENTO SVILUPPATORI --%>
+            <!-- Inserimento sviluppatori -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
                     <i class="fa-solid fa-code"></i> Team Sviluppatori
@@ -232,7 +234,7 @@
                 </form>
             </section>
 
-            <%-- SEZIONE 5: INSERIMENTO FRANCHISE --%>
+            <!-- Inserimento franchise -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
                     <i class="fa-solid fa-star"></i> Nuovo Franchise
@@ -251,7 +253,7 @@
                 </form>
             </section>
 
-            <%-- SEZIONE 6: INSERIMENTO NUOVO VIDEOGIOCO (CATALOGO) --%>
+            <!-- Inserimento gioco -->
             <section class="box-gestione blocco-larghezza-piena">
                 <h2 class="titolo-sottosezione">
                     <i class="fa-solid fa-gamepad"></i> Inserimento Nuovo Videogioco
@@ -259,7 +261,6 @@
 
                 <form action="${pageContext.request.contextPath}/insertVideogioco" method="POST" class="form-amministrazione-video">
 
-                    <%-- Informazioni Principali del Gioco --%>
                     <div class="riga-form-tripla">
                         <div class="gruppo-form">
                             <label class="etichetta-gruppo">Titolo Gioco:</label>
@@ -286,7 +287,6 @@
                         </div>
                     </div>
 
-                    <%-- Dropdown Relazionali (SH, Publisher, Franchise) --%>
                     <div class="riga-form-tripla">
                         <div class="gruppo-form">
                             <label class="etichetta-gruppo">Team Sviluppatore:</label>
@@ -338,10 +338,7 @@
                         </div>
                     </div>
 
-                    <%-- MATRICE DELLE CHECKBOX DELLE RELAZIONI N-TO-N --%>
                     <div class="contenitore-matrice-checkbox">
-
-                        <%-- Piattaforme --%>
                         <div class="blocco-checkbox">
                             <span class="etichetta-matrice">Rilascio su Piattaforma:</span>
                             <div class="lista-scorrimento-checkbox">
@@ -354,7 +351,6 @@
                             </div>
                         </div>
 
-                        <%-- Regioni --%>
                         <div class="blocco-checkbox">
                             <span class="etichetta-matrice">Regioni Attivazione:</span>
                             <div class="lista-scorrimento-checkbox">
@@ -365,7 +361,6 @@
                             </div>
                         </div>
 
-                        <%-- Lingue --%>
                         <div class="blocco-checkbox">
                             <span class="etichetta-matrice">Lingue Supportate:</span>
                             <div class="lista-scorrimento-checkbox">
@@ -377,7 +372,6 @@
                             </div>
                         </div>
 
-                        <%-- Generi --%>
                         <div class="blocco-checkbox">
                             <span class="etichetta-matrice">Generi del Gioco:</span>
                             <div class="lista-scorrimento-checkbox">
@@ -397,7 +391,6 @@
                             </div>
                         </div>
 
-                        <%-- Categorie --%>
                         <div class="blocco-checkbox">
                             <span class="etichetta-matrice">Caratteristiche / Categorie:</span>
                             <div class="lista-scorrimento-checkbox">
@@ -428,6 +421,7 @@
     </main>
 </div>
 
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-basso">
         &copy; 2026 GameOrbit - Tutti i diritti riservati.

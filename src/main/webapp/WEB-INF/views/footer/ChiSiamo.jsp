@@ -8,6 +8,8 @@
     <title>Come Acquistare</title>
 </head>
 <body>
+
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="${pageContext.request.contextPath}/img/Logo.png" alt="Logo GameOrbit">
@@ -56,8 +58,7 @@
     </nav>
 </div>
 
-<!-- fine navbar inizio pagina -->
-
+<!-- fine navbar, inizio sezione -->
 <div class="container">
     <h1>Chi siamo</h1>
     <br><br>
@@ -79,7 +80,8 @@
         Allaccia le cinture e preparati a esplorare nuovi mondi. Il tuo prossimo viaggio videoludico parte da qui.
     </p>
 </div>
-<!-- fine pagina inizio footer -->
+
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

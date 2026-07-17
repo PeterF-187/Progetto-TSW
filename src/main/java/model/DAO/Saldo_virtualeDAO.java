@@ -18,7 +18,6 @@ public class Saldo_virtualeDAO {
                     con.prepareStatement("SELECT Username_Account, Valuta, " +
                             "Saldo, Stato,Data_ultimo_aggiornamento FROM Saldo_virtuale");
             ResultSet rs = ps.executeQuery();
-            // Usiamo while invece di if per scorrere tutta la tabella
             while (rs.next()) {
                 Saldo_virtuale s = new Saldo_virtuale();
                 s.setUsername(rs.getString(1));
@@ -89,8 +88,6 @@ public class Saldo_virtualeDAO {
             // CORREZIONE QUI: Convertiamo i millisecondi in modo sicuro per il database
             if (s.getData() != null) {
                 ps.setTimestamp(5, new java.sql.Timestamp(s.getData().getTime()));
-                // Nota: Se sul DB la colonna è un DATE semplice e preferisci il vecchio tipo:
-                // ps.setDate(5, new java.sql.Date(s.getData().getTime()));
             } else {
                 ps.setNull(5, Types.TIMESTAMP);
             }

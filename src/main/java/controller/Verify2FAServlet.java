@@ -18,7 +18,7 @@ public class Verify2FAServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-        // Recuperiamo l'utente che era rimasto in sospeso al primo step del login
+        // Recuperiamo l'utente
         Utente u = (Utente) session.getAttribute("pending2FAUser");
 
         if (u == null) {
@@ -46,7 +46,7 @@ public class Verify2FAServlet extends HttpServlet {
             return;
         }
 
-        // 1. AGGIORNA LA TABELLA DEI TOKEN (Estensione della validità a 30 giorni)
+        // Aggiornamento tabella Token con scadenza di 30 giorni
         long trentaGiorni = 30L * 24 * 60 * 60 * 1000;
         t.setScadenza(new Timestamp(System.currentTimeMillis() + trentaGiorni));
         dao.save(t); // Fa l'ON DUPLICATE KEY UPDATE impostando la nuova scadenza a 30gg
@@ -56,14 +56,13 @@ public class Verify2FAServlet extends HttpServlet {
         session.setAttribute("username", u.getUsername());
         session.setAttribute("user", u);
 
-        // Creazione del cookie persistente per la sessione standard
+        // Creazione del cookie per la sessione
         Cookie cookie = new Cookie("username", u.getUsername());
         cookie.setMaxAge(60 * 60 * 24 * 30);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
-        // 2. SMISTAMENTO ALLA HOME O DASHBOARD IN BASE AL RUOLO
         if (u.isAdmin()) {
             response.sendRedirect(request.getContextPath() + "/admin");
         } else {

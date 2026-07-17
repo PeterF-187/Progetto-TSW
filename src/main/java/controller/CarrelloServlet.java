@@ -89,7 +89,6 @@ public class CarrelloServlet extends HttpServlet {
 
         if (idProdottoStr != null && !idProdottoStr.trim().isEmpty()) {
             try {
-                // Protetti da NumberFormatException tramite blocco di cattura mirato
                 int idProdotto = Integer.parseInt(idProdottoStr.trim());
 
                 if ("remove".equals(action)) {
@@ -107,7 +106,6 @@ public class CarrelloServlet extends HttpServlet {
                 }
             } catch (NumberFormatException e) {
                 System.err.println("Tentativo di inserimento ID prodotto non valido rintracciato: " + idProdottoStr);
-                // Impedisce il crash rimandando l'utente alla schermata iniziale del carrello
             }
         }
 

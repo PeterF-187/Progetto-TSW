@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="img/Logo.png" alt="Logo GameOrbit">
@@ -61,8 +62,7 @@
     </nav>
 </div>
 
-<!-- fine navbar, inizio sezione----------------------------------------------------------------------------------------------------- -->
-
+<!-- fine navbar, inizio sezione -->
 <main class="wishlist-container">
 
     <c:if test="${empty prodottiWishlist}">
@@ -118,7 +118,7 @@
 
 </main>
 
-<!-- fine sezione - inizio footer ----------------------------------------------------------------------------------------------------- -->
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

@@ -7,45 +7,20 @@ import java.sql.*;
 
 public class ImpostazioniDAO {
 
-    public void createDefault(String username){
-
-        try(Connection con = ConPool.getConnection()){
-
-            PreparedStatement ps = con.prepareStatement(
-                    "INSERT INTO Impostazioni_Utente(Username, Due_Fattori) VALUES(?, FALSE)"
-            );
-
-            ps.setString(1, username);
-
-            ps.executeUpdate();
-
-        }catch(SQLException e){
-            throw new RuntimeException(e);
-        }
-    }
-
     public ImpostazioniUtente doRetrieveByUsername(String username){
-
         try(Connection con = ConPool.getConnection()){
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT * FROM Impostazioni_Utente WHERE Username=?"
             );
-
             ps.setString(1, username);
-
             ResultSet rs = ps.executeQuery();
-
             if(rs.next()){
-
                 ImpostazioniUtente i = new ImpostazioniUtente();
-
                 i.setUsername(rs.getString("Username"));
                 i.setDueFattori(rs.getBoolean("Due_Fattori"));
 
                 return i;
             }
-
             return null;
 
         }catch(SQLException e){
@@ -54,20 +29,15 @@ public class ImpostazioniDAO {
     }
 
     public boolean isDueFattori(String username){
-
         ImpostazioniUtente i = doRetrieveByUsername(username);
-
         return i != null && i.isDueFattori();
     }
 
     public boolean setDueFattori(String username, boolean stato){
-
         try(Connection con = ConPool.getConnection()){
-
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE Impostazioni_Utente SET Due_Fattori=? WHERE Username=?"
             );
-
             ps.setBoolean(1, stato);
             ps.setString(2, username);
 

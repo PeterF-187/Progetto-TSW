@@ -41,17 +41,13 @@ public class Pubblicazione_giocoDAO {
             throw new RuntimeException(e);
         }
     }
+
     public List<String> doRetrieveByIdProdotto(int id) {
-
         List<String> publishers = new ArrayList<>();
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT Nome_Publisher FROM Pubblicazione_gioco WHERE Id_prodotto=?");
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

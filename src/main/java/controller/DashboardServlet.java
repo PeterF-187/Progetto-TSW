@@ -37,7 +37,7 @@ public class DashboardServlet extends HttpServlet {
         ImpostazioniDAO impostazioniDAO = new ImpostazioniDAO();
         TicketDAO ticketDAO = new TicketDAO(); // 🔥 AGGIUNTO: Inizializzazione DAO Ticket
 
-        /* UTENTE */
+        // Utente
         Utente utente = utenteDAO.doRetrieveByUsername(username);
         if (utente == null) {
             System.out.println("Utente NON trovato!");
@@ -45,7 +45,7 @@ public class DashboardServlet extends HttpServlet {
             System.out.println("Utente trovato: " + utente.getUsername());
         }
 
-        /* IMPOSTAZIONI UTENTE */
+        // Impostazioni utente
         ImpostazioniUtente impostazioni = impostazioniDAO.doRetrieveByUsername(username);
         if (impostazioni == null) {
             System.out.println("Impostazioni utente non trovate");
@@ -53,15 +53,14 @@ public class DashboardServlet extends HttpServlet {
             System.out.println("2FA attiva: " + impostazioni.isDueFattori());
         }
 
-        /* ACQUISTI */
+        // Acquisti
         List<Videogioco> acquistiUtente = acquistoDAO.doRetrieveVideogiochiByUsername(username);
 
-        /* TICKET UTENTE */
-        // 🔥 AGGIUNTO: Recupero dello storico dei ticket dell'utente
+        // Ticket utente
         List<Ticket> ticketUtente = ticketDAO.doRetrieveByUsername(username);
         System.out.println("Ticket trovati: " + (ticketUtente != null ? ticketUtente.size() : 0));
 
-        /* SALDO */
+        // Saldo
         Saldo_virtuale saldoVirtuale = saldoDAO.doRetrieveByUsername(username);
 
         if (saldoVirtuale == null) {
@@ -79,7 +78,7 @@ public class DashboardServlet extends HttpServlet {
             System.out.println("Stato = " + saldoVirtuale.getStato());
         }
 
-        /* METODI PAGAMENTO */
+        // Metodi pagamento
         List<Metodo_pagamento> metodiUtente = new ArrayList<>();
         List<Metodo_pagamento> tuttiIMetodi = metodoDAO.doRetrieveAll();
 
@@ -107,7 +106,7 @@ public class DashboardServlet extends HttpServlet {
         System.out.println("Metodi validi trovati: " + metodiUtente.size());
         System.out.println("haMetodoAttivo = " + haMetodoAttivo);
 
-        /* ATTRIBUTI JSP */
+        // Attributi JSP
         request.setAttribute("utente", utente);
         request.setAttribute("impostazioni", impostazioni);
         request.setAttribute("acquistiUtente", acquistiUtente);
@@ -115,7 +114,6 @@ public class DashboardServlet extends HttpServlet {
         request.setAttribute("metodiUtente", metodiUtente);
         request.setAttribute("haMetodoAttivo", haMetodoAttivo);
 
-        // 🔥 AGGIUNTO: Invio della lista dei ticket alla pagina JSP
         request.setAttribute("ticketUtente", ticketUtente);
 
         System.out.println("Forward verso dashboard.jsp");

@@ -11,12 +11,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let selectedIndex = -1;
     let currentResults = [];
 
-    // 1. SUGGERIMENTI IN TEMPO REALE (Mentre l'utente scrive)
+    //Suggerrimenti all'utente
     searchInput.addEventListener("input", function () {
         clearTimeout(debounceTimer);
         const query = searchInput.value.trim();
 
-        // Se scrive meno di 2 lettere, nascondiamo la tendina asincrona
+        // Se scrive meno di 2 lettere, nascondiamo la tendina
         if (query.length < 2) {
             suggestionsBox.innerHTML = "";
             suggestionsBox.style.display = "none";

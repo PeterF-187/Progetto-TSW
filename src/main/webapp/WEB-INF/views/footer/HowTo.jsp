@@ -8,6 +8,8 @@
     <title>Come Acquistare</title>
 </head>
 <body>
+
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="${pageContext.request.contextPath}/img/Logo.png" alt="Logo GameOrbit">
@@ -56,8 +58,7 @@
     </nav>
 </div>
 
-<!-- fine navbar inizio pagina -->
-
+<!-- fine navbar, inizio sezione -->
 <div class="container">
 <h1>Come acquistare</h1>
 <br><br>
@@ -78,7 +79,8 @@
 </p>
 
 </div>
-<!-- fine pagina inizio footer -->
+
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

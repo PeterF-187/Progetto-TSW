@@ -26,7 +26,6 @@
 }
 
     // Cerca il bottone corrispondente nella sidebar e rendilo attivo
-    // Questo serve se la funzione viene chiamata via JS all'avvio e non da un click reale
     const targetBtn = document.querySelector(`.tab-btn[onclick="showSection('${sectionId}')"]`);
     if (targetBtn) {
     targetBtn.classList.add('active');
@@ -35,7 +34,7 @@
 }
 }
 
-    // Gestione dello scorrimento del carosello giochi
+    // Gestione dello scorrimento sezione ordini passati
     function scrollCarousel(direction) {
     const carousel = document.getElementById("ordersCarousel");
     const scrollAmount = 240 * 2;
@@ -45,14 +44,14 @@
 });
 }
 
-    // CONTROLLO ALL'AVVIO DELLA PAGINA
+    //Controllo del ticket all'avvio pagina
     window.addEventListener('DOMContentLoaded', () => {
-    // Legge i parametri dall'URL (es. ?tab=ticket)
+    // Legge i parametri dall'URL
     const urlParams = new URLSearchParams(window.location.search);
     const activeTab = urlParams.get('tab');
 
     if (activeTab) {
-    // Se c'è un parametro valido, mostra quella sezione (es. 'ticket')
+    // Se c'è un parametro valido, mostra quella sezione
     showSection(activeTab);
 } else {
     // Altrimenti di default mostra sempre la panoramica

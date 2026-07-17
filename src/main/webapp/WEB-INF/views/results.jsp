@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="img/Logo.png" alt="Logo GameOrbit">
@@ -59,9 +60,8 @@
         </ul>
     </nav>
 </div>
-<! fine navbar, inizio sezione----------------------------------------------------------------------------------------------------- >
 
-
+<!-- fine navbar, inizio sezione -->
 <main class="products-area">
     <c:choose>
         <c:when test="${not empty parametroRicerca}">
@@ -111,7 +111,7 @@
 
 
 
-<! fine sezione - inizio footer ----------------------------------------------------------------------------------------------------- >
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

@@ -22,11 +22,9 @@ public class ResultsServlet extends HttpServlet {
         List<Videogioco> risultati;
         if (query != null && !query.trim().isEmpty()) {
             query = query.trim();
-            // Utilizza lo stesso metodo DAO che usi per la barra dei suggerimenti asincrona
             risultati = videogiocoDAO.cercaPerTitolo(query);
             request.setAttribute("parametroRicerca", query);
         } else {
-            // Se la query viene forzata vuota, mostriamo la lista completa
             risultati = videogiocoDAO.doRetrieveAll();
         }
 

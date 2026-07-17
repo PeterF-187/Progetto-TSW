@@ -9,7 +9,7 @@
     <title>Game Orbit</title>
 </head>
 <body>
-
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="img/Logo.png" alt="Logo GameOrbit">
@@ -55,7 +55,7 @@
     </nav>
 </div>
 
-<!-- fine navbar, inizio sezione----------------------------------------------------------------------------------------------------- -->
+<!-- fine navbar, inizio sezione-->
 
 <section class="hero">
 
@@ -74,7 +74,7 @@
 
 <div class="home-container">
 
-    <!-- SIDEBAR FILTRI -->
+    <!-- Sidebar filtri -->
     <aside class="filters-sidebar">
         <h2>Filtri</h2>
 
@@ -162,7 +162,7 @@
         </form>
     </aside>
 
-    <!-- PRODOTTI -->
+    <!-- Prodotti -->
     <main class="products-area">
         <h2>Giochi In Evidenza</h2>
 
@@ -202,8 +202,7 @@
 </div>
 
 
-
-<! fine sezione - inizio footer ----------------------------------------------------------------------------------------------------- >
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

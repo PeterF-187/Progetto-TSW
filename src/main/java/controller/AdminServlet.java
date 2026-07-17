@@ -27,9 +27,8 @@ public class AdminServlet extends HttpServlet {
             u = (Utente) session.getAttribute("user");
         }
 
-        // CONTROLLO SICUREZZA: L'utente esiste ed è un Admin?
+        // Controllo se l'utente esiste ed è Admin
         if (u != null && u.isAdmin()) {
-            // ... dentro il controllo if (u != null && u.isAdmin()) di AdminServlet.java ...
 
             UtenteDAO utenteDAO = new UtenteDAO();
             request.setAttribute("listaUtenti", utenteDAO.doRetrieveAll());
@@ -37,7 +36,6 @@ public class AdminServlet extends HttpServlet {
             Software_HouseDAO shDAO = new Software_HouseDAO();
             request.setAttribute("listaSoftwareHouse", shDAO.doRetrieveAll());
 
-// 🔥 AGGIUNTO: Carichiamo i Franchise per il form del nuovo videogioco
             FranchiseDAO franchiseDAO = new FranchiseDAO();
             request.setAttribute("listaFranchise", franchiseDAO.doRetrieveAll());
 
@@ -73,7 +71,7 @@ public class AdminServlet extends HttpServlet {
                     boolean nuovoIsAdmin = Boolean.parseBoolean(request.getParameter("ruoloAdmin"));
                     Stato_saldo nuovoStato = Stato_saldo.valueOf(request.getParameter("statoSaldo"));
 
-                    // 1. Aggiornamento Ruolo
+                    // Aggiornamento Ruolo
                     try (Connection con = ConPool.getConnection();
                          PreparedStatement ps = con.prepareStatement("UPDATE Utente SET is_admin = ? WHERE Username = ?")) {
                         ps.setBoolean(1, nuovoIsAdmin);
@@ -81,7 +79,7 @@ public class AdminServlet extends HttpServlet {
                         ps.executeUpdate();
                     }
 
-                    // 2. Aggiornamento Stato Conto
+                    // Aggiornamento Stato Conto
                     Saldo_virtualeDAO saldoDAO = new Saldo_virtualeDAO();
                     Saldo_virtuale saldo = saldoDAO.doRetrieveByUsername(targetUser);
                     if (saldo != null) {

@@ -42,16 +42,11 @@ public class Sviluppo_giocoDAO {
         }
     }
     public List<String> doRetrieveByIdProdotto(int id) {
-
         List<String> sviluppatori = new ArrayList<>();
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT Nome_SH FROM Sviluppo_gioco WHERE Id_prodotto=?");
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

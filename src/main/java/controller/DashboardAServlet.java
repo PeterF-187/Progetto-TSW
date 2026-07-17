@@ -35,12 +35,11 @@ public class DashboardAServlet extends HttpServlet {
         System.out.println("===== DASHBOARD ADMIN =====");
         System.out.println("Username sessione: " + username);
 
-        // Inizializzazione dei DAO necessari
         UtenteDAO utenteDAO = new UtenteDAO();
         ImpostazioniDAO impostazioniDAO = new ImpostazioniDAO();
         TicketDAO ticketDAO = new TicketDAO();
 
-        /* UTENTE */
+        // Utente
         Utente utente = utenteDAO.doRetrieveByUsername(username);
         if (utente == null) {
             System.out.println("Admin NON trovato nel database!");
@@ -48,7 +47,7 @@ public class DashboardAServlet extends HttpServlet {
             System.out.println("Admin trovato: " + utente.getUsername());
         }
 
-        /* IMPOSTAZIONI UTENTE (per la gestione del 2FA) */
+        //Impostazioni utente
         ImpostazioniUtente impostazioni = impostazioniDAO.doRetrieveByUsername(username);
         if (impostazioni == null) {
             System.out.println("Impostazioni admin non trovate");
@@ -56,7 +55,7 @@ public class DashboardAServlet extends HttpServlet {
             System.out.println("2FA attiva per l'Admin: " + impostazioni.isDueFattori());
         }
 
-        /* GESTIONE E SMISTAMENTO TICKET GLOBALI */
+        //Ticket
         List<Ticket> tuttiITicket = ticketDAO.doRetrieveAll();
         List<Ticket> ticketAperti = new ArrayList<>();
         List<Ticket> ticketChiusi = new ArrayList<>();
@@ -74,7 +73,7 @@ public class DashboardAServlet extends HttpServlet {
         System.out.println("Ticket aperti contati: " + ticketAperti.size());
         System.out.println("Ticket chiusi contati: " + ticketChiusi.size());
 
-        /* ATTRIBUTI RICHIESTI DA dashboardA.jsp */
+        //Attributi richiesti da dashboardA.jsp
         request.setAttribute("utente", utente);
         request.setAttribute("impostazioni", impostazioni);
         request.setAttribute("ticketAperti", ticketAperti);  // Fornisce l'elenco delle pratiche da risolvere
@@ -83,7 +82,6 @@ public class DashboardAServlet extends HttpServlet {
         System.out.println("Forward verso dashboardA.jsp");
         System.out.println("============================");
 
-        // Reindirizzamento alla pagina jsp degli Admin
         request.getRequestDispatcher("/WEB-INF/views/dashboardA.jsp").forward(request, response);
     }
 }

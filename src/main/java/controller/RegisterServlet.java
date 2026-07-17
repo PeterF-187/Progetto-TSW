@@ -38,7 +38,7 @@ public class RegisterServlet extends HttpServlet {
             String dataNascitaStr = request.getParameter("data_nascita");
             String telefonoStr = request.getParameter("telefono");
 
-            // 1. RIGIDO CONTROLLO LATO SERVER SUI CAMPI OBBLIGATORI VUOTI
+            // Controllo lato server delle parti vuote
             if (username == null || username.trim().isEmpty() ||
                     nome == null || nome.trim().isEmpty() ||
                     cognome == null || cognome.trim().isEmpty() ||
@@ -78,7 +78,7 @@ public class RegisterServlet extends HttpServlet {
                 return;
             }
 
-            // 🔐 HASH PASSWORD
+            // Criptaggio password
             String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
             Utente u = new Utente();
@@ -90,7 +90,6 @@ public class RegisterServlet extends HttpServlet {
             u.setData_di_nascita(dataNascita);
             u.setNumero(numero);
 
-            // Salvataggio sul Database
             dao.doSave(u);
 
             // Inizializzazione automatica del Saldo Virtuale associato
@@ -110,7 +109,7 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("username", u.getUsername());
             session.setAttribute("user", u);
 
-            // Generazione del Cookie di autenticazione persistente
+            // Generazione del Cookie di autenticazione
             Cookie cookie = new Cookie("username", u.getUsername());
             cookie.setMaxAge(60 * 60 * 24 * 30);
             cookie.setPath("/");
@@ -118,14 +117,11 @@ public class RegisterServlet extends HttpServlet {
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
 
-            // Successo: Accesso alla Home Page
             response.sendRedirect(request.getContextPath() + "/home");
 
         } catch (Exception e) {
             System.err.println("Errore imprevisto intercettato in RegisterServlet: " + e.getMessage());
             e.printStackTrace();
-            // ❌ RIMOSSO IL THROW SERVLETEXCEPTION (Evita la schermata d'errore nativa di Tomcat)
-            // Reindirizziamo l'utente in sicurezza mostrando una notifica di errore generico controllato
             response.sendRedirect(request.getContextPath() + "/register?registerError=3");
         }
     }

@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 
-
 body {
     background: #1e2228;
     background-image:
@@ -17,9 +16,7 @@ body {
     color: white;
 }
 
-/* ========================================= */
 /* --- NAVBAR --- */
-/* ========================================= */
 .navbar {
     position: fixed;
     top: 0;
@@ -37,7 +34,6 @@ body {
     border-bottom: 1px solid rgba(163, 126, 215, 0.2);
 }
 
-/* --- LOGO --- */
 .titolo {
     text-decoration: none;
     font-size: 32px;
@@ -47,46 +43,34 @@ body {
     cursor: pointer;
 }
 
-/* Effetto riempimento per il testo (GameOrbit) */
 .titolo span {
-    /* Creiamo un gradiente a due colori netti: sopra viola (#a37ed7), sotto azzurro (#56cdce) */
     background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
     background-size: 100% 200%;
-    background-position: top; /* Partiamo mostrando solo la metà superiore (viola) */
-
-    /* Ritagliamo il background a forma di testo */
+    background-position: top;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-
-    /* Gestiamo l'animazione */
     transition: background-position 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Al passaggio del mouse sull'intero blocco, il gradiente sale */
 .titolo:hover span {
     background-position: bottom;
 }
 
-/* Immagine del logo */
 .titolo img {
     height: 1.8em;
     width: auto;
     margin-right: -10px;
-    /* Ho aggiunto un piccolo movimento (transform) per renderlo più dinamico */
     transition: filter 0.4s ease, transform 0.4s ease;
     filter: brightness(0) saturate(100%) invert(56%) sepia(50%) saturate(550%) hue-rotate(220deg);
 }
 
 .titolo:hover img {
     filter: brightness(0) saturate(100%) invert(75%) sepia(80%) saturate(350%) hue-rotate(130deg);
-    /* L'immagine fa un piccolo saltino in alto mentre il testo si riempie */
     transform: translateY(-3px);
 }
 
-
-/* --- MENU E ICONE --- */
 .navbar nav ul {
     display: flex;
     list-style: none;
@@ -110,7 +94,7 @@ body {
     flex: 1;
     max-width: 500px;
     margin: 0 30px;
-    position: relative; /* IMPORTANTE per dropdown */
+    position: relative;
 }
 
 .search-container form {
@@ -161,21 +145,18 @@ body {
     transform: scale(1.2);
 }
 
-/* DROPDOWN */
+/* --- DROPDOWN --- */
 #suggestions {
     display: none;
     position: absolute;
     top: 110%;
     left: 0;
     width: 100%;
-
     background: #2f363c;
     border: 1px solid rgba(163, 126, 215, 0.3);
     border-radius: 15px;
-
     overflow: hidden;
     z-index: 10000;
-
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -183,19 +164,16 @@ body {
     background-color: #eee;
     cursor: pointer;
 }
+
 .suggestion-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
     gap: 15px;
     padding: 12px;
-
     cursor: pointer;
-
     text-decoration: none;
     color: white;
-
     transition: 0.2s;
 }
 
@@ -203,14 +181,12 @@ body {
     background: rgba(86, 205, 206, 0.15);
 }
 
-/* parte sinistra info */
 .suggestion-info {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-/* immagine */
 .suggestion-img img {
     width: 50px;
     height: 50px;
@@ -218,25 +194,21 @@ body {
     border-radius: 8px;
 }
 
-/* titolo */
 .suggestion-title {
     font-size: 15px;
 }
 
-/* prezzo */
 .suggestion-price {
     font-size: 14px;
     color: #56cdce;
     white-space: nowrap;
 }
 
-/* no results */
 .no-suggestion {
     padding: 12px;
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* --- EFFETTI ICONE --- */
 .icon-link {
     font-size: 22px;
     display: flex;
@@ -245,13 +217,11 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Cometa Carrello */
 .icon-link.carrello:hover {
     color: #56cdce;
     transform:  scale(1.2);
 }
 
-/* Battito Cuore */
 .icon-link.preferiti:hover {
     color: #ff4d4d;
     animation: pulse 0.8s infinite;
@@ -263,54 +233,42 @@ body {
     100% { transform: scale(1); }
 }
 
-
+/* --- HERO --- */
 .hero {
     position: relative;
     width: 100%;
     height: 50vh;
     overflow: hidden;
-
     display: flex;
     justify-content: center;
     align-items: center;
-
     text-align: center;
     color: white;
 }
 
-/* VIDEO BACKGROUND */
 .hero-video {
     position: absolute;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
     object-fit: cover;
-
     z-index: 0;
 }
 
-/* OVERLAY SCURO */
 .hero-overlay {
     position: absolute;
     top: 0;
     left: 0;
-
     width: 100%;
     height: 100%;
-
     background: rgba(0, 0, 0, 0.55);
-
     z-index: 1;
 }
 
-/* CONTENUTO TESTO */
 .hero-content {
     position: relative;
     z-index: 2;
-
     padding: 20px;
     max-width: 800px;
 }
@@ -329,31 +287,27 @@ body {
     font-weight: bold;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: #56cdce;
-
 }
 
-/*sezione filtri*/
+/* --- FILTRI --- */
 .home-container {
     display: flex;
     align-items: flex-start;
-    gap: 30px; /* Leggermente aumentato per dare più respiro */
-    padding: 40px; /* Allineato al padding della navbar e del footer */
+    gap: 30px;
+    padding: 40px;
     max-width: 1400px;
     margin: 0 auto;
 }
 
-/* sidebar */
 .filters-sidebar {
-    width: 280px; /* Un po' più larga per accogliere bene i testi */
-    background: rgba(47, 54, 60, 0.6); /* Sfondo coerente con la navbar */
+    width: 280px;
+    background: rgba(47, 54, 60, 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     color: white;
     padding: 25px;
     border-radius: 15px;
-    border: 1px solid rgba(163, 126, 215, 0.2); /* Bordo viola sfumato */
-
-    /* Gestione sticky: la navbar è alta 80px, quindi mettiamo top 100px per lasciare spazio */
+    border: 1px solid rgba(163, 126, 215, 0.2);
     position: sticky;
     top: 100px;
     height: fit-content;
@@ -378,7 +332,7 @@ body {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 12px;
-    color: #a37ed7; /* Sostituito rosa con Viola Orbit */
+    color: #a37ed7;
 }
 
 .filter-group label {
@@ -393,10 +347,9 @@ body {
 }
 
 .filter-group label:hover {
-    color: #56cdce; /* Il testo della label si illumina al passaggio */
+    color: #56cdce;
 }
 
-/* Customizzazione input numerico e text dei filtri */
 .filter-group input[type="number"] {
     width: 100%;
     padding: 10px;
@@ -415,12 +368,11 @@ body {
     background: rgba(255, 255, 255, 0.08);
 }
 
-/* BOTTONE FILTRI */
 .filter-btn {
     width: 100%;
     padding: 12px;
     background: transparent;
-    border: 1px solid #56cdce; /* Stile coerente con i bottoni delle app nel footer */
+    border: 1px solid #56cdce;
     color: #56cdce;
     font-weight: 600;
     text-transform: uppercase;
@@ -436,67 +388,58 @@ body {
     box-shadow: 0 0 15px rgba(86, 205, 206, 0.3);
     transform: translateY(-2px);
 }
-.home-container{
+
+.home-container {
     display: flex;
     gap: 25px;
     align-items: flex-start;
 }
 
-.filters-sidebar{
+.filters-sidebar {
     width: 280px;
     min-width: 280px;
-
     position: sticky;
     top: 20px;
-
     max-height: calc(100vh - 40px);
     overflow-y: auto;
-
     padding: 20px;
-
     background: #1e1e1e;
     border-radius: 15px;
 }
 
-/* Scrollbar personalizzata */
-.filters-sidebar::-webkit-scrollbar{
+.filters-sidebar::-webkit-scrollbar {
     width: 8px;
 }
 
-.filters-sidebar::-webkit-scrollbar-track{
+.filters-sidebar::-webkit-scrollbar-track {
     background: #2a2a2a;
     border-radius: 10px;
 }
 
-.filters-sidebar::-webkit-scrollbar-thumb{
+.filters-sidebar::-webkit-scrollbar-thumb {
     background: #666;
     border-radius: 10px;
 }
 
-.filters-sidebar::-webkit-scrollbar-thumb:hover{
+.filters-sidebar::-webkit-scrollbar-thumb:hover {
     background: #888;
 }
 
-.products-area{
-    flex: 1;
-}
-
-.filter-btn{
+.filter-btn {
     position: sticky;
     bottom: 0;
-
     width: 100%;
     padding: 15px;
-
     background: #00bfff;
     color: white;
     border: none;
     border-radius: 10px;
 }
-/* AREA PRODOTTI */
+
+/* --- PRODOTTI --- */
 .products-area {
     flex: 1;
-    background: rgba(35, 40, 48, 0.5); /* Sostituito il grigio chiaro #f5f5f5 con un dark trasparente */
+    background: rgba(35, 40, 48, 0.5);
     border: 1px solid rgba(255, 255, 255, 0.05);
     padding: 30px;
     border-radius: 15px;
@@ -504,14 +447,11 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-
-/* --- Area giochi */
-
 .products-area h2 {
     font-size: 28px;
     color: white;
     margin-bottom: 25px;
-    border-bottom: 2px solid rgba(163, 126, 215, 0.3); /* Sottolineatura viola Orbit */
+    border-bottom: 2px solid rgba(163, 126, 215, 0.3);
     padding-bottom: 10px;
     display: inline-block;
 }
@@ -522,46 +462,42 @@ body {
     gap: 25px;
 }
 
-/* --- PRODUCT CARD --- */
 .product-card {
     background: rgba(47, 54, 60, 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(163, 126, 215, 0.2); /* Bordo viola tenue */
+    border: 1px solid rgba(163, 126, 215, 0.2);
     border-radius: 15px;
     display: flex;
-    overflow: hidden; /* Taglia gli spigoli dell'immagine se esce fuori */
+    overflow: hidden;
     flex-direction: column;
     transition: all 0.3s ease-in-out;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Effetto Hover sulla singola Card */
 .product-card:hover {
-    transform: translateY(-8px); /* Si solleva */
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(86, 205, 206, 0.2); /* Bagliore ciano */
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(86, 205, 206, 0.2);
     border-color: rgba(86, 205, 206, 0.5);
 }
 
-/* Immagine del Gioco */
 .product-card img {
     width: 100%;
     height: 270px;
-    object-fit: cover; /* Ritaglia l'immagine senza deformarla */
+    object-fit: cover;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: transform 0.4s ease;
 }
 
 .product-card:hover img {
-    transform: scale(1.05); /* L'immagine fa un leggero zoom dentro la card */
+    transform: scale(1.05);
 }
 
-/* --- INFORMAZIONI PRODOTTO --- */
 .product-info {
     padding: 20px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Spinge il bottone sempre in fondo se le altezze variano */
+    flex-grow: 1;
 }
 
 .product-info h3 {
@@ -571,26 +507,23 @@ body {
     line-height: 1.3;
 }
 
-/* Descrizione Testuale */
 .product-info .description {
     color: rgba(255, 255, 255, 0.6);
     font-size: 13px;
     line-height: 1.5;
     margin-bottom: 20px;
     flex-grow: 1;
-
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.product-link{
-    text-decoration:none;
-    color:inherit;
+.product-link {
+    text-decoration: none;
+    color: inherit;
 }
 
-/* Prezzo */
 .price-container {
     margin-bottom: 15px;
 }
@@ -598,15 +531,14 @@ body {
 .price {
     font-size: 22px;
     font-weight: 700;
-    color: #56cdce; /* Neon Cyan */
+    color: #56cdce;
     text-shadow: 0 0 10px rgba(86, 205, 206, 0.3);
 }
 
-/* --- BOTTONE AGGIUNGI AL CARRELLO --- */
 .btn-buy {
     width: 100%;
     background: transparent;
-    border: 1px solid #a37ed7; /* Bordo viola */
+    border: 1px solid #a37ed7;
     color: #a37ed7;
     font-family: inherit;
     font-size: 14px;
@@ -619,7 +551,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px; /* Spazio tra icona e testo */
+    gap: 10px;
     transition: all 0.3s ease;
 }
 
@@ -627,7 +559,6 @@ body {
     font-size: 18px;
 }
 
-/* Hover sul bottone: Si riempie di Neon Cyan e il testo diventa scuro */
 .btn-buy:hover {
     background: #56cdce;
     border-color: #56cdce;
@@ -638,8 +569,8 @@ body {
 
 /* --- FOOTER --- */
 .footer {
-    background-color: #2f363c; /* Deep Space */
-    border-top: 2px solid #a855f7; /* Orbit Purple */
+    background-color: #2f363c;
+    border-top: 2px solid #a855f7;
     padding: 60px 40px 20px;
     margin-top: 50px;
 }
@@ -647,18 +578,17 @@ body {
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;         /* Attiva il posizionamento in colonna */
-    justify-content: space-between; /* Spazia le colonne uniformemente */
-    gap: 40px;            /* Spazio tra le colonne */
-    flex-wrap: wrap;      /* Se lo schermo è piccolo, le manda a capo */
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
 .footer-column {
-    flex: 1;              /* Ogni colonna occupa lo stesso spazio */
-    min-width: 200px;     /* Impedisce alle colonne di diventare troppo strette */
+    flex: 1;
+    min-width: 200px;
 }
 
-/* Titoli */
 .footer-column h3 {
     color: #ffffff;
     margin-bottom: 20px;
@@ -667,7 +597,6 @@ body {
     letter-spacing: 1px;
 }
 
-/* Liste e Testo */
 .footer-column p {
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
@@ -682,17 +611,16 @@ body {
 }
 
 .footer-column ul li a {
-    color: #56cdce; /* Neon Cyan */
+    color: #56cdce;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .footer-column ul li a:hover {
-    color: #a855f7; /* Orbit Purple */
-    padding-left: 5px; /* Piccolo effetto movimento */
+    color: #a855f7;
+    padding-left: 5px;
 }
 
-/* Icone Social */
 .social-icons {
     display: flex;
     gap: 15px;
@@ -709,7 +637,6 @@ body {
     transform: translateY(-5px);
 }
 
-/* Copyright in basso */
 .footer-bottom {
     text-align: center;
     margin-top: 40px;
@@ -719,32 +646,27 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-
-/* --- SEZIONE DOWNLOAD APP --- */
-
-/* Forza il contenitore dei bottoni a incolonnarli */
+/* --- DOWNLOAD APP --- */
 .footer-column .app-buttons {
     display: flex !important;
     flex-direction: column !important;
     gap: 15px !important;
     margin-top: 20px !important;
-    align-items: flex-start; /* Allinea a sinistra */
+    align-items: flex-start;
 }
 
-/* Stile del singolo bottone (Usiamo .footer-column per dare più forza al selettore) */
 .footer-column .btn-app {
     display: flex !important;
     align-items: center !important;
     background-color: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid #56cdce !important; /* Neon Cyan */
+    border: 1px solid #56cdce !important;
     border-radius: 10px !important;
     padding: 10px 20px !important;
     text-decoration: none !important;
-    width: 220px !important; /* Larghezza fissa per simmetria */
+    width: 220px !important;
     transition: all 0.3s ease-in-out !important;
 }
 
-/* Icona dentro il bottone */
 .footer-column .btn-app i {
     font-size: 28px !important;
     margin-right: 15px !important;
@@ -753,7 +675,6 @@ body {
     text-align: center;
 }
 
-/* Testo del bottone */
 .footer-column .btn-text {
     display: flex !important;
     flex-direction: column !important;
@@ -773,49 +694,57 @@ body {
     font-weight: 700 !important;
 }
 
-/* --- EFFETTI HOVER --- */
-
 .footer-column .btn-app:hover {
-    background-color: rgba(168, 85, 247, 0.1) !important; /* Sfondo Purple */
-    border-color: #a855f7 !important; /* Bordo Purple */
+    background-color: rgba(168, 85, 247, 0.1) !important;
+    border-color: #a855f7 !important;
     transform: translateY(-3px) !important;
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
 .footer-column .btn-app:hover i,
 .footer-column .btn-app:hover .btn-text strong {
-    color: #a855f7 !important; /* Tutto diventa Purple al passaggio */
+    color: #a855f7 !important;
 }
 
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+    .home-container {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .filters-sidebar {
+        width: 100%;
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
+    }
+}
 
 @media (max-width: 768px) {
-    /* 1. SISTEMAZIONE NAVBAR E MENU */
     .navbar {
         height: auto;
         padding: 15px 20px;
-        flex-wrap: wrap; /* Permette agli elementi di andare a capo */
+        flex-wrap: wrap;
         gap: 15px;
     }
 
-    /* Rimpicciolisce il logo */
     .titolo {
         font-size: 24px;
-        flex-grow: 1; /* Spinge le icone a destra */
+        flex-grow: 1;
     }
 
     .titolo img {
         height: 1.5em;
     }
 
-    /* Barra di ricerca a larghezza piena, spostata sotto il logo */
     .search-container {
-        order: 3; /* La sposta sotto */
+        order: 3;
         margin: 0;
         max-width: 100%;
         width: 100%;
     }
 
-    /* Disposizione link di navigazione */
     .navbar nav {
         order: 4;
         width: 100%;
@@ -827,17 +756,15 @@ body {
         gap: 15px;
     }
 
-    /* Aumentiamo il padding del body perché la navbar ora è più alta su due/tre righe */
     body {
         padding-top: 160px;
     }
 
     .hero {
-        height: 30vh; /* Occupa meno di un terzo dello schermo invece di metà */
-        min-height: 220px; /* Assicura che non diventi MAI troppo sottile sui telefoni piccoli */
+        height: 30vh;
+        min-height: 220px;
     }
 
-    /* Adattiamo ulteriormente i testi per farli stare bene nel nuovo spazio ridotto */
     .hero-content h1 {
         font-size: 28px;
         margin-bottom: 10px;
@@ -846,7 +773,7 @@ body {
     .hero-content p {
         font-size: 16px;
     }
-    /* 3. SISTEMAZIONE AREA PRODOTTI E FILTRI */
+
     .home-container {
         padding: 15px;
         gap: 20px;
@@ -861,23 +788,28 @@ body {
         font-size: 22px;
     }
 
-    /* Griglia prodotti adattiva per schermi medi/piccoli */
     .products-grid {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 15px;
     }
 
-    /* Altezza immagine card proporzionata */
     .product-card img {
         height: 200px;
     }
 
-    /* 4. SISTEMAZIONE FOOTER */
     .footer {
         padding: 40px 20px 20px;
     }
 
-    /* Centra anche i bottoni delle app che prima erano forzati a sinistra */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
     .footer-column .app-buttons {
         align-items: center !important;
     }

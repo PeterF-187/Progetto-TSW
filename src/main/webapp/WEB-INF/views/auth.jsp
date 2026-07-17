@@ -9,17 +9,18 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="${pageContext.request.contextPath}/img/Logo.png" alt="Logo GameOrbit">
         <span>GameOrbit</span>
     </a>
 </div>
-<!-- Pagina -->
+<!-- fine navbar, inizio sezione -->
 <section class="auth-section">
     <div class="auth-container">
 
-        <!-- LOGIN -->
+        <!-- Login -->
         <div class="auth-box" id="loginBox">
 
             <% if (request.getParameter("checkMail") == null) { %>
@@ -41,7 +42,7 @@
             </p>
 
             <% } else { %>
-            <!-- FASE 2: Inserimento codice 2FA ricevuto via Email -->
+            <!-- 2FA -->
             <h2>Verifica 2FA</h2>
 
             <form action="${pageContext.request.contextPath}/verify2fa" method="post">
@@ -72,7 +73,7 @@
             <% } %>
         </div>
 
-        <!-- REGISTRAZIONE -->
+        <!-- Registrazione -->
         <div class="auth-box hidden" id="registerBox">
             <h2>Registrati</h2>
 
@@ -119,7 +120,7 @@
 </script>
 
 
-<!-- Footer -->
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

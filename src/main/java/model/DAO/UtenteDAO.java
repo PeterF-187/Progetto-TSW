@@ -10,14 +10,9 @@ public class UtenteDAO {
 
     public List<Utente> doRetrieveAll() {
         List<Utente> utenti = new ArrayList<>();
-
         try (Connection con = ConPool.getConnection()) {
-
-            // 🔥 AGGIUNTO: is_admin nella SELECT
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT Username, Nome, Cognome, Email, Password, Data_di_nascita, Numero_di_telefono, is_admin FROM Utente"
-            );
-
+                    "SELECT Username, Nome, Cognome, Email, Password, Data_di_nascita, Numero_di_telefono, is_admin FROM Utente");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -30,7 +25,6 @@ public class UtenteDAO {
                 u.setData_di_nascita(rs.getDate("Data_di_nascita"));
                 u.setNumero(rs.getLong("Numero_di_telefono"));
 
-                // 🔥 AGGIUNTO: Settiamo il ruolo
                 u.setAdmin(rs.getBoolean("is_admin"));
 
                 utenti.add(u);
@@ -44,13 +38,9 @@ public class UtenteDAO {
     }
 
     public Utente doRetrieveByUsername(String username) {
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
-                    "SELECT * FROM Utente WHERE Username = ?"
-            );
-
+                    "SELECT * FROM Utente WHERE Username = ?");
             ps.setString(1, username);
 
             ResultSet rs = ps.executeQuery();
@@ -64,17 +54,13 @@ public class UtenteDAO {
                 u.setPassword(rs.getString("Password")); // hash BCrypt
                 u.setData_di_nascita(rs.getDate("Data_di_nascita"));
                 u.setNumero(rs.getLong("Numero_di_telefono"));
-
-                // 🔥 AGGIUNTO: Settiamo il ruolo anche qui
                 u.setAdmin(rs.getBoolean("is_admin"));
-
                 return u;
             }
 
         } catch (SQLException e) {
             throw new RuntimeException("Errore recupero utente: " + e.getMessage(), e);
         }
-
         return null;
     }
 
@@ -93,22 +79,17 @@ public class UtenteDAO {
             return rows == 1;
 
         } catch (SQLException e) {
-            throw new RuntimeException(
-                    "Errore doUpdate password: " + e.getMessage(),
-                    e
-            );
+            throw new RuntimeException("Errore doUpdate password: " + e.getMessage(), e);
         }
     }
 
     public void doSave(Utente u) {
-
         String sql = "INSERT INTO Utente " +
                 "(Username, Nome, Cognome, Email, Password, Data_di_nascita, Numero_di_telefono) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection con = ConPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
-
             ps.setString(1, u.getUsername());
             ps.setString(2, u.getNome());
             ps.setString(3, u.getCognome());
@@ -126,13 +107,11 @@ public class UtenteDAO {
             } else {
                 ps.setNull(7, Types.BIGINT);
             }
-
             int rows = ps.executeUpdate();
 
             if (rows != 1) {
                 throw new RuntimeException("Insert fallito, righe inserite = " + rows);
             }
-
         } catch (SQLException e) {
             throw new RuntimeException("DB ERROR doSave: " + e.getMessage(), e);
         }

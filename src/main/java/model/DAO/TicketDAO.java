@@ -11,7 +11,6 @@ import java.util.List;
 
 public class TicketDAO {
 
-    // 1. Modifica il doRetrieveAll per leggere anche le risposte
     public List<Ticket> doRetrieveAll() {
         List<Ticket> tickets = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
@@ -33,7 +32,6 @@ public class TicketDAO {
                 t.setTipo(Tipo_ticket.valueOf(rs.getString("Tipo_ticket")));
                 t.setStato(Stato.valueOf(rs.getString("Stato")));
 
-                // 🔥 NUOVO: Recupero dati dell'evasione
                 t.setRispostaAdmin(rs.getString("Risposta_Admin"));
                 t.setUsernameAdmin(rs.getString("Username_Admin"));
 
@@ -45,7 +43,6 @@ public class TicketDAO {
         }
     }
 
-    // 2. NUOVO METODO: Salva la risposta e aggiorna lo stato contemporaneamente
     public void doRispondiEChiudi(int idTicket, String risposta, String usernameAdmin, Stato nuovoStato) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -63,7 +60,6 @@ public class TicketDAO {
         }
     }
 
-    // 2. RECUPERA I TICKET DI UN SINGOLO UTENTE (Serve alla Dashboard del Cliente)
     public List<Ticket> doRetrieveByUsername(String username) {
         List<Ticket> tickets = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
@@ -94,7 +90,6 @@ public class TicketDAO {
         }
     }
 
-    // 3. RECUPERA UN SINGOLO TICKET TRAMITE ID (Serve all'Admin quando deve rispondere)
     public Ticket doRetrieveById(int idTicket) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(
@@ -123,22 +118,6 @@ public class TicketDAO {
         }
     }
 
-    // 4. AGGIORNA LO STATO DI UN TICKET (Serve all'Admin per chiudere le pratiche)
-    public void doUpdateStato(int idTicket, Stato nuovoStato) {
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("UPDATE Ticket SET Stato = ? WHERE Id_Ticket = ?");
-            ps.setString(1, nuovoStato.name());
-            ps.setInt(2, idTicket);
-
-            if (ps.executeUpdate() != 1) {
-                throw new RuntimeException("Errore durante l'aggiornamento dello stato del ticket.");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException("Errore DB doUpdateStato ticket: " + e.getMessage(), e);
-        }
-    }
-
-    // 5. SALVA UN NUOVO TICKET (Serve all'Utente quando invia il form)
     public void doSave(Ticket t) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement(

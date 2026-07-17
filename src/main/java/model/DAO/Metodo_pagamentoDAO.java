@@ -10,25 +10,6 @@ import java.util.List;
 
 public class Metodo_pagamentoDAO {
 
-    // Helper method privato interno per mappare le stringhe del DB all'Enum in modo sicuro
-    private TipoMetodo mapStringToEnum(String tipoMetodoDb) {
-        if (tipoMetodoDb == null) return null;
-
-        // Rimuove gli spazi e mette l'underscore (es: "Da configurare" -> "Da_configurare")
-        String enumFormat = tipoMetodoDb.replace(" ", "_");
-        try {
-            return TipoMetodo.valueOf(enumFormat);
-        } catch (IllegalArgumentException e) {
-            try {
-                // Tenta il fallback tutto in MAIUSCOLO (es: "DA_CONFIGURARE")
-                return TipoMetodo.valueOf(enumFormat.toUpperCase());
-            } catch (IllegalArgumentException ex) {
-                // Se la stringa nel DB non corrisponde a nulla, restituisce null evitando il crash
-                return null;
-            }
-        }
-    }
-
     public List<Metodo_pagamento> doRetrieveAll() {
         List<Metodo_pagamento> metodi = new ArrayList<>();
 
@@ -47,8 +28,6 @@ public class Metodo_pagamentoDAO {
 
                 m.setIdMetodo(rs.getInt(1));
                 m.setUsername(rs.getString(2));
-
-                // Ora che i dati sono allineati, il valueOf standard funzionerà perfettamente!
                 String tipoMetodoDb = rs.getString(3);
                 if (tipoMetodoDb != null) {
                     m.setTipoMetodo(TipoMetodo.valueOf(tipoMetodoDb));
@@ -74,19 +53,14 @@ public class Metodo_pagamentoDAO {
     }
 
     public Metodo_pagamento doRetrieveByUsername(String username) {
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT IdMetodo, Username, TipoMetodo, Provider, TokenPagamento, " +
                             "Ultime4Cifre, ScadenzaMese, ScadenzaAnno, Predefinito, Attivo, DataCreazione " +
                             "FROM Metodo_pagamento WHERE Username = ? LIMIT 1"
             );
-
             ps.setString(1, username);
-
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 Metodo_pagamento m = new Metodo_pagamento();
 
@@ -122,16 +96,13 @@ public class Metodo_pagamentoDAO {
     }
 
     public void doUpdate(Metodo_pagamento m) {
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "UPDATE Metodo_pagamento SET " +
                             "TipoMetodo=?, Provider=?, TokenPagamento=?, Ultime4Cifre=?, " +
                             "ScadenzaMese=?, ScadenzaAnno=?, Predefinito=?, Attivo=?, DataCreazione=? " +
                             "WHERE Username=?"
             );
-
             ps.setString(1, m.getTipoMetodo().name());
             ps.setString(2, m.getProvider());
             ps.setString(3, m.getTokenPagamento());
@@ -163,7 +134,6 @@ public class Metodo_pagamentoDAO {
             );
 
             ps.setString(1, m.getUsername());
-            // Gestione di sicurezza se l'enum è null durante il salvataggio
             ps.setString(2, m.getTipoMetodo() != null ? m.getTipoMetodo().name() : "Da configurare");
             ps.setString(3, m.getProvider());
             ps.setString(4, m.getTokenPagamento());

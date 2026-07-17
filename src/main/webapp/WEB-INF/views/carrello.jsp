@@ -10,6 +10,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="img/Logo.png" alt="Logo GameOrbit">
@@ -60,7 +61,7 @@
     </nav>
 </div>
 
-<!-- fine navbar, inizio sezione----------------------------------------------------------------------------------------------------- -->
+<!-- fine navbar, inizio sezione -->
 
 <main class="cart-main-container">
 
@@ -168,7 +169,6 @@
     </aside>
 
     <script>
-
         document.addEventListener("DOMContentLoaded", function() {
             const selectMethod = document.getElementById("paymentMethodSelect");
             const walletBox = document.getElementById("walletDetailsBox");
@@ -208,7 +208,6 @@
                 });
             }
 
-            // INTERCETTAZIONE DEL PULSANTE "PROCEDI ALL'ORDINE"
             if (checkoutForm) {
                 checkoutForm.addEventListener("submit", function(e) {
                     const currentPayment = hiddenInput.value;
@@ -218,7 +217,6 @@
                         // Reindirizza l'utente direttamente al pannello saldo della dashboard
                         window.location.href = "${pageContext.request.contextPath}/dashboard?tab=saldo";
                     }
-                    // Se invece è "carta" o "saldo", lascia che il form esegua il POST standard verso /checkout
                 });
             }
         });
@@ -229,7 +227,7 @@
 </main>
 
 
-<!-- fine sezione - inizio footer ----------------------------------------------------------------------------------------------------- -->
+<!-- fine sezione, inizio footer  -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

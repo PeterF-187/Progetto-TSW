@@ -11,7 +11,7 @@ import model.Obj.Utente;
 
 import org.mindrot.jbcrypt.BCrypt;
 
-@WebServlet("/impostazioni")
+@WebServlet(name="Impostazioni", value="/impostazioni")
 public class ImpostazioniServlet extends HttpServlet {
 
     @Override
@@ -23,9 +23,7 @@ public class ImpostazioniServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
 
         if (session == null) {
-            response.sendRedirect(
-                    request.getContextPath() + "/login"
-            );
+            response.sendRedirect(request.getContextPath() + "/login");
             return;
         }
 
@@ -35,9 +33,7 @@ public class ImpostazioniServlet extends HttpServlet {
         UtenteDAO utenteDAO = new UtenteDAO();
         ImpostazioniDAO impostazioniDAO = new ImpostazioniDAO();
 
-        /*
-         * CAMBIO PASSWORD
-         */
+        //Cambio password
         if ("cambioPassword".equals(action)) {
 
             Utente u = utenteDAO.doRetrieveByUsername(username);
@@ -47,49 +43,28 @@ public class ImpostazioniServlet extends HttpServlet {
             String conferma = request.getParameter("confirmPassword");
 
             if (!BCrypt.checkpw(vecchia, u.getPassword())) {
-                response.sendRedirect(
-                        request.getContextPath() + "/dashboard?status=wrong_pass"
-                );
+                response.sendRedirect(request.getContextPath() + "/dashboard?status=wrong_pass");
                 return;
             }
 
             if (!nuova.equals(conferma)) {
-                response.sendRedirect(
-                        request.getContextPath() + "/dashboard?status=no_match"
-                );
+                response.sendRedirect(request.getContextPath() + "/dashboard?status=no_match");
                 return;
             }
 
-            String hash = BCrypt.hashpw(
-                    nuova,
-                    BCrypt.gensalt()
-            );
-
+            String hash = BCrypt.hashpw(nuova, BCrypt.gensalt());
             utenteDAO.doUpdate(username, hash);
 
-            response.sendRedirect(
-                    request.getContextPath() + "/dashboard?status=success"
-            );
+            response.sendRedirect(request.getContextPath() + "/dashboard?status=success");
             return;
         }
 
-        /*
-         * 2FA
-         */
+        //2FA
         if ("toggle2FA".equals(action)) {
+            boolean stato = Boolean.parseBoolean(request.getParameter("stato2FA"));
+            impostazioniDAO.setDueFattori(username, stato);
 
-            boolean stato = Boolean.parseBoolean(
-                    request.getParameter("stato2FA")
-            );
-
-            impostazioniDAO.setDueFattori(
-                    username,
-                    stato
-            );
-
-            response.sendRedirect(
-                    request.getContextPath() + "/dashboard?status=success"
-            );
+            response.sendRedirect(request.getContextPath() + "/dashboard?status=success");
         }
     }
 }

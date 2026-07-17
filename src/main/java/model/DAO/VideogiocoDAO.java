@@ -33,11 +33,8 @@ public class VideogiocoDAO {
     }
 
     public List<Videogioco> doRetrieveConsigliati(int idProdotto) {
-
         List<Videogioco> lista = new ArrayList<>();
-
-        String sql =
-                "SELECT DISTINCT v.* " +
+        String sql = "SELECT DISTINCT v.* " +
                         "FROM Videogioco v " +
                         "JOIN Appartiene_genere ag ON v.Id_prodotto = ag.Id_prodotto " +
                         "WHERE ag.Nome_Genere IN (" +
@@ -49,16 +46,12 @@ public class VideogiocoDAO {
                         "LIMIT 3";
 
         try(Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(sql);
-
             ps.setInt(1, idProdotto);
             ps.setInt(2, idProdotto);
-
             ResultSet rs = ps.executeQuery();
 
             while(rs.next()) {
-
                 Videogioco v = new Videogioco();
 
                 v.setId_prodotto(rs.getInt("Id_prodotto"));
@@ -78,19 +71,14 @@ public class VideogiocoDAO {
         return lista;
     }
 
+
     public List<Videogioco> cercaPerTitolo(String query) {
-
         List<Videogioco> lista = new ArrayList<>();
-
         try(Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT * FROM Videogioco WHERE Titolo LIKE ? LIMIT 5");
-
             ps.setString(1, query + "%");
-
             ResultSet rs = ps.executeQuery();
-
             while(rs.next()) {
 
                 Videogioco v = new Videogioco();
@@ -103,25 +91,20 @@ public class VideogiocoDAO {
 
                 lista.add(v);
             }
-
         } catch(SQLException e) {
             throw new RuntimeException(e);
         }
-
         return lista;
     }
 
+
     public Videogioco doRetrieveById(int id) {
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT Id_prodotto, Titolo, Prezzo, Data_rilascio, " +
                             "Descrizione_testuale, immagine " +
                             "FROM Videogioco WHERE Id_prodotto = ?");
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -141,7 +124,6 @@ public class VideogiocoDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         return null;
     }
 
@@ -184,19 +166,14 @@ public class VideogiocoDAO {
         StringBuilder sql = new StringBuilder(
                 "SELECT DISTINCT v.* " +
                         "FROM Videogioco v ");
-
         if (categorie != null && categorie.length > 0)
             sql.append("JOIN Appartiene_categoria ac ON v.Id_prodotto = ac.Id_prodotto ");
-
         if (generi != null && generi.length > 0)
             sql.append("JOIN Appartiene_genere ag ON v.Id_prodotto = ag.Id_prodotto ");
-
         if (piattaforme != null && piattaforme.length > 0)
             sql.append("JOIN rilascio_su rs ON v.Id_prodotto = rs.Id_prodotto ");
-
         if (lingue != null && lingue.length > 0)
             sql.append("JOIN Supporta s ON v.Id_prodotto = s.Id_prodotto ");
-
         if (regioni != null && regioni.length > 0)
             sql.append("JOIN Disponibile_in d ON v.Id_prodotto = d.Id_prodotto ");
 
@@ -254,12 +231,10 @@ public class VideogiocoDAO {
 
         if (minPrice != null)
             sql.append("AND v.Prezzo >= ? ");
-
         if (maxPrice != null)
             sql.append("AND v.Prezzo <= ? ");
 
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(sql.toString());
 
             int indice = 1;

@@ -44,16 +44,11 @@ public class Disponibile_inDAO {
     }
 
     public List<Regione> doRetrieveByIdProdotto(int id) {
-
         List<Regione> regioni = new ArrayList<>();
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT Nome_Regione FROM Disponibile_in WHERE Id_prodotto=?");
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

@@ -41,17 +41,14 @@ public class Fa_Parte_diDAO {
             throw new RuntimeException(e);
         }
     }
+
+
     public String doRetrieveByIdProdotto(int id) {
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT Titolo_Franchise FROM Fa_Parte_di WHERE Id_prodotto=?");
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
-
             if (rs.next()) {
                 return rs.getString(1);
             }

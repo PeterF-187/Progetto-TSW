@@ -9,10 +9,7 @@ public class Software_HouseDAO {
 
     public List<Software_House> doRetrieveAll() {
         List<Software_House> softwareHouse = new ArrayList<>();
-
-        // Modificato il nome della tabella in "Software_house" con la 'h' minuscola
         String sql = "SELECT Nome, Sede_legale, Anno_di_fondazione FROM Software_house";
-
         try (Connection con = ConPool.getConnection();
              PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
@@ -32,7 +29,6 @@ public class Software_HouseDAO {
     }
 
     public void doSave(Software_House sh) {
-        // Modificato il nome della tabella in "Software_house" anche qui
         String sql = "INSERT INTO Software_house (Nome, Sede_legale, Anno_di_fondazione) VALUES(?,?,?)";
 
         try (Connection con = ConPool.getConnection();

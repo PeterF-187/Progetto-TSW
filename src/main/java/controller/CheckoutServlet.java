@@ -24,7 +24,6 @@ public class CheckoutServlet extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
-
         String username = (String) session.getAttribute("username");
 
         if (username == null) {
@@ -52,9 +51,7 @@ public class CheckoutServlet extends HttpServlet {
 
         try {
 
-            // =========================
-            // PAGAMENTO
-            // =========================
+            //Pagamento
             if ("saldo".equalsIgnoreCase(selectedPayment)) {
 
                 Saldo_virtuale saldo = saldoDAO.doRetrieveByUsername(username);
@@ -82,10 +79,7 @@ public class CheckoutServlet extends HttpServlet {
                     "saldo".equalsIgnoreCase(selectedPayment)
                             ? TipoMetodo.Saldo.name()
                             : selectedPayment;
-
-            // =========================
-            // ACQUISTO + KEY
-            // =========================
+            //Acquisto
             for (Videogioco gioco : carrello) {
 
                 Product_keys pk =

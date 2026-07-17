@@ -11,7 +11,7 @@ import model.Obj.TipoMetodo;
 import java.io.IOException;
 import java.util.Date;
 
-@WebServlet("/metodoPagamento")
+@WebServlet(name = "MetodoPagamento", value = "/metodoPagamento")
 public class MetodoPagamentoServlet extends HttpServlet {
 
     private final Metodo_pagamentoDAO dao = new Metodo_pagamentoDAO();
@@ -65,7 +65,6 @@ public class MetodoPagamentoServlet extends HttpServlet {
             m.setAttivo(true);
             m.setDataCreazione(new Date());
 
-            // 🔥 LOGICA IMPORTANTE: UPDATE o INSERT
             Metodo_pagamento esistente = dao.doRetrieveByUsername(username);
 
             if (esistente == null) {

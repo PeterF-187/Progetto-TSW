@@ -8,6 +8,8 @@
   <title>FAQ</title>
 </head>
 <body>
+
+<!-- Navbar -->
 <div class="navbar">
   <a href="${pageContext.request.contextPath}/home" class="titolo">
     <img src="${pageContext.request.contextPath}/img/Logo.png" alt="Logo GameOrbit">
@@ -56,9 +58,7 @@
   </nav>
 </div>
 
-<!-- fine navbar inizio pagina -->
-
-
+<!-- fine navbar, inizio sezione -->
 <div class="faq-container">
 
   <h1>Domande Frequenti</h1>
@@ -122,7 +122,7 @@
 </div>
 
 
-<!-- fine pagina inizio footer -->
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
   <div class="footer-container">
     <div class="footer-column">

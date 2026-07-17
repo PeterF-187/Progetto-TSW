@@ -13,6 +13,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="${pageContext.request.contextPath}/img/Logo.png" alt="Logo GameOrbit">
@@ -20,6 +21,7 @@
     </a>
 </div>
 
+<!-- navbar, inizio sezione -->
 <div class="dashboard-container">
     <aside class="sidebar">
         <button onclick="showSection('panoramica')" class="tab-btn active">Panoramica</button>
@@ -250,7 +252,6 @@
                             </select>
                         </div>
 
-                        <!-- 🔥 MODIFICATO: Cambiato da "hidden" a "nascosto" per allinearsi al JS inline e al CSS -->
                         <div class="gruppo-modulo nascosto" id="divSelezioneProdotto">
                             <label class="etichetta-gruppo" for="idProdottoTicket">
                                 Relativo al Gioco
@@ -279,7 +280,7 @@
                     </div>
                 </form>
 
-                <!-- Script in linea per il toggle del prodotto -->
+                <!-- Script inline per il toggle del prodotto -->
                 <script>
                     function gestisciMenuProdotti() {
                         var selettore = document.getElementById("selettoreTipoTicket");
@@ -347,7 +348,7 @@
 </script>
 <script src="${pageContext.request.contextPath}/JS/dashboard.js"></script>
 
-<!-- Footer -->
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

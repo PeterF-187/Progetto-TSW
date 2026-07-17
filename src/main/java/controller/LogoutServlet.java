@@ -12,12 +12,10 @@ public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-
 
         Cookie cookie = new Cookie("username", null);
         cookie.setMaxAge(0);
@@ -26,7 +24,6 @@ public class LogoutServlet extends HttpServlet {
         cookie.setHttpOnly(true);
         response.addCookie(cookie);
 
-        // Torna alla home
         response.sendRedirect(request.getContextPath() + "/home");
     }
 }

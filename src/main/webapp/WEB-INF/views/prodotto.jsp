@@ -14,6 +14,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
     <a href="${pageContext.request.contextPath}/home" class="titolo">
         <img src="img/Logo.png" alt="Logo GameOrbit">
@@ -63,8 +64,8 @@
         </ul>
     </nav>
 </div>
-<!-- fine navbar inizio pagina -->
 
+<!-- fine navbar, inizio pagina -->
 <div class="product-container">
 
     <img src="${pageContext.request.contextPath}/img/giochi/${gioco.img}">
@@ -127,7 +128,6 @@
 
 <div class="product-actions">
 
-    <!-- CARRELLO -->
     <form action="${pageContext.request.contextPath}/carrello" method="POST">
         <input type="hidden" name="idProdotto" value="${gioco.id_prodotto}">
         <button type="submit" class="btn-cart">
@@ -136,7 +136,6 @@
         </button>
     </form>
 
-    <!-- WISHLIST -->
     <form action="${pageContext.request.contextPath}/wishlist" method="POST">
         <input type="hidden" name="idProdotto" value="${gioco.id_prodotto}">
         <button type="submit" class="btn-wishlist">
@@ -162,7 +161,7 @@
     </div>
 </section>
 
-<!-- fine pagina inizio footer -->
+<!-- fine pagina, inizio footer -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-column">

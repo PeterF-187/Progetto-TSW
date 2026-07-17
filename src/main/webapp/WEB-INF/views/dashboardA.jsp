@@ -11,6 +11,7 @@
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="navbar">
   <div class="titolo">
     <a href="${pageContext.request.contextPath}/admin" class="titolo">
@@ -20,7 +21,7 @@
   </div>
 </div>
 
-
+<!-- fine navbar, inizio sezione -->
 <div class="dashboard-container">
 
   <aside class="sidebar">
@@ -74,7 +75,7 @@
       </c:if>
 
       <div class="contenitore-impostazioni">
-        <!-- CAMBIO PASSWORD -->
+        <!-- Cambio password -->
         <div class="scheda-impostazioni">
           <h3 class="subsection-title">
             <i class="fa-solid fa-lock icona-sezione"></i> Cambio Password
@@ -120,7 +121,7 @@
       <h1 class="titolo-sezione">Pannello Gestione Ticket</h1>
 
       <div class="box-gestione">
-        <!-- 1. Sotto-sezione Ticket Aperti -->
+        <!-- Ticket Aperti -->
         <h2 class="titolo-sottosezione">
           <i class="fa-solid fa-folder-open"></i> Ticket Aperti (In Attesa)
         </h2>
@@ -179,7 +180,7 @@
           </c:otherwise>
         </c:choose>
 
-        <!-- 2. Sotto-sezione Ticket Chiusi -->
+        <!-- Ticket Chiusi -->
         <h2 class="titolo-sottosezione sezione-chiusi">
           <i class="fa-solid fa-folder-closed"></i> Storico Ticket Chiusi
         </h2>
@@ -229,7 +230,7 @@
 </script>
 <script src="${pageContext.request.contextPath}/JS/dashboard.js"></script>
 
-<!-- Footer -->
+<!-- fine sezione, inizio footer -->
 <footer class="footer">
   <div class="footer-bottom">
     &copy; 2026 GameOrbit - Tutti i diritti riservati.

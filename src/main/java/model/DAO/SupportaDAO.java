@@ -44,16 +44,11 @@ public class SupportaDAO {
     }
 
     public List<Lingue> doRetrieveByIdProdotto(int id) {
-
         List<Lingue> lingue = new ArrayList<>();
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT Lingua FROM Supporta WHERE Id_prodotto=?");
-
             ps.setInt(1, id);
-
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {

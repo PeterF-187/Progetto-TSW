@@ -47,7 +47,7 @@ public class RispondiTicketServlet extends HttpServlet {
                 return;
             }
 
-            // 1. Recupero dell'email del cliente destinatario tramite UtenteDAO
+            //Recupero dell'email del cliente destinatario tramite UtenteDAO
             UtenteDAO utenteDAO = new UtenteDAO();
             Utente utenteCliente = utenteDAO.doRetrieveByUsername(ticket.getUsername());
 
@@ -57,7 +57,7 @@ public class RispondiTicketServlet extends HttpServlet {
 
             Stato statoFinale = Stato.valueOf(nuovoStatoStr);
 
-            // 2. Aggiornamento dello stato, della risposta e del nome operatore nel DB
+            //Aggiornamento dello stato, della risposta e del nome operatore nel DB
             ticketDAO.doRispondiEChiudi(
                     idTicket,
                     rispostaAdmin.trim(),
@@ -65,7 +65,7 @@ public class RispondiTicketServlet extends HttpServlet {
                     statoFinale
             );
 
-            // 3. Spedizione asincrona della mail all'utente tramite EmailService
+            // Spedizione della mail all'utente tramite EmailService
             EmailService emailService = new EmailService();
             emailService.sendTicketReplyEmail(
                     utenteCliente.getEmail(),
@@ -75,7 +75,7 @@ public class RispondiTicketServlet extends HttpServlet {
                     statoFinale.name()
             );
 
-            // Successo: Ricarica la Dashboard Admin
+            //Se tutto va bene ricarica la Dashboard Admin
             response.sendRedirect(request.getContextPath() + "/dashboardA?status=success");
 
         } catch (Exception e) {

@@ -9,19 +9,13 @@ import java.util.*;
 public class AcquistoDAO {
 
     public List<Acquisto> doRetrieveAll() {
-
         List<Acquisto> list = new ArrayList<>();
-
         try (Connection con = ConPool.getConnection()) {
-
             PreparedStatement ps = con.prepareStatement(
                     "SELECT Username_Account, Id_prodotto, Data_acquisto, Prezzo_pagato, Metodo_di_pagamento, Id_key FROM Acquisto"
             );
-
             ResultSet rs = ps.executeQuery();
-
             while (rs.next()) {
-
                 Acquisto a = new Acquisto();
                 a.setUsername(rs.getString("Username_Account"));
                 a.setId(rs.getInt("Id_prodotto"));
@@ -29,7 +23,6 @@ public class AcquistoDAO {
                 a.setPrezzo_pagato(rs.getBigDecimal("Prezzo_pagato"));
                 a.setMetodo_di_pagamento(rs.getString("Metodo_di_pagamento"));
                 a.setId_key(rs.getInt("Id_key"));
-
                 list.add(a);
             }
 

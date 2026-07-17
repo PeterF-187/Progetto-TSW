@@ -19,13 +19,13 @@ public class InsertVideogiocoServlet extends HttpServlet {
         HttpSession session = request.getSession(false);
         Utente attuale = (Utente) (session != null ? session.getAttribute("user") : null);
 
-        // Controllo Sicurezza Admin
+        // verifica permessi admin
         if (attuale == null || !attuale.isAdmin()) {
             response.sendRedirect(request.getContextPath() + "/home");
             return;
         }
 
-        // 1. Recupero parametri principali del Videogioco dal Form
+        // recupero campi testuali e date dal form
         String titolo = request.getParameter("titolo");
         BigDecimal prezzo = new BigDecimal(request.getParameter("prezzo"));
         String dataParam = request.getParameter("dataRilascio");
@@ -33,12 +33,12 @@ public class InsertVideogiocoServlet extends HttpServlet {
         String descrizione = request.getParameter("descrizione");
         String immagine = request.getParameter("immagine");
 
-        // Recupero parametri dei Dropdown
+        // recupero parametri delle select
         String sviluppatore = request.getParameter("sviluppatoreSH");
         String publisher = request.getParameter("publisherSH");
         String franchiseSelezionato = request.getParameter("franchiseAppartenenza");
 
-        // Recupero Array delle Checkbox N-to-N
+        // recupero array delle checkbox
         String[] piattaforme = request.getParameterValues("piattaforme");
         String[] regioni = request.getParameterValues("regioni");
         String[] generi = request.getParameterValues("generi");
@@ -46,7 +46,7 @@ public class InsertVideogiocoServlet extends HttpServlet {
         String[] lingue = request.getParameterValues("lingue");
 
         try {
-            // STEP 1: Creazione e Salvataggio del Videogioco principale
+            // salvataggio del videogioco base
             Videogioco v = new Videogioco();
             v.setTitolo(titolo);
             v.setPrezzo(prezzo);
@@ -55,25 +55,25 @@ public class InsertVideogiocoServlet extends HttpServlet {
             v.setImg(immagine);
 
             VideogiocoDAO vDAO = new VideogiocoDAO();
-            vDAO.doSave(v); // Questo metodo esegue l'insert e imposta l'ID generato tramite getGeneratedKeys
+            vDAO.doSave(v);
 
             int idProdotto = v.getId_prodotto();
 
-            // STEP 2: Assegnazione dello Sviluppatore tramite Sviluppo_giocoDAO
+            // assegnazione sviluppatore
             Sviluppo_gioco sg = new Sviluppo_gioco();
             sg.setId_prodotto(idProdotto);
             sg.setNome_SH(sviluppatore);
             Sviluppo_giocoDAO sgDAO = new Sviluppo_giocoDAO();
             sgDAO.doSave(sg);
 
-            // STEP 3: Assegnazione del Publisher tramite Pubblicazione_giocoDAO
+            // assegnazione publisher
             Pubblicazione_gioco pg = new Pubblicazione_gioco();
             pg.setId_prodotto(idProdotto);
             pg.setNome_Publisher(publisher);
             Pubblicazione_giocoDAO pgDAO = new Pubblicazione_giocoDAO();
             pgDAO.doSave(pg);
 
-            // STEP 4: Associazione al Franchise (solo se valorizzato)
+            // collegamento al franchise se specificato
             if (franchiseSelezionato != null && !franchiseSelezionato.trim().isEmpty()) {
                 Fa_Parte_di fpd = new Fa_Parte_di();
                 fpd.setId_prodotto(idProdotto);
@@ -82,18 +82,18 @@ public class InsertVideogiocoServlet extends HttpServlet {
                 fpdDAO.doSave(fpd);
             }
 
-            // STEP 5: Inserimento Piattaforme (rilascio_su)
+            // collegamento piattaforme
             if (piattaforme != null) {
                 rilascio_suDAO rilascioDAO = new rilascio_suDAO();
                 for (String p : piattaforme) {
                     rilascio_su r = new rilascio_su();
                     r.setId_prodotto(idProdotto);
-                    r.setPiattaforma(Piattaforma.valueOf(p)); // Conversione sicura in Enum
+                    r.setPiattaforma(Piattaforma.valueOf(p));
                     rilascioDAO.doSave(r);
                 }
             }
 
-            // STEP 6: Inserimento Regioni di attivazione (Disponibile_in)
+            // collegamento regioni
             if (regioni != null) {
                 Disponibile_inDAO disponibileDAO = new Disponibile_inDAO();
                 for (String r : regioni) {
@@ -104,7 +104,7 @@ public class InsertVideogiocoServlet extends HttpServlet {
                 }
             }
 
-            // STEP 7: Inserimento Generi (Appartiene_genere)
+            // collegamento generi
             if (generi != null) {
                 Appartiene_genereDAO genereDAO = new Appartiene_genereDAO();
                 for (String g : generi) {
@@ -115,7 +115,7 @@ public class InsertVideogiocoServlet extends HttpServlet {
                 }
             }
 
-            // STEP 8: Inserimento Categorie (Appartiene_categoria)
+            // collegamento categorie
             if (categorie != null) {
                 Appartiene_categoriaDAO categoriaDAO = new Appartiene_categoriaDAO();
                 for (String c : categorie) {
@@ -126,7 +126,7 @@ public class InsertVideogiocoServlet extends HttpServlet {
                 }
             }
 
-            // STEP 9: Inserimento Lingue supportate (Supporta)
+            // collegamento lingue
             if (lingue != null) {
                 SupportaDAO supportaDAO = new SupportaDAO();
                 for (String l : lingue) {
@@ -137,11 +137,10 @@ public class InsertVideogiocoServlet extends HttpServlet {
                 }
             }
 
-            // Tutto completato con successo
             response.sendRedirect(request.getContextPath() + "/admin?status=success");
 
         } catch (Exception e) {
-            System.err.println("Errore inserimento videogioco tramite architettura DAO: " + e.getMessage());
+            System.err.println("errore durante il salvataggio del videogioco: " + e.getMessage());
             e.printStackTrace();
             response.sendRedirect(request.getContextPath() + "/admin?status=error");
         }
