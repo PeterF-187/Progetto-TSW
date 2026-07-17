@@ -4,7 +4,6 @@
     box-sizing: border-box;
 }
 
-
 body {
     background: #1e2228;
     background-image:
@@ -17,9 +16,7 @@ body {
     color: white;
 }
 
-/* ========================================= */
 /* --- NAVBAR --- */
-/* ========================================= */
 .navbar {
     position: fixed;
     top: 0;
@@ -47,7 +44,6 @@ body {
     cursor: pointer;
 }
 
-/* Effetto riempimento per il testo (GameOrbit) */
 .titolo span {
     background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
     background-size: 100% 200%;
@@ -156,7 +152,7 @@ body {
     transform: scale(1.2);
 }
 
-/* DROPDOWN */
+/* --- DROPDOWN --- */
 #suggestions {
     display: none;
     position: absolute;
@@ -273,19 +269,18 @@ body {
     width: 100%;
 }
 
-/* --- IL BOX DEL GIOCO AGGIORNATO (Immagine + Titolo + Prezzo + Cuore) --- */
 .game-box {
     flex: 1;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Divide la parte sinistra da quella destra */
+    justify-content: space-between;
     background: rgba(47, 54, 60, 0.6);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 2px solid rgba(163, 126, 215, 0.4);
     border-radius: 8px;
     padding: 15px 25px;
-    height: 100px; /* Incrementato leggermente per accomodare l'immagine */
+    height: 100px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -294,7 +289,6 @@ body {
     box-shadow: 0 0 15px rgba(163, 126, 215, 0.15);
 }
 
-/* Raggruppamento Sinistro: Immagine e Titolo */
 .game-info-left {
     display: flex;
     align-items: center;
@@ -316,7 +310,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Raggruppamento Destro: Prezzo e Cuore */
 .game-actions-right {
     display: flex;
     align-items: center;
@@ -326,7 +319,7 @@ body {
 .game-price {
     font-size: 18px;
     font-weight: 700;
-    color: #56cdce; /* Neon Cyan coerente con il brand */
+    color: #56cdce;
     white-space: nowrap;
 }
 
@@ -376,38 +369,6 @@ body {
     box-shadow: 0 0 15px rgba(86, 205, 206, 0.3);
     transform: scale(1.03);
 }
-
-/* --- RESPONSIVE --- */
-@media (max-width: 768px) {
-    .wishlist-item-row {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .game-box {
-        width: 100%;
-        height: auto;
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-start;
-        padding: 20px;
-    }
-
-    .game-actions-right {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .cart-action-box {
-        width: 100%;
-    }
-
-    .btn-add-to-cart {
-        width: 100%;
-        text-align: center;
-    }
-}
-
 
 /* --- FOOTER --- */
 .footer {
@@ -488,17 +449,6 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .social-icons {
-        justify-content: center;
-    }
-}
-
 .footer-column .app-buttons {
     display: flex !important;
     flex-direction: column !important;
@@ -556,4 +506,87 @@ body {
 .footer-column .btn-app:hover i,
 .footer-column .btn-app:hover .btn-text strong {
     color: #a855f7 !important;
+}
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1;
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+    .search-container {
+        order: 3;
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .navbar nav {
+        order: 4;
+        width: 100%;
+    }
+
+    .navbar nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    body {
+        padding-top: 160px;
+    }
+
+    /* Contenuto Pagina */
+    .wishlist-item-row {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .game-box {
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+        padding: 20px;
+    }
+
+    .game-actions-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .cart-action-box {
+        width: 100%;
+    }
+
+    .btn-add-to-cart {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    .social-icons {
+        justify-content: center;
+    }
+
+    .footer-column .app-buttons {
+        align-items: center !important;
+    }
 }

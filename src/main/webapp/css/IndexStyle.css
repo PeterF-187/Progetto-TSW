@@ -504,20 +504,6 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive per schermi piccoli (Tablet / Smartphone) */
-@media (max-width: 992px) {
-    .home-container {
-        flex-direction: column;
-        padding: 20px;
-    }
-
-    .filters-sidebar {
-        width: 100%;
-        position: relative;
-        top: 0; /* Rimuove lo sticky su mobile per fluidità */
-        margin-bottom: 20px;
-    }
-}
 
 /* --- Area giochi */
 
@@ -733,17 +719,6 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Responsive: sui telefoni le colonne tornano una sopra l'altra */
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .social-icons {
-        justify-content: center;
-    }
-}
 
 /* --- SEZIONE DOWNLOAD APP --- */
 
@@ -812,3 +787,98 @@ body {
     color: #a855f7 !important; /* Tutto diventa Purple al passaggio */
 }
 
+
+@media (max-width: 768px) {
+    /* 1. SISTEMAZIONE NAVBAR E MENU */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap; /* Permette agli elementi di andare a capo */
+        gap: 15px;
+    }
+
+    /* Rimpicciolisce il logo */
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1; /* Spinge le icone a destra */
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+
+    /* Barra di ricerca a larghezza piena, spostata sotto il logo */
+    .search-container {
+        order: 3; /* La sposta sotto */
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* Disposizione link di navigazione */
+    .navbar nav {
+        order: 4;
+        width: 100%;
+    }
+
+    .navbar nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    /* Aumentiamo il padding del body perché la navbar ora è più alta su due/tre righe */
+    body {
+        padding-top: 160px;
+    }
+
+    .hero {
+        height: 30vh; /* Occupa meno di un terzo dello schermo invece di metà */
+        min-height: 220px; /* Assicura che non diventi MAI troppo sottile sui telefoni piccoli */
+    }
+
+    /* Adattiamo ulteriormente i testi per farli stare bene nel nuovo spazio ridotto */
+    .hero-content h1 {
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+    /* 3. SISTEMAZIONE AREA PRODOTTI E FILTRI */
+    .home-container {
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .products-area {
+        padding: 15px;
+        min-height: auto;
+    }
+
+    .products-area h2 {
+        font-size: 22px;
+    }
+
+    /* Griglia prodotti adattiva per schermi medi/piccoli */
+    .products-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+    }
+
+    /* Altezza immagine card proporzionata */
+    .product-card img {
+        height: 200px;
+    }
+
+    /* 4. SISTEMAZIONE FOOTER */
+    .footer {
+        padding: 40px 20px 20px;
+    }
+
+    /* Centra anche i bottoni delle app che prima erano forzati a sinistra */
+    .footer-column .app-buttons {
+        align-items: center !important;
+    }
+}

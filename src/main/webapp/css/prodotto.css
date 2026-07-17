@@ -1,10 +1,8 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 
 body {
     background: #1e2228;
@@ -19,9 +17,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ========================================= */
 /* --- NAVBAR --- */
-/* ========================================= */
 .navbar {
     position: fixed;
     top: 0;
@@ -49,43 +45,34 @@ body {
     cursor: pointer;
 }
 
-/* Effetto riempimento per il testo (GameOrbit) */
 .titolo span {
-    /* Creiamo un gradiente a due colori netti: sopra viola (#a37ed7), sotto azzurro (#56cdce) */
     background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
     background-size: 100% 200%;
-    background-position: top; /* Partiamo mostrando solo la metà superiore (viola) */
-
-    /* Ritagliamo il background a forma di testo */
+    background-position: top;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-
-    /* Gestiamo l'animazione */
     transition: background-position 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Al passaggio del mouse sull'intero blocco, il gradiente sale */
 .titolo:hover span {
     background-position: bottom;
 }
 
-/* Immagine del logo */
 .titolo img {
     height: 1.8em;
     width: auto;
     margin-right: -10px;
-    /* Ho aggiunto un piccolo movimento (transform) per renderlo più dinamico */
     transition: filter 0.4s ease, transform 0.4s ease;
     filter: brightness(0) saturate(100%) invert(56%) sepia(50%) saturate(550%) hue-rotate(220deg);
 }
 
 .titolo:hover img {
     filter: brightness(0) saturate(100%) invert(75%) sepia(80%) saturate(350%) hue-rotate(130deg);
-    /* L'immagine fa un piccolo saltino in alto mentre il testo si riempie */
     transform: translateY(-3px);
 }
+
 /* --- MENU E ICONE --- */
 .navbar nav ul {
     display: flex;
@@ -112,9 +99,9 @@ body {
 }
 
 .search-container {
-    flex: 1; /* Prende tutto lo spazio disponibile tra logo e icone */
-    max-width: 500px; /* Evita che diventi troppo larga su schermi giganti */
-    margin: 0 30px; /* Distanza dal logo e dalla nav */
+    flex: 1;
+    max-width: 500px;
+    margin: 0 30px;
 }
 
 .search-container form {
@@ -126,9 +113,9 @@ body {
 
 .search-container input {
     width: 100%;
-    padding: 10px 45px 10px 20px; /* Spazio a destra per l'icona */
+    padding: 10px 45px 10px 20px;
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(163, 126, 215, 0.3); /* Viola spento di base */
+    border: 1px solid rgba(163, 126, 215, 0.3);
     border-radius: 25px;
     color: white;
     font-family: inherit;
@@ -151,20 +138,19 @@ body {
     right: 15px;
     background: none;
     border: none;
-    color: #a37ed7; /* Viola originale */
+    color: #a37ed7;
     cursor: pointer;
     font-size: 16px;
     transition: 0.3s;
 }
 
 .search-container input:focus + button {
-    color: #56cdce; /* L'icona diventa ciano quando scrivi */
+    color: #56cdce;
 }
 
 .search-container button:hover {
     transform: scale(1.2);
 }
-
 
 #suggestions{
     display:none;
@@ -172,49 +158,35 @@ body {
     top: 50px;
     left: 0;
     width: 100%;
-
     background: #2f363c;
-
     border: 1px solid rgba(163,126,215,0.3);
     border-radius: 15px;
-
     overflow: hidden;
-
     z-index: 10000;
-
     box-shadow: 0 10px 30px rgba(0,0,0,.3);
 }
 
-/* singolo suggerimento */
 .search-item{
     display: flex;
     align-items: center;
     gap: 15px;
-
     padding: 12px;
-
     text-decoration: none;
     color: white;
-
     transition: .2s;
 }
 
-/* hover */
 .search-item:hover{
     background: rgba(86,205,206,.15);
 }
 
-/* immagine del gioco */
 .search-item img{
     width: 50px;
     height: 50px;
-
     object-fit: cover;
-
     border-radius: 8px;
 }
 
-/* titolo */
 .search-item span{
     font-size: 15px;
 }
@@ -228,13 +200,11 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Cometa Carrello */
 .icon-link.carrello:hover {
     color: #56cdce;
     transform:  scale(1.2);
 }
 
-/* Battito Cuore */
 .icon-link.preferiti:hover {
     color: #ff4d4d;
     animation: pulse 0.8s infinite;
@@ -246,14 +216,10 @@ body {
     100% { transform: scale(1); }
 }
 
-
-
-
 /* --- PRODUCT PAGE --- */
-
 h1 {
-    font-size: 32px; /* Ridotto per risparmiare spazio verticale */
-    margin: 15px 40px 5px; /* Margini verticali minimi */
+    font-size: 32px;
+    margin: 15px 40px 5px;
     background: linear-gradient(to right, #a37ed7, #56cdce);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -263,18 +229,14 @@ h1 {
     display: flex;
     gap: 40px;
     padding: 10px 40px;
-    align-items: center; /* Centra verticalmente immagine e dettagli nel display */
-    /* Calcoliamo l'altezza esatta: 100vh meno la navbar (80px) e meno l'H1 con i suoi margini (~70px) */
+    align-items: center;
     height: calc(100vh - 150px);
-    max-height: 650px; /* Evita che si allarghi troppo su schermi giganteschi */
+    max-height: 650px;
 }
 
-/* IMMAGINE */
 .product-container img {
-    /* Usiamo max-height basato sulla percentuale del contenitore così si rimpicciolisce
-       automaticamente se lo schermo è basso (es. portatili) */
     max-height: 85%;
-    width: auto; /* Mantiene le proporzioni corrette */
+    width: auto;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.4);
     transition: transform 0.3s ease;
@@ -284,13 +246,12 @@ h1 {
     transform: scale(1.03);
 }
 
-/* DETTAGLI */
 .product-details {
     flex: 1;
-    height: 85%; /* Sincronizzato con l'altezza massima dell'immagine */
+    height: 85%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribuisce gli elementi e blocca i bottoni sul fondo del contenitore */
+    justify-content: space-between;
 }
 
 .product-details h2 {
@@ -299,7 +260,6 @@ h1 {
     color: #56cdce;
 }
 
-/* DESCRIZIONE */
 .product-description {
     margin: 5px 0;
     padding: 12px 15px;
@@ -307,11 +267,10 @@ h1 {
     border-left: 3px solid #a37ed7;
     border-radius: 10px;
     line-height: 1.4;
-    font-size: 14px; /* Un pelo più piccolo per garantire il rientro */
+    font-size: 14px;
     color: rgba(255,255,255,0.85);
 }
 
-/* SEZIONI LISTE */
 .product-section {
     margin-top: 5px;
 }
@@ -324,13 +283,12 @@ h1 {
 }
 
 .product-section ul li {
-    padding: 3px 0; /* Molto compatto */
+    padding: 3px 0;
     font-size: 14px;
     color: rgba(255,255,255,0.8);
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* FRANCHISE BOX */
 .franchise-box {
     margin-top: 8px;
     padding: 6px 12px;
@@ -349,7 +307,6 @@ h1 {
     align-items: center;
 }
 
-/* Bottone carrello */
 .btn-cart {
     background: linear-gradient(135deg, #56cdce, #4aa8ff);
     border: none;
@@ -370,7 +327,6 @@ h1 {
     box-shadow: 0 8px 20px rgba(86, 205, 206, 0.35);
 }
 
-/* Bottone wishlist (cuore) */
 .btn-wishlist {
     width: 50px;
     height: 50px;
@@ -393,23 +349,23 @@ h1 {
     box-shadow: 0 5px 15px rgba(255, 77, 77, 0.3);
 }
 
-.recommended-section{
+.recommended-section {
     margin-top:80px;
     padding:0 40px;
 }
 
-.recommended-section h2{
+.recommended-section h2 {
     margin-bottom:30px;
     color:#56cdce;
 }
 
-.recommended-grid{
+.recommended-grid {
     display:flex;
     gap:30px;
     flex-wrap:wrap;
 }
 
-.recommended-card{
+.recommended-card {
     width:260px;
     background:#2f363c;
     border-radius:20px;
@@ -419,27 +375,27 @@ h1 {
     transition:.3s;
 }
 
-.recommended-card:hover{
+.recommended-card:hover {
     transform:translateY(-8px);
     box-shadow:0 10px 30px rgba(86,205,206,.2);
 }
 
-.recommended-card img{
+.recommended-card img {
     width:100%;
     height:300px;
     object-fit:cover;
 }
 
-.recommended-info{
+.recommended-info {
     padding:20px;
 }
 
-.recommended-info h3{
+.recommended-info h3 {
     margin-bottom:15px;
     font-size:18px;
 }
 
-.recommended-info span{
+.recommended-info span {
     color:#56cdce;
     font-weight:bold;
     font-size:18px;
@@ -447,8 +403,8 @@ h1 {
 
 /* --- FOOTER --- */
 .footer {
-    background-color: #2f363c; /* Deep Space */
-    border-top: 2px solid #a855f7; /* Orbit Purple */
+    background-color: #2f363c;
+    border-top: 2px solid #a855f7;
     padding: 60px 40px 20px;
     margin-top: 50px;
 }
@@ -456,18 +412,17 @@ h1 {
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;         /* Attiva il posizionamento in colonna */
-    justify-content: space-between; /* Spazia le colonne uniformemente */
-    gap: 40px;            /* Spazio tra le colonne */
-    flex-wrap: wrap;      /* Se lo schermo è piccolo, le manda a capo */
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
 .footer-column {
-    flex: 1;              /* Ogni colonna occupa lo stesso spazio */
-    min-width: 200px;     /* Impedisce alle colonne di diventare troppo strette */
+    flex: 1;
+    min-width: 200px;
 }
 
-/* Titoli */
 .footer-column h3 {
     color: #ffffff;
     margin-bottom: 20px;
@@ -476,7 +431,6 @@ h1 {
     letter-spacing: 1px;
 }
 
-/* Liste e Testo */
 .footer-column p {
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.7);
@@ -491,17 +445,16 @@ h1 {
 }
 
 .footer-column ul li a {
-    color: #56cdce; /* Neon Cyan */
+    color: #56cdce;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .footer-column ul li a:hover {
-    color: #a855f7; /* Orbit Purple */
-    padding-left: 5px; /* Piccolo effetto movimento */
+    color: #a855f7;
+    padding-left: 5px;
 }
 
-/* Icone Social */
 .social-icons {
     display: flex;
     gap: 15px;
@@ -518,7 +471,6 @@ h1 {
     transform: translateY(-5px);
 }
 
-/* Copyright in basso */
 .footer-bottom {
     text-align: center;
     margin-top: 40px;
@@ -528,43 +480,27 @@ h1 {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Responsive: sui telefoni le colonne tornano una sopra l'altra */
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .social-icons {
-        justify-content: center;
-    }
-}
-
 /* --- SEZIONE DOWNLOAD APP --- */
-
-/* Forza il contenitore dei bottoni a incolonnarli */
 .footer-column .app-buttons {
     display: flex !important;
     flex-direction: column !important;
     gap: 15px !important;
     margin-top: 20px !important;
-    align-items: flex-start; /* Allinea a sinistra */
+    align-items: flex-start;
 }
 
-/* Stile del singolo bottone (Usiamo .footer-column per dare più forza al selettore) */
 .footer-column .btn-app {
     display: flex !important;
     align-items: center !important;
     background-color: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid #56cdce !important; /* Neon Cyan */
+    border: 1px solid #56cdce !important;
     border-radius: 10px !important;
     padding: 10px 20px !important;
     text-decoration: none !important;
-    width: 220px !important; /* Larghezza fissa per simmetria */
+    width: 220px !important;
     transition: all 0.3s ease-in-out !important;
 }
 
-/* Icona dentro il bottone */
 .footer-column .btn-app i {
     font-size: 28px !important;
     margin-right: 15px !important;
@@ -573,7 +509,6 @@ h1 {
     text-align: center;
 }
 
-/* Testo del bottone */
 .footer-column .btn-text {
     display: flex !important;
     flex-direction: column !important;
@@ -593,17 +528,104 @@ h1 {
     font-weight: 700 !important;
 }
 
-/* --- EFFETTI HOVER --- */
-
 .footer-column .btn-app:hover {
-    background-color: rgba(168, 85, 247, 0.1) !important; /* Sfondo Purple */
-    border-color: #a855f7 !important; /* Bordo Purple */
+    background-color: rgba(168, 85, 247, 0.1) !important;
+    border-color: #a855f7 !important;
     transform: translateY(-3px) !important;
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
 .footer-column .btn-app:hover i,
 .footer-column .btn-app:hover .btn-text strong {
-    color: #a855f7 !important; /* Tutto diventa Purple al passaggio */
+    color: #a855f7 !important;
 }
 
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1;
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+
+    .search-container {
+        order: 3;
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .navbar nav {
+        order: 4;
+        width: 100%;
+    }
+
+    .navbar nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    body {
+        padding-top: 160px;
+    }
+
+    /* Prodotto */
+    .product-container {
+        flex-direction: column;
+        height: auto;
+        max-height: none;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .product-container img {
+        max-height: 400px;
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .product-details {
+        height: auto;
+        width: 100%;
+    }
+
+    h1 {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .recommended-section {
+        margin-top: 40px;
+        padding: 0 20px;
+    }
+
+    .recommended-grid {
+        justify-content: center;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .footer-column .app-buttons {
+        align-items: center !important;
+    }
+}

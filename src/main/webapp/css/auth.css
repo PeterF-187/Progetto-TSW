@@ -1,10 +1,8 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 
 body {
     background: #1e2228;
@@ -16,11 +14,13 @@ body {
     padding-top: 85px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: white;
+
+    /* FIX FOOTER: Trasforma il body in una colonna flessibile */
+    display: flex;
+    flex-direction: column;
 }
 
-
 /* --- NAVBAR --- */
-
 .navbar {
     position: fixed;
     top: 0;
@@ -38,7 +38,6 @@ body {
     border-bottom: 1px solid rgba(163, 126, 215, 0.2);
 }
 
-/* --- LOGO --- */
 .titolo {
     text-decoration: none;
     font-size: 32px;
@@ -48,52 +47,43 @@ body {
     cursor: pointer;
 }
 
-/* Effetto riempimento per il testo (GameOrbit) */
 .titolo span {
-    /* Creiamo un gradiente a due colori netti: sopra viola (#a37ed7), sotto azzurro (#56cdce) */
     background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
     background-size: 100% 200%;
-    background-position: top; /* Partiamo mostrando solo la metà superiore (viola) */
-
-    /* Ritagliamo il background a forma di testo */
+    background-position: top;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-
-    /* Gestiamo l'animazione */
     transition: background-position 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Al passaggio del mouse sull'intero blocco, il gradiente sale */
 .titolo:hover span {
     background-position: bottom;
 }
 
-/* Immagine del logo */
 .titolo img {
     height: 1.8em;
     width: auto;
     margin-right: -10px;
-    /* Ho aggiunto un piccolo movimento (transform) per renderlo più dinamico */
     transition: filter 0.4s ease, transform 0.4s ease;
     filter: brightness(0) saturate(100%) invert(56%) sepia(50%) saturate(550%) hue-rotate(220deg);
 }
 
 .titolo:hover img {
     filter: brightness(0) saturate(100%) invert(75%) sepia(80%) saturate(350%) hue-rotate(130deg);
-    /* L'immagine fa un piccolo saltino in alto mentre il testo si riempie */
     transform: translateY(-3px);
 }
 
-
-/* AUTH SECTION */
-
+/* --- AUTH SECTION --- */
 .auth-section {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 60px 20px;
+
+    /* FIX FOOTER: Fa in modo che questa sezione occupi tutto lo spazio vuoto, spingendo il footer in basso */
+    flex: 1;
 }
 
 .auth-container {
@@ -103,40 +93,31 @@ body {
     justify-content: center;
 }
 
-/* BOX LOGIN/REGISTER */
 .auth-box {
     background: rgba(47, 54, 60, 0.8);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
-
     border: 1px solid rgba(86, 205, 206, 0.2);
     border-radius: 15px;
-
     padding: 40px;
     width: 320px;
-
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
-/* TITOLI */
 .auth-box h2 {
     margin-bottom: 20px;
     color: white;
     font-size: 24px;
 }
 
-/* INPUT */
 .auth-box input {
     width: 100%;
     padding: 10px 12px;
     margin-bottom: 12px;
-
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 8px;
-
     background: rgba(255,255,255,0.05);
     color: white;
-
     outline: none;
     transition: 0.3s;
 }
@@ -146,7 +127,6 @@ body {
     box-shadow: 0 0 10px rgba(86,205,206,0.3);
 }
 
-/* Specifico per il campo inserimento codice 2FA (Aggiunto) */
 .auth-box .code-input {
     font-size: 22px;
     text-align: center;
@@ -155,20 +135,15 @@ body {
     color: #56cdce;
 }
 
-/* BUTTON */
 .auth-box button {
     width: 100%;
     padding: 12px;
-
     border: none;
     border-radius: 8px;
-
     background: linear-gradient(90deg, #56cdce, #a855f7);
     color: white;
-
     font-weight: bold;
     cursor: pointer;
-
     transition: 0.3s;
 }
 
@@ -177,14 +152,12 @@ body {
     box-shadow: 0 5px 15px rgba(168,85,247,0.3);
 }
 
-/* LINK SWITCH E TESTI */
 .auth-box p {
     margin-top: 15px;
     font-size: 14px;
     color: rgba(255,255,255,0.6);
 }
 
-/* Testo descrittivo interno al form 2FA (Aggiunto) */
 .auth-box .info-text {
     color: rgba(255, 255, 255, 0.7);
     font-size: 13px;
@@ -192,9 +165,8 @@ body {
     margin-bottom: 15px;
 }
 
-/* Gestione degli errori (Aggiunto) */
 .auth-box .error-text {
-    color: #ff6b6b; /* Rosso morbido per non contrastare male sul fondo scuro */
+    color: #ff6b6b;
     font-size: 13px;
     margin-top: 4px;
     margin-bottom: 8px;
@@ -211,42 +183,30 @@ body {
     color: #a855f7;
 }
 
-/* HIDE */
 .hidden {
     display: none !important;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-    .auth-container {
-        flex-direction: column;
-        align-items: center;
-    }
-}
-
 /* --- FOOTER --- */
 .footer {
-    background-color: #2f363c; /* Deep Space */
-    border-top: 2px solid #a855f7; /* Orbit Purple */
+    background-color: #2f363c;
+    border-top: 2px solid #a855f7;
     padding: 60px 40px 20px;
-    margin-top: 50px;
+    margin-top: auto; /* Aiuta a tenere il footer in basso */
+    width: 100%;
 }
 
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;         /* Attiva il posizionamento in colonna */
-    justify-content: space-between; /* Spazia le colonne uniformemente */
-    gap: 40px;            /* Spazio tra le colonne */
-    flex-wrap: wrap;      /* Se lo schermo è piccolo, le manda a capo */
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
-.footer-column {
-    flex: 1;              /* Ogni colonna occupa lo stesso spazio */
-    min-width: 200px;     /* Impedisce alle colonne di diventare troppo strette */
-}
+.footer-column { flex: 1; min-width: 200px; }
 
-/* Titoli */
 .footer-column h3 {
     color: #ffffff;
     margin-bottom: 20px;
@@ -255,49 +215,16 @@ body {
     letter-spacing: 1px;
 }
 
-/* Liste e Testo */
-.footer-column p {
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
-}
+.footer-column p { line-height: 1.6; color: rgba(255, 255, 255, 0.7); }
+.footer-column ul { list-style: none; }
+.footer-column ul li { margin-bottom: 10px; }
+.footer-column ul li a { color: #56cdce; text-decoration: none; transition: 0.3s; }
+.footer-column ul li a:hover { color: #a855f7; padding-left: 5px; }
 
-.footer-column ul {
-    list-style: none;
-}
+.social-icons { display: flex; gap: 15px; font-size: 24px; }
+.social-icons a { color: #56cdce; transition: transform 0.3s, color 0.3s; }
+.social-icons a:hover { color: #a855f7; transform: translateY(-5px); }
 
-.footer-column ul li {
-    margin-bottom: 10px;
-}
-
-.footer-column ul li a {
-    color: #56cdce; /* Neon Cyan */
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.footer-column ul li a:hover {
-    color: #a855f7; /* Orbit Purple */
-    padding-left: 5px; /* Piccolo effetto movimento */
-}
-
-/* Icone Social */
-.social-icons {
-    display: flex;
-    gap: 15px;
-    font-size: 24px;
-}
-
-.social-icons a {
-    color: #56cdce;
-    transition: transform 0.3s, color 0.3s;
-}
-
-.social-icons a:hover {
-    color: #a855f7;
-    transform: translateY(-5px);
-}
-
-/* Copyright in basso */
 .footer-bottom {
     text-align: center;
     margin-top: 40px;
@@ -307,43 +234,26 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Responsive: sui telefoni le colonne tornano una sopra l'altra */
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .social-icons {
-        justify-content: center;
-    }
-}
-
-/* --- SEZIONE DOWNLOAD APP --- */
-
-/* Forza il contenitore dei bottoni a incolonnarli */
 .footer-column .app-buttons {
     display: flex !important;
     flex-direction: column !important;
     gap: 15px !important;
     margin-top: 20px !important;
-    align-items: flex-start; /* Allinea a sinistra */
+    align-items: flex-start;
 }
 
-/* Stile del singolo bottone (Usiamo .footer-column per dare più forza al selettore) */
 .footer-column .btn-app {
     display: flex !important;
     align-items: center !important;
     background-color: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid #56cdce !important; /* Neon Cyan */
+    border: 1px solid #56cdce !important;
     border-radius: 10px !important;
     padding: 10px 20px !important;
     text-decoration: none !important;
-    width: 220px !important; /* Larghezza fissa per simmetria */
+    width: 220px !important;
     transition: all 0.3s ease-in-out !important;
 }
 
-/* Icona dentro il bottone */
 .footer-column .btn-app i {
     font-size: 28px !important;
     margin-right: 15px !important;
@@ -352,7 +262,6 @@ body {
     text-align: center;
 }
 
-/* Testo del bottone */
 .footer-column .btn-text {
     display: flex !important;
     flex-direction: column !important;
@@ -372,17 +281,55 @@ body {
     font-weight: 700 !important;
 }
 
-/* --- EFFETTI HOVER --- */
-
 .footer-column .btn-app:hover {
-    background-color: rgba(168, 85, 247, 0.1) !important; /* Sfondo Purple */
-    border-color: #a855f7 !important; /* Bordo Purple */
+    background-color: rgba(168, 85, 247, 0.1) !important;
+    border-color: #a855f7 !important;
     transform: translateY(-3px) !important;
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
-.footer-column .btn-app:hover i,
-.footer-column .btn-app:hover .btn-text strong {
-    color: #a855f7 !important; /* Tutto diventa Purple al passaggio */
-}
+.footer-column .btn-app:hover i, .footer-column .btn-app:hover .btn-text strong { color: #a855f7 !important; }
 
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1;
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+
+    body {
+        padding-top: 130px;
+    }
+
+    /* Auth UI */
+    .auth-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .footer-column .app-buttons {
+        align-items: center !important;
+    }
+}

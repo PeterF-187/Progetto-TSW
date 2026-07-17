@@ -1,10 +1,8 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 
 body {
     background: #1e2228;
@@ -17,7 +15,6 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: white;
 }
-
 
 /* --- NAVBAR --- */
 .navbar {
@@ -37,7 +34,6 @@ body {
     border-bottom: 1px solid rgba(163, 126, 215, 0.2);
 }
 
-/* --- LOGO --- */
 .titolo {
     text-decoration: none;
     font-size: 32px;
@@ -47,68 +43,53 @@ body {
     cursor: pointer;
 }
 
-/* Effetto riempimento per il testo (GameOrbit) */
 .titolo span {
-    /* Creiamo un gradiente a due colori netti: sopra viola (#a37ed7), sotto azzurro (#56cdce) */
     background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
     background-size: 100% 200%;
-    background-position: top; /* Partiamo mostrando solo la metà superiore (viola) */
-
-    /* Ritagliamo il background a forma di testo */
+    background-position: top;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
     -webkit-text-fill-color: transparent;
-
-    /* Gestiamo l'animazione */
     transition: background-position 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* Al passaggio del mouse sull'intero blocco, il gradiente sale */
 .titolo:hover span {
     background-position: bottom;
 }
 
-/* Immagine del logo */
 .titolo img {
     height: 1.8em;
     width: auto;
     margin-right: -10px;
-    /* Ho aggiunto un piccolo movimento (transform) per renderlo più dinamico */
     transition: filter 0.4s ease, transform 0.4s ease;
     filter: brightness(0) saturate(100%) invert(56%) sepia(50%) saturate(550%) hue-rotate(220deg);
 }
 
 .titolo:hover img {
     filter: brightness(0) saturate(100%) invert(75%) sepia(80%) saturate(350%) hue-rotate(130deg);
-    /* L'immagine fa un piccolo saltino in alto mentre il testo si riempie */
     transform: translateY(-3px);
 }
 
-/* --- Pagina --- */
-
-
-/* Utility per nascondere i pannelli tramite lo switch JavaScript */
+/* --- PAGINA --- */
 .hidden {
     display: none !important;
 }
 
-/* Contenitore principale responsivo */
 .dashboard-container {
     display: flex;
     max-width: 1300px;
     margin: 0 auto;
     padding: 40px 20px;
     gap: 30px;
-    align-items: flex-start; /* Impedisce l'allungamento verticale forzato */
+    align-items: flex-start;
     box-sizing: border-box;
     width: 100%;
 }
 
-
 .sidebar {
     width: 260px;
-    min-width: 260px; /* Impedisce alla sidebar di rimpicciolirsi */
+    min-width: 260px;
     background: rgba(35, 40, 48, 0.7);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -121,7 +102,6 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-/* Pulsanti interni alla Sidebar */
 .tab-btn {
     width: 100%;
     padding: 14px 20px;
@@ -137,13 +117,11 @@ body {
     transition: background 0.3s, transform 0.2s, border-color 0.3s;
 }
 
-/* Hover sui pulsanti neutri */
 .tab-btn:hover {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Sezione Attiva (Stile Esatto dello screenshot) */
 .tab-btn.active {
     border: none;
     background: linear-gradient(90deg, #56cdce, #a855f7);
@@ -151,15 +129,13 @@ body {
     box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
 }
 
-
 .main-content {
     flex: 1;
-    min-width: 0; /* Fondamentale in Flexbox per evitare il fuori pagina (overflow) */
+    min-width: 0;
     display: flex;
     flex-direction: column;
 }
 
-/* Scritta di benvenuto "Ciao Utente" */
 .main-content h1 {
     font-size: 46px;
     margin: 0 0 25px 0;
@@ -167,7 +143,6 @@ body {
     color: #ffffff;
 }
 
-/* Il grande pannello scuro della panoramica */
 .panoramica-box {
     background: rgba(35, 40, 48, 0.4);
     backdrop-filter: blur(15px);
@@ -180,7 +155,6 @@ body {
     box-sizing: border-box;
 }
 
-
 .info-utente {
     display: flex;
     flex-direction: column;
@@ -188,10 +162,9 @@ body {
     margin-bottom: 45px;
 }
 
-/* Campi informativi */
 .info-riga {
     width: 100%;
-    max-width: 550px; /* Dimensione ideale per non sforare */
+    max-width: 550px;
     padding: 14px 20px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     border-radius: 10px;
@@ -200,13 +173,13 @@ body {
     font-size: 16px;
 }
 
-/* Etichetta azzurra interna (Nome:, Email:, ecc.) */
 .info-riga strong {
     color: #56cdce;
     font-weight: bold;
     margin-right: 6px;
 }
 
+/* --- SEZIONE CAROSELLO --- */
 .orders-section {
     width: 100%;
     position: relative;
@@ -221,7 +194,6 @@ body {
     padding-bottom: 12px;
 }
 
-/* Contenitore padre per posizionare le frecce ai lati esterni */
 .carousel-wrapper {
     position: relative;
     display: flex;
@@ -229,41 +201,32 @@ body {
     width: 100%;
 }
 
-/* La finestra visibile che taglia i giochi in eccesso */
 .carousel-container {
-    overflow-x: auto; /* Permette lo scroll orizzontale */
+    overflow-x: auto;
     scroll-behavior: smooth;
     width: 100%;
     padding: 10px 5px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
-/* Nasconde la barra di scorrimento predefinita del browser */
 .carousel-container::-webkit-scrollbar {
     display: none;
 }
-.carousel-container {
-    -ms-overflow-style: none;  /* IE/Edge */
-    scrollbar-width: none;  /* Firefox */
-}
 
-/* Allinea i giochi rigorosamente su una riga senza mandarli a capo */
 .recommended-grid {
     display: flex;
     flex-wrap: nowrap;
     gap: 20px;
 }
 
-/* Singola Card di Gioco Comprato */
 .recommended-card {
     text-decoration: none;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
     width: 220px;
-    flex: 0 0 220px; /* Impedisce alle card di rimpicciolirsi all'interno del carosello */
-    overflow: hidden;
-    display: block;
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    flex: 0 0 220px;
 }
 
 .recommended-card:hover {
@@ -272,16 +235,13 @@ body {
     box-shadow: 0 5px 20px rgba(168, 85, 247, 0.2);
 }
 
-/* Copertina del Videogioco */
 .recommended-card img {
     width: 100%;
     height: 140px;
     object-fit: cover;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    display: block;
 }
 
-/* Info del Videogioco sotto la foto */
 .recommended-info {
     padding: 15px;
 }
@@ -302,7 +262,6 @@ body {
     font-weight: bold;
 }
 
-/* Frecce del Carosello (Bottoni) */
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -323,12 +282,8 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-.prev-btn {
-    left: -20px;
-}
-.next-btn {
-    right: -20px;
-}
+.prev-btn { left: -20px; }
+.next-btn { right: -20px; }
 
 .carousel-btn:hover {
     background: linear-gradient(90deg, #56cdce, #a855f7);
@@ -337,15 +292,13 @@ body {
     box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
 }
 
-.carousel-btn:focus {
-    outline: none;
-}
+.carousel-btn:focus { outline: none; }
 
-
+/* --- LOGOUT --- */
 .logout-wrapper {
     margin-top: 40px;
     display: flex;
-    justify-content: flex-start; /* Allineato a sinistra sotto le informazioni */
+    justify-content: flex-start;
 }
 
 .btn-logout {
@@ -372,29 +325,7 @@ body {
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
 }
 
-
-@media (max-width: 900px) {
-    .dashboard-container {
-        flex-direction: column;
-        padding: 20px 10px;
-    }
-
-    .sidebar {
-        width: 100%;
-        min-width: 100%;
-    }
-
-    .info-riga {
-        max-width: 100%;
-    }
-
-    .carousel-btn {
-        display: none; /* Nei telefoni si naviga scorrendo con le dita */
-    }
-}
-
-/* --- Saldo --- */
-
+/* --- SALDO --- */
 .section-title {
     font-size: 42px;
     margin-bottom: 30px;
@@ -415,7 +346,6 @@ body {
     margin-bottom: 20px;
 }
 
-
 .saldo-display, .stato-display {
     max-width: 400px;
     display: flex;
@@ -424,16 +354,9 @@ body {
     box-sizing: border-box;
 }
 
-.saldo-display {
-    font-size: 20px;
-}
+.saldo-display { font-size: 20px; }
+.saldo-valore { color: #56cdce; font-weight: 800; }
 
-.saldo-valore {
-    color: #56cdce;
-    font-weight: 800;
-}
-
-/* Badge di stato colorati */
 .stato-badge {
     font-weight: bold;
     padding: 4px 10px;
@@ -441,20 +364,9 @@ body {
     background: rgba(0, 0, 0, 0.2);
 }
 
-.stato-attivo {
-    color: #22c55e;
-    text-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
-}
-
-.stato-sospeso {
-    color: #eab308;
-    text-shadow: 0 0 10px rgba(234, 179, 8, 0.3);
-}
-
-.stato-bloccato {
-    color: #ef4444;
-    text-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
-}
+.stato-attivo { color: #22c55e; text-shadow: 0 0 10px rgba(34, 197, 94, 0.3); }
+.stato-sospeso { color: #eab308; text-shadow: 0 0 10px rgba(234, 179, 8, 0.3); }
+.stato-bloccato { color: #ef4444; text-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
 
 .sezione-metodo-pagamento {
     margin-top: 30px;
@@ -462,14 +374,13 @@ body {
     padding-top: 25px;
 }
 
-/* Elementi di selezione Dropdown */
 .select-custom {
     background: rgba(35, 40, 48, 0.8);
     color: #ffffff;
     cursor: pointer;
     outline: none;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    appearance: none; /* Rimuove lo stile nativo brutto dei browser */
+    appearance: none;
     -webkit-appearance: none;
 }
 
@@ -478,7 +389,6 @@ body {
     color: #ffffff;
 }
 
-/* Form Ricarica Rapida (Inline) */
 .form-inline-ricarica {
     display: flex;
     gap: 15px;
@@ -487,9 +397,7 @@ body {
     width: 100%;
 }
 
-.form-inline-ricarica .select-custom {
-    flex: 1;
-}
+.form-inline-ricarica .select-custom { flex: 1; }
 
 .input-importo {
     width: 90px;
@@ -506,7 +414,6 @@ body {
     white-space: nowrap;
 }
 
-/* Form Inserimento Nuova Carta (Incolonnato) */
 .form-nuovo-metodo {
     max-width: 550px;
     display: flex;
@@ -533,14 +440,8 @@ body {
     color: #ffffff;
 }
 
-.input-center {
-    text-align: center;
-}
-
-.btn-submit-full {
-    margin-top: 10px;
-    width: 100%;
-}
+.input-center { text-align: center; }
+.btn-submit-full { margin-top: 10px; width: 100%; }
 
 .sezione-riscatta-codice {
     margin-top: 35px;
@@ -570,29 +471,8 @@ body {
     width: 100%;
 }
 
-@media (max-width: 600px) {
-    .form-inline-ricarica, .form-riscatta {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 10px;
-    }
-
-    .input-importo, .btn-riscatta-submit {
-        width: 100%;
-        max-width: 100%;
-    }
-
-    .form-row-split {
-        flex-direction: column;
-        gap: 12px;
-    }
-
-    .saldo-display, .stato-display {
-        max-width: 100%;
-    }
-}
-
-/* --- Impostazioni --- */
+/* --- IMPOSTAZIONI E TICKET ASSISTENZA --- */
+/* (Molte regole sono in comune con dashboardA, mantengo la logica pulita qui) */
 
 .contenitore-impostazioni {
     background: rgba(35, 40, 48, 0.4);
@@ -602,14 +482,11 @@ body {
     border-radius: 20px;
     padding: 35px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-
-    /* FIX: Allinea le schede internamente in verticale distanziandole */
     display: flex;
     flex-direction: column;
     gap: 30px;
 }
 
-/* --- SINGOLA SCHEDA (CAMBIO PASSWORD / 2FA) --- */
 .scheda-impostazioni {
     padding: 25px;
     border-radius: 15px;
@@ -624,43 +501,18 @@ body {
     box-shadow: 0 10px 25px rgba(86, 205, 206, 0.08);
 }
 
-/* --- TESTI --- */
-.subsection-title {
-    display: flex;
-    align-items: center;
-    gap: 12px; /* FIX: Spazio automatico tra l'icona FontAwesome e il testo */
-    color: white;
-    font-size: 22px;
-    margin-bottom: 15px;
-}
+.icona-sezione { color: #56cdce; font-size: 22px; }
 
-.icona-sezione {
-    color: #56cdce;
-    font-size: 22px;
-}
-
-.section-description {
-    color: rgba(255, 255, 255, 0.65);
-    line-height: 1.5;
-    max-width: 650px;
-    margin-bottom: 10px;
-}
-
-/* --- FORM MODIFICA PASSWORD --- */
 .form-impostazioni {
     margin-top: 25px;
     max-width: 500px;
-    /* FIX: Forza i campi della password ad incolonnarsi e distanziarsi */
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-.form-impostazioni .gruppo-input {
-    width: 100%;
-}
+.form-impostazioni .gruppo-input { width: 100%; }
 
-/* Input ereditati (stile focus) */
 .form-impostazioni input:focus {
     outline: none;
     border-color: #56cdce;
@@ -668,7 +520,6 @@ body {
     box-shadow: 0 0 15px rgba(86, 205, 206, 0.2);
 }
 
-/* --- FORM SICUREZZA IN LINEA (2FA) --- */
 .form-impostazioni-linea {
     margin-top: 25px;
     display: flex;
@@ -677,7 +528,6 @@ body {
     gap: 15px;
 }
 
-/* --- SELEZIONE PERSONALIZZATA (2FA) --- */
 .select-personalizzata-impostazioni {
     appearance: none;
     -webkit-appearance: none;
@@ -687,7 +537,6 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     padding: 14px 20px;
-
     min-width: 250px;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -703,9 +552,7 @@ body {
     color: white;
 }
 
-/* --- BOTTONI GENERALI --- */
-.btn-invia-impostazioni,
-.btn-invia-linea-impostazioni {
+.btn-invia-impostazioni, .btn-invia-linea-impostazioni {
     border: none;
     cursor: pointer;
     background: linear-gradient(90deg, #56cdce, #a855f7);
@@ -713,85 +560,35 @@ body {
     font-weight: bold;
     font-size: 15px;
     border-radius: 10px;
-    padding: 14px 30px; /* Uniformato il padding per renderli simmetrici alle input */
+    padding: 14px 30px;
     transition: transform .25s ease, box-shadow .25s ease;
 }
 
-.btn-invia-impostazioni:hover,
-.btn-invia-linea-impostazioni:hover {
+.btn-invia-impostazioni:hover, .btn-invia-linea-impostazioni:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(168, 85, 247, 0.35);
 }
 
-/* --- DIVISORE ORIZZONTALE --- */
 .divisore-impostazioni {
     margin: 10px 0;
     border: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.08); /* FIX: Reso un vero bordo CSS standard */
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* --- ANIMAZIONE BOX NOTIFICA --- */
 .box-notifica {
     animation: comparsaNotifica .35s ease forwards;
 }
 
 @keyframes comparsaNotifica {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- RESPONSIVE MOBILES --- */
-@media(max-width: 700px){
-    .contenitore-impostazioni {
-        padding: 20px;
-    }
+/* --- SEZIONE TICKET --- */
+.nascosto { display: none !important; }
 
-    .scheda-impostazioni {
-        padding: 20px;
-    }
+.sezione-dashboard { padding: 20px; color: #ffffff; }
 
-    .form-impostazioni-linea {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .select-personalizzata-impostazioni,
-    .btn-invia-linea-impostazioni,
-    .btn-invia-impostazioni {
-        max-width: 100%;
-        width: 100%;
-    }
-}
-
-/* ==========================================================================
-   SEZIONE TICKET & ASSISTENZA (Struttura, Form e Liste)
-   ========================================================================== */
-
-/* Utility di visibilità */
-.nascosto {
-    display: none !important;
-}
-
-/* Contenitore principale della sezione */
-.sezione-dashboard {
-    padding: 20px;
-    color: #ffffff;
-}
-
-.titolo-sezione {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 28px;
-    color: #ffffff;
-}
-
-/* Scatola di gestione (Card bianche trasparenti sul tema scuro) */
 .scatola-gestione {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -801,50 +598,13 @@ body {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
 }
 
-.titolo-sottosezione {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 24px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #ffffff;
-}
+.modulo-amministrazione { display: flex; flex-direction: column; gap: 20px; }
+.riga-modulo-doppia { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.gruppo-modulo { display: flex; flex-direction: column; gap: 8px; }
 
-.icona-sezione {
-    color: #56cdce; /* Cyan coordinato al tuo stile */
-}
+.etichetta-gruppo { font-size: 0.9rem; font-weight: 600; color: rgba(255, 255, 255, 0.7); }
 
-/* ---------- Form e Input ---------- */
-
-.modulo-amministrazione {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.riga-modulo-doppia {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-.gruppo-modulo {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.etichetta-gruppo {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: rgba(255, 255, 255, 0.7),
-}
-
-/* Stile comune per Select e Textarea */
-.selettore-personalizzato,
-.input-testo-personalizzato {
+.selettore-personalizzato, .input-testo-personalizzato {
     width: 100%;
     padding: 12px 16px;
     background: rgba(0, 0, 0, 0.2);
@@ -857,29 +617,17 @@ body {
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.selettore-personalizzato:focus,
-.input-testo-personalizzato:focus {
+.selettore-personalizzato:focus, .input-testo-personalizzato:focus {
     outline: none;
-    border-color: rgba(168, 85, 247, 0.8); /* Purple focus */
+    border-color: rgba(168, 85, 247, 0.8);
     box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.25);
 }
 
-/* Select option styling base */
-.selettore-personalizzato option {
-    background: #1e1e24; /* Sfondo scuro per le opzioni del menu a tendina */
-    color: #ffffff;
-}
+.selettore-personalizzato option { background: #1e1e24; color: #ffffff; }
 
-.textarea-ticket {
-    resize: vertical;
-    min-height: 120px;
-}
+.textarea-ticket { resize: vertical; min-height: 120px; }
 
-/* Bottone di invio */
-.azioni-modulo {
-    display: flex;
-    justify-content: flex-start;
-}
+.azioni-modulo { display: flex; justify-content: flex-start; }
 
 .pulsante-invia {
     background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
@@ -896,21 +644,7 @@ body {
     transition: transform 0.2s ease, filter 0.2s ease;
 }
 
-.pulsante-invia:hover {
-    filter: brightness(1.1);
-    transform: translateY(-1px);
-}
-
-.pulsante-invia:active {
-    transform: translateY(0);
-}
-
-/* ---------- Lista Storico Ticket ---------- */
-
-.descrizione-sezione {
-    color: rgba(255, 255, 255, 0.6);
-    font-style: italic;
-}
+.pulsante-invia:hover { filter: brightness(1.1); transform: translateY(-1px); }
 
 .lista-ticket-contenitore {
     display: flex;
@@ -921,22 +655,11 @@ body {
     padding-right: 8px;
 }
 
-/* Scrollbar Personalizzata */
-.lista-ticket-contenitore::-webkit-scrollbar {
-    width: 6px;
-}
-.lista-ticket-contenitore::-webkit-scrollbar-track {
-    background: transparent;
-}
-.lista-ticket-contenitore::-webkit-scrollbar-thumb {
-    background: rgba(168, 85, 247, 0.35);
-    border-radius: 20px;
-}
-.lista-ticket-contenitore::-webkit-scrollbar-thumb:hover {
-    background: rgba(168, 85, 247, 0.6);
-}
+.lista-ticket-contenitore::-webkit-scrollbar { width: 6px; }
+.lista-ticket-contenitore::-webkit-scrollbar-track { background: transparent; }
+.lista-ticket-contenitore::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.35); border-radius: 20px; }
+.lista-ticket-contenitore::-webkit-scrollbar-thumb:hover { background: rgba(168, 85, 247, 0.6); }
 
-/* Singola Scheda Ticket */
 .scheda-ticket {
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -961,22 +684,9 @@ body {
     border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
-.tipo-ticket {
-    color: #56cdce;
-    font-size: .85rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: .5px;
-}
-
-.data-ticket {
-    color: rgba(255,255,255,.55);
-    font-size: .85rem;
-}
-
-.intestazione-ticket .etichetta-stato {
-    margin-left: auto;
-}
+.tipo-ticket { color: #56cdce; font-size: .85rem; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.data-ticket { color: rgba(255,255,255,.55); font-size: .85rem; }
+.intestazione-ticket .etichetta-stato { margin-left: auto; }
 
 .corpo-ticket p {
     margin: 0;
@@ -987,7 +697,6 @@ body {
     word-break: break-word;
 }
 
-/* Badge di Stato */
 .etichetta-stato {
     display: inline-flex;
     align-items: center;
@@ -998,40 +707,13 @@ body {
     letter-spacing: .3px;
 }
 
-.ticket-aperto {
-    background: rgba(34,197,94,.18);
-    color: #67e58d;
-    border: 1px solid rgba(34,197,94,.35);
-}
-
-.ticket-chiuso {
-    background: rgba(239,68,68,.18);
-    color: #ff8a8a;
-    border: 1px solid rgba(239,68,68,.35);
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .riga-modulo-doppia {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-    .intestazione-ticket {
-        flex-wrap: wrap;
-        gap: 8px;
-    }
-    .intestazione-ticket .etichetta-stato {
-        margin-left: 0;
-    }
-    .scheda-ticket {
-        padding: 16px;
-    }
-}
+.ticket-aperto { background: rgba(34,197,94,.18); color: #67e58d; border: 1px solid rgba(34,197,94,.35); }
+.ticket-chiuso { background: rgba(239,68,68,.18); color: #ff8a8a; border: 1px solid rgba(239,68,68,.35); }
 
 /* --- FOOTER --- */
 .footer {
-    background-color: #2f363c; /* Deep Space */
-    border-top: 2px solid #a855f7; /* Orbit Purple */
+    background-color: #2f363c;
+    border-top: 2px solid #a855f7;
     padding: 60px 40px 20px;
     margin-top: 50px;
 }
@@ -1039,18 +721,14 @@ body {
 .footer-container {
     max-width: 1200px;
     margin: 0 auto;
-    display: flex;         /* Attiva il posizionamento in colonna */
-    justify-content: space-between; /* Spazia le colonne uniformemente */
-    gap: 40px;            /* Spazio tra le colonne */
-    flex-wrap: wrap;      /* Se lo schermo è piccolo, le manda a capo */
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
-.footer-column {
-    flex: 1;              /* Ogni colonna occupa lo stesso spazio */
-    min-width: 200px;     /* Impedisce alle colonne di diventare troppo strette */
-}
+.footer-column { flex: 1; min-width: 200px; }
 
-/* Titoli */
 .footer-column h3 {
     color: #ffffff;
     margin-bottom: 20px;
@@ -1059,49 +737,16 @@ body {
     letter-spacing: 1px;
 }
 
-/* Liste e Testo */
-.footer-column p {
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
-}
+.footer-column p { line-height: 1.6; color: rgba(255, 255, 255, 0.7); }
+.footer-column ul { list-style: none; }
+.footer-column ul li { margin-bottom: 10px; }
+.footer-column ul li a { color: #56cdce; text-decoration: none; transition: 0.3s; }
+.footer-column ul li a:hover { color: #a855f7; padding-left: 5px; }
 
-.footer-column ul {
-    list-style: none;
-}
+.social-icons { display: flex; gap: 15px; font-size: 24px; }
+.social-icons a { color: #56cdce; transition: transform 0.3s, color 0.3s; }
+.social-icons a:hover { color: #a855f7; transform: translateY(-5px); }
 
-.footer-column ul li {
-    margin-bottom: 10px;
-}
-
-.footer-column ul li a {
-    color: #56cdce; /* Neon Cyan */
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.footer-column ul li a:hover {
-    color: #a855f7; /* Orbit Purple */
-    padding-left: 5px; /* Piccolo effetto movimento */
-}
-
-/* Icone Social */
-.social-icons {
-    display: flex;
-    gap: 15px;
-    font-size: 24px;
-}
-
-.social-icons a {
-    color: #56cdce;
-    transition: transform 0.3s, color 0.3s;
-}
-
-.social-icons a:hover {
-    color: #a855f7;
-    transform: translateY(-5px);
-}
-
-/* Copyright in basso */
 .footer-bottom {
     text-align: center;
     margin-top: 40px;
@@ -1111,43 +756,26 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Responsive: sui telefoni le colonne tornano una sopra l'altra */
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .social-icons {
-        justify-content: center;
-    }
-}
-
-/* --- SEZIONE DOWNLOAD APP --- */
-
-/* Forza il contenitore dei bottoni a incolonnarli */
 .footer-column .app-buttons {
     display: flex !important;
     flex-direction: column !important;
     gap: 15px !important;
     margin-top: 20px !important;
-    align-items: flex-start; /* Allinea a sinistra */
+    align-items: flex-start;
 }
 
-/* Stile del singolo bottone (Usiamo .footer-column per dare più forza al selettore) */
 .footer-column .btn-app {
     display: flex !important;
     align-items: center !important;
     background-color: rgba(255, 255, 255, 0.05) !important;
-    border: 1px solid #56cdce !important; /* Neon Cyan */
+    border: 1px solid #56cdce !important;
     border-radius: 10px !important;
     padding: 10px 20px !important;
     text-decoration: none !important;
-    width: 220px !important; /* Larghezza fissa per simmetria */
+    width: 220px !important;
     transition: all 0.3s ease-in-out !important;
 }
 
-/* Icona dentro il bottone */
 .footer-column .btn-app i {
     font-size: 28px !important;
     margin-right: 15px !important;
@@ -1156,7 +784,6 @@ body {
     text-align: center;
 }
 
-/* Testo del bottone */
 .footer-column .btn-text {
     display: flex !important;
     flex-direction: column !important;
@@ -1176,17 +803,124 @@ body {
     font-weight: 700 !important;
 }
 
-/* --- EFFETTI HOVER --- */
-
 .footer-column .btn-app:hover {
-    background-color: rgba(168, 85, 247, 0.1) !important; /* Sfondo Purple */
-    border-color: #a855f7 !important; /* Bordo Purple */
+    background-color: rgba(168, 85, 247, 0.1) !important;
+    border-color: #a855f7 !important;
     transform: translateY(-3px) !important;
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
-.footer-column .btn-app:hover i,
-.footer-column .btn-app:hover .btn-text strong {
-    color: #a855f7 !important; /* Tutto diventa Purple al passaggio */
+.footer-column .btn-app:hover i, .footer-column .btn-app:hover .btn-text strong { color: #a855f7 !important; }
+
+/* --- RESPONSIVE MOBILE E TABLET --- */
+@media (max-width: 900px) {
+    .dashboard-container {
+        flex-direction: column;
+        padding: 20px 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .info-riga {
+        max-width: 100%;
+    }
+    .carousel-btn {
+        display: none;
+    }
 }
 
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1;
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+
+    body {
+        padding-top: 130px;
+    }
+
+    /* Forms */
+    .riga-modulo-doppia {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .intestazione-ticket {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .intestazione-ticket .etichetta-stato {
+        margin-left: 0;
+    }
+
+    .scheda-ticket {
+        padding: 16px;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .footer-column .app-buttons {
+        align-items: center !important;
+    }
+}
+
+@media(max-width: 700px) {
+    .contenitore-impostazioni {
+        padding: 20px;
+    }
+
+    .scheda-impostazioni {
+        padding: 20px;
+    }
+
+    .form-impostazioni-linea {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .select-personalizzata-impostazioni, .btn-invia-linea-impostazioni, .btn-invia-impostazioni {
+        max-width: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-inline-ricarica, .form-riscatta { flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    .input-importo, .btn-riscatta-submit {
+        width: 100%;
+        max-width: 100%; }
+    .form-row-split {
+        flex-direction: column;
+        gap: 12px;
+    }
+    .saldo-display, .stato-display {
+        max-width: 100%;
+    }
+}

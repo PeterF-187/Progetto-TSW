@@ -14,15 +14,11 @@ body {
     padding-top: 85px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: white;
-
-    /* Layout verticale flessibile per gestire il posizionamento del footer */
     display: flex;
     flex-direction: column;
 }
 
-/* ========================================= */
-/* --- BARRA DI NAVIGAZIONE (NAVBAR) --- */
-/* ========================================= */
+/* --- NAVBAR --- */
 .navbar {
     position: fixed;
     top: 0;
@@ -40,14 +36,13 @@ body {
     border-bottom: 1px solid rgba(163, 126, 215, 0.2);
 }
 
-/* --- LOGO --- */
 .titolo {
     text-decoration: none;
     font-size: 32px;
     font-weight: bold;
     display: flex;
     align-items: center;
-    cursor: default; /* Statico e non cliccabile per l'area amministrativa */
+    cursor: default;
 }
 
 .titolo span {
@@ -78,7 +73,6 @@ body {
     transform: translateY(-3px);
 }
 
-/* --- LOGOUT E AREA UTENTE NAVBAR --- */
 .navbar-autenticazione {
     display: flex;
     align-items: center;
@@ -104,9 +98,7 @@ body {
     user-select: none;
 }
 
-/* ========================================= */
 /* --- STRUTTURA LOGISTICA E GRIGLIE --- */
-/* ========================================= */
 .nascosto {
     display: none !important;
 }
@@ -117,7 +109,7 @@ body {
     margin: 0 auto;
     padding: 40px 20px;
     width: 100%;
-    flex: 1; /* Consente di spingere il footer sul fondo della pagina */
+    flex: 1;
 }
 
 .principale-amministrazione {
@@ -134,7 +126,6 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Griglia principale a due colonne per affiancare i box gestionali */
 .griglia-amministrazione {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -142,14 +133,11 @@ body {
     width: 100%;
 }
 
-/* Classe per espandere un intero box su entrambe le colonne (es. Franchise o Videogioco) */
 .blocco-larghezza-piena {
     grid-column: span 2;
 }
 
-/* ========================================= */
-/* --- PANNELLI CONTENITORI (SCHEDE) --- */
-/* ========================================= */
+/* --- PANNELLI CONTENITORI --- */
 .box-gestione {
     background: rgba(35, 40, 48, 0.4);
     backdrop-filter: blur(15px);
@@ -174,12 +162,10 @@ body {
 }
 
 .titolo-sottosezione i {
-    color: #56cdce; /* Azzurro Neon */
+    color: #56cdce;
 }
 
-/* ========================================= */
-/* --- ARCHITETTURA ELEMENTI FORM --- */
-/* ========================================= */
+/* --- ARCHITETTURA FORM --- */
 .form-amministrazione {
     display: flex;
     flex-direction: column;
@@ -204,7 +190,6 @@ body {
     font-weight: 600;
 }
 
-/* Disposizione campi su righe multiple (Sezione Videogioco) */
 .riga-form-doppia {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -219,7 +204,6 @@ body {
     width: 100%;
 }
 
-/* Menu a tendina personalizzato */
 .seleziona-personalizzato {
     width: 100%;
     max-width: 500px;
@@ -244,7 +228,6 @@ body {
     color: #ffffff;
 }
 
-/* Input di testo e numerici */
 .input-testo-personalizzato {
     width: 100%;
     max-width: 500px;
@@ -268,19 +251,17 @@ body {
     color: rgba(255, 255, 255, 0.25);
 }
 
-/* Rimozione delle freccette standard dai campi numerici */
 .input-testo-personalizzato[type="number"] {
     -moz-appearance: textfield;
 }
+
 .input-testo-personalizzato::-webkit-outer-spin-button,
 .input-testo-personalizzato::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-/* ========================================= */
 /* --- SELEZIONI DI TIPO RADIO --- */
-/* ========================================= */
 .riga-radio {
     display: flex;
     flex-direction: row;
@@ -321,12 +302,11 @@ body {
 
 .etichetta-radio input[type="radio"]:checked + .radio-personalizzato {
     background: rgba(168, 85, 247, 0.12);
-    border-color: #a855f7; /* Viola Orbit */
+    border-color: #a855f7;
     color: #ffffff;
     box-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
 }
 
-/* Varianti colore per lo Stato del Conto */
 .etichetta-radio input[type="radio"]:checked + .stato-disponibile {
     border-color: #22c55e;
     background: rgba(34, 197, 94, 0.12);
@@ -348,12 +328,10 @@ body {
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
 }
 
-/* ========================================= */
-/* --- MATRICE CHECKBOX N-TO-N VIDEOGIOCO --- */
-/* ========================================= */
+/* --- MATRICE CHECKBOX VIDEOGIOCO --- */
 .contenitore-matrice-checkbox {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 Colonne pulite */
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     margin-top: 15px;
     width: 100%;
@@ -369,7 +347,7 @@ body {
 }
 
 .etichetta-matrice {
-    color: #56cdce; /* Azzurro Neon */
+    color: #56cdce;
     font-size: 15px;
     font-weight: 600;
     margin-bottom: 12px;
@@ -377,7 +355,6 @@ body {
     padding-bottom: 6px;
 }
 
-/* Finestra di scorrimento interna per bloccare l'altezza della scheda */
 .lista-scorrimento-checkbox {
     display: flex;
     flex-direction: column;
@@ -387,14 +364,8 @@ body {
     padding-right: 5px;
 }
 
-/* Scrollbar minimale coordinata */
-.lista-scorrimento-checkbox::-webkit-scrollbar {
-    width: 4px;
-}
-.lista-scorrimento-checkbox::-webkit-scrollbar-thumb {
-    background: rgba(168, 85, 247, 0.3);
-    border-radius: 4px;
-}
+.lista-scorrimento-checkbox::-webkit-scrollbar { width: 4px; }
+.lista-scorrimento-checkbox::-webkit-scrollbar-thumb { background: rgba(168, 85, 247, 0.3); border-radius: 4px; }
 
 .contenitore-spunta {
     display: flex;
@@ -408,22 +379,16 @@ body {
 }
 
 .contenitore-spunta input[type="checkbox"] {
-    accent-color: #a855f7; /* Segno di spunta viola */
+    accent-color: #a855f7;
     width: 16px;
     height: 16px;
     cursor: pointer;
 }
 
-.contenitore-spunta:hover {
-    color: #ffffff;
-}
+.contenitore-spunta:hover { color: #ffffff; }
 
-/* ========================================= */
-/* --- PULSANTI DI INVIO E MESSAGGI --- */
-/* ========================================= */
-.azioni-form {
-    margin-top: 5px;
-}
+/* --- PULSANTI E NOTIFICHE --- */
+.azioni-form { margin-top: 5px; }
 
 .pulsante-invia {
     padding: 14px 35px;
@@ -454,26 +419,15 @@ body {
     animation: comparsaDallAlto 0.3s ease forwards;
 }
 
-.notifica-successo {
-    background: rgba(34, 197, 94, 0.12);
-    border: 1px solid #22c55e;
-    color: #22c55e;
-}
-
-.notifica-errore {
-    background: rgba(239, 68, 68, 0.12);
-    border: 1px solid #ef4444;
-    color: #ef4444;
-}
+.notifica-successo { background: rgba(34, 197, 94, 0.12); border: 1px solid #22c55e; color: #22c55e; }
+.notifica-errore { background: rgba(239, 68, 68, 0.12); border: 1px solid #ef4444; color: #ef4444; }
 
 @keyframes comparsaDallAlto {
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========================================= */
-/* --- PIÈ DI PAGINA (FOOTER) --- */
-/* ========================================= */
+/* --- FOOTER --- */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
@@ -489,9 +443,7 @@ body {
     font-weight: 500;
 }
 
-/* ========================================= */
-/* --- RESPONSIVITÀ COMPATTA (DIAGNOSTICA) --- */
-/* ========================================= */
+/* --- RESPONSIVITÀ (MEDIA QUERIES) --- */
 @media (max-width: 1100px) {
     .contenitore-matrice-checkbox {
         grid-template-columns: repeat(2, 1fr);
@@ -503,6 +455,7 @@ body {
         grid-template-columns: 1fr;
         gap: 25px;
     }
+
     .blocco-larghezza-piena {
         grid-column: span 1;
     }
@@ -513,8 +466,37 @@ body {
         grid-template-columns: 1fr;
         gap: 15px;
     }
+
     .contenitore-matrice-checkbox {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navbar per Area Admin */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1;
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+
+    .navbar-autenticazione {
+        order: 3; width: 100%;
+        justify-content: center;
+    }
+
+    body {
+        padding-top: 130px;
     }
 }
 
@@ -523,16 +505,20 @@ body {
         flex-direction: column;
         align-items: stretch;
     }
+
     .radio-personalizzato {
         text-align: center;
         width: 100%;
     }
+
     .contenitore-amministrazione {
         padding: 20px 15px;
     }
+
     .box-gestione {
         padding: 25px;
     }
+
     .riga-form-doppia {
         grid-template-columns: 1fr;
     }

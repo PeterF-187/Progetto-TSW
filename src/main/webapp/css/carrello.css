@@ -1,10 +1,8 @@
-
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-
 
 body {
     background: #1e2228;
@@ -18,9 +16,7 @@ body {
     color: white;
 }
 
-/* ========================================= */
 /* --- NAVBAR --- */
-/* ========================================= */
 .navbar {
     position: fixed;
     top: 0;
@@ -38,7 +34,6 @@ body {
     border-bottom: 1px solid rgba(163, 126, 215, 0.2);
 }
 
-/* --- LOGO --- */
 .titolo {
     text-decoration: none;
     font-size: 32px;
@@ -48,7 +43,6 @@ body {
     cursor: pointer;
 }
 
-/* Effetto riempimento per il testo (GameOrbit) */
 .titolo span {
     background: linear-gradient(to top, #56cdce 50%, #a37ed7 50%);
     background-size: 100% 200%;
@@ -157,7 +151,6 @@ body {
     transform: scale(1.2);
 }
 
-/* DROPDOWN */
 #suggestions {
     display: none;
     position: absolute;
@@ -216,7 +209,6 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
-/* --- EFFETTI ICONE --- */
 .icon-link {
     font-size: 22px;
     display: flex;
@@ -241,21 +233,18 @@ body {
     100% { transform: scale(1); }
 }
 
-
-/* --- Sezione pagina carrello --- */
-
+/* --- CARRELLO PAGINA --- */
 .cart-main-container {
-    max-width: 1300px; /* Più largo della wishlist per far stare comodamente la sidebar */
+    max-width: 1300px;
     margin: 40px auto;
     padding: 0 30px;
     display: flex;
-    align-items: flex-start; /* Allinea gli elementi in alto */
+    align-items: flex-start;
     justify-content: space-between;
-    gap: 40px; /* Spazio tra la lista articoli e la barra laterale di riepilogo */
+    gap: 40px;
     min-height: 60vh;
 }
 
-/* --- COLONNA SINISTRA: Lista dei prodotti --- */
 .cart-items-section {
     flex: 2;
     display: flex;
@@ -271,7 +260,6 @@ body {
     color: white;
 }
 
-/* Riga del singolo articolo nel carrello */
 .cart-item-row {
     display: flex;
     align-items: center;
@@ -291,7 +279,6 @@ body {
     box-shadow: 0 0 15px rgba(163, 126, 215, 0.15);
 }
 
-/* Sotto-blocco info gioco (Immagine + Titolo) */
 .cart-item-info {
     display: flex;
     align-items: center;
@@ -312,7 +299,6 @@ body {
     color: white;
 }
 
-/* Sotto-blocco azioni gioco (Prezzo + Cestino) */
 .cart-item-actions {
     display: flex;
     align-items: center;
@@ -322,11 +308,10 @@ body {
 .cart-item-price {
     font-size: 18px;
     font-weight: 700;
-    color: #56cdce; /* Neon Cyan */
+    color: #56cdce;
     white-space: nowrap;
 }
 
-/* Bottone per rimuovere l'elemento */
 .btn-remove-item {
     background: none;
     border: none;
@@ -341,23 +326,21 @@ body {
 }
 
 .btn-remove-item:hover {
-    color: #ff4d4d; /* Diventa rosso al passaggio */
+    color: #ff4d4d;
     transform: scale(1.1);
 }
 
-
-/* --- Sidebar di Riepilogo e Controllo Saldo --- */
-
+/* --- SIDEBAR RIEPILOGO --- */
 .cart-summary-sidebar {
-    flex: 1; /* Prende 1/3 dello spazio disponibile */
+    flex: 1;
     min-width: 320px;
-    position: sticky; /* Rimane bloccata in alto durante lo scroll */
+    position: sticky;
     top: 120px;
 }
 
 .summary-card {
     background: rgba(35, 40, 48, 0.8);
-    border: 2px solid #56cdce; /* Bordo ciano per differenziare la sezione di acquisto */
+    border: 2px solid #56cdce;
     border-radius: 12px;
     padding: 25px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -376,7 +359,6 @@ body {
     margin-bottom: 20px;
 }
 
-/* Righe di testo del calcolo prezzi */
 .summary-row {
     display: flex;
     justify-content: space-between;
@@ -395,7 +377,7 @@ body {
     color: #56cdce;
 }
 
-/* --- SEZIONE METODO DI PAGAMENTO --- */
+/* --- METODO PAGAMENTO --- */
 .payment-method-section {
     margin-top: 25px;
     padding-top: 20px;
@@ -410,7 +392,6 @@ body {
     margin-bottom: 15px;
 }
 
-/* --- NUOVO: Stile per il Menù a Tendina (Select) --- */
 .payment-selector-container {
     margin-bottom: 15px;
 }
@@ -426,10 +407,8 @@ body {
     cursor: pointer;
     outline: none;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
-    /* Reset della freccia nativa per personalizzarla se necessario */
     appearance: none;
     -webkit-appearance: none;
-    -moz-appearance: none;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2356cdce' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
     background-repeat: no-repeat;
     background-position: right 10px center;
@@ -447,7 +426,6 @@ body {
     box-shadow: 0 0 8px rgba(86, 205, 206, 0.3);
 }
 
-/* Stile delle opzioni interne al menù (dipende dal browser, ma aiuta lo stacco) */
 .form-select option {
     background-color: #1e2228;
     color: rgba(255, 255, 255, 0.9);
@@ -457,7 +435,6 @@ body {
     color: rgba(255, 255, 255, 0.3);
 }
 
-/* Box riepilogativo delle condizioni del saldo virtuale */
 .wallet-status-box {
     background: rgba(0, 0, 0, 0.2);
     padding: 15px;
@@ -466,7 +443,6 @@ body {
     line-height: 1.6;
     margin-bottom: 15px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    /* Animazione fluida alla comparsa tramite JS */
     animation: fadeIn 0.3s ease-in-out;
 }
 
@@ -475,7 +451,6 @@ body {
     font-weight: 700;
 }
 
-/* Badge dinamici legati all'Enum dello stato del conto */
 .status-badge {
     padding: 2px 8px;
     border-radius: 4px;
@@ -484,12 +459,10 @@ body {
     text-transform: uppercase;
 }
 
-/* Gestione dei Badge sia in maiuscolo che minuscolo per sicurezza */
 .status-badge.ATTIVO, .status-badge.Attivo { background: rgba(40, 167, 69, 0.2); color: #28a745; }
 .status-badge.SOSPESO, .status-badge.Sospeso { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
 .status-badge.BLOCCATO, .status-badge.Bloccato { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
 
-/* Box di allerta per blocchi o info */
 .alert-box {
     padding: 12px 15px;
     border-radius: 6px;
@@ -502,30 +475,15 @@ body {
     animation: fadeIn 0.3s ease-in-out;
 }
 
-.alert-box.error {
-    background: rgba(220, 53, 69, 0.15);
-    border: 1px solid rgba(220, 53, 69, 0.4);
-    color: #f8d7da;
-}
+.alert-box.error { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.4); color: #f8d7da; }
+.alert-box.info { background: rgba(86, 205, 206, 0.1); border: 1px solid rgba(86, 205, 206, 0.3); color: #e2f8f8; }
+.alert-box.info a { color: #56cdce; text-decoration: underline; }
 
-.alert-box.info {
-    background: rgba(86, 205, 206, 0.1);
-    border: 1px solid rgba(86, 205, 206, 0.3);
-    color: #e2f8f8;
-}
-
-.alert-box.info a {
-    color: #56cdce;
-    text-decoration: underline;
-}
-
-/* Animazione di comparsa per elementi dinamici */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-5px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- PULSANTE DI PROCEDURA ACQUISTO --- */
 .checkout-form {
     margin-top: 25px;
 }
@@ -538,7 +496,7 @@ body {
     font-size: 16px;
     font-weight: 700;
     border: 2px solid #56cdce;
-    border-radius: 50px; /* Forma ovale perfetta come da disegno */
+    border-radius: 50px;
     padding: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -551,7 +509,6 @@ body {
     transform: scale(1.02);
 }
 
-/* Disabilitazione estetica quando l'utente è bloccato o il carrello è vuoto */
 .btn-proceed-order:disabled {
     border-color: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.2);
@@ -561,40 +518,7 @@ body {
     transform: none;
 }
 
-
-
-/* --- RESPONSIVE DESIGN  --- */
-
-@media (max-width: 992px) {
-    .cart-main-container {
-        flex-direction: column; /* Incolonna le sezioni su schermi medi/piccoli */
-        align-items: stretch;
-    }
-
-    .cart-summary-sidebar {
-        position: static; /* Sblocca la sidebar dall'effetto sticky */
-        width: 100%;
-    }
-}
-
-@media (max-width: 576px) {
-    .cart-item-row {
-        height: auto;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-        padding: 20px;
-    }
-
-    .cart-item-actions {
-        width: 100%;
-        justify-content: space-between;
-    }
-}
-
-
-
-/* --- Footer --- */
+/* --- FOOTER --- */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
@@ -611,10 +535,7 @@ body {
     flex-wrap: wrap;
 }
 
-.footer-column {
-    flex: 1;
-    min-width: 200px;
-}
+.footer-column { flex: 1; min-width: 200px; }
 
 .footer-column h3 {
     color: #ffffff;
@@ -624,45 +545,15 @@ body {
     letter-spacing: 1px;
 }
 
-.footer-column p {
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.7);
-}
+.footer-column p { line-height: 1.6; color: rgba(255, 255, 255, 0.7); }
+.footer-column ul { list-style: none; }
+.footer-column ul li { margin-bottom: 10px; }
+.footer-column ul li a { color: #56cdce; text-decoration: none; transition: 0.3s; }
+.footer-column ul li a:hover { color: #a855f7; padding-left: 5px; }
 
-.footer-column ul {
-    list-style: none;
-}
-
-.footer-column ul li {
-    margin-bottom: 10px;
-}
-
-.footer-column ul li a {
-    color: #56cdce;
-    text-decoration: none;
-    transition: 0.3s;
-}
-
-.footer-column ul li a:hover {
-    color: #a855f7;
-    padding-left: 5px;
-}
-
-.social-icons {
-    display: flex;
-    gap: 15px;
-    font-size: 24px;
-}
-
-.social-icons a {
-    color: #56cdce;
-    transition: transform 0.3s, color 0.3s;
-}
-
-.social-icons a:hover {
-    color: #a855f7;
-    transform: translateY(-5px);
-}
+.social-icons { display: flex; gap: 15px; font-size: 24px; }
+.social-icons a { color: #56cdce; transition: transform 0.3s, color 0.3s; }
+.social-icons a:hover { color: #a855f7; transform: translateY(-5px); }
 
 .footer-bottom {
     text-align: center;
@@ -671,17 +562,6 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     font-size: 12px;
     color: rgba(255, 255, 255, 0.4);
-}
-
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    .social-icons {
-        justify-content: center;
-    }
 }
 
 .footer-column .app-buttons {
@@ -738,7 +618,87 @@ body {
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
-.footer-column .btn-app:hover i,
-.footer-column .btn-app:hover .btn-text strong {
-    color: #a855f7 !important;
+.footer-column .btn-app:hover i, .footer-column .btn-app:hover .btn-text strong { color: #a855f7 !important; }
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 992px) {
+    .cart-main-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .cart-summary-sidebar {
+        position: static;
+        width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1;
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+
+    .search-container {
+        order: 3;
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .navbar nav {
+        order: 4;
+        width: 100%;
+    }
+
+    .navbar nav ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    body {
+        padding-top: 160px;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .footer-column .app-buttons {
+        align-items: center !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .cart-item-row {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .cart-item-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
 }

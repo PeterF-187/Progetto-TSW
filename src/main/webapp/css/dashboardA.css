@@ -16,9 +16,7 @@ body {
     color: white;
 }
 
-/* ========================================= */
-/* --- BARRA DI NAVIGAZIONE (NAVBAR) --- */
-/* ========================================= */
+/* --- NAVBAR --- */
 .navbar {
     position: fixed;
     top: 0;
@@ -73,9 +71,7 @@ body {
     transform: translateY(-3px);
 }
 
-/* ========================================= */
 /* --- LAYOUT STRUTTURALE GLOBALE --- */
-/* ========================================= */
 .hidden {
     display: none !important;
 }
@@ -90,9 +86,7 @@ body {
     width: 100%;
 }
 
-/* ========================================= */
 /* --- TITOLI E TESTI GLOBALI --- */
-/* ========================================= */
 .section-title,
 .titolo-sezione {
     font-size: 42px;
@@ -134,9 +128,7 @@ body {
     font-size: 14px;
 }
 
-/* ========================================= */
-/* --- BARRA LATERALE (SIDEBAR) --- */
-/* ========================================= */
+/* --- SIDEBAR --- */
 .sidebar {
     width: 260px;
     min-width: 260px;
@@ -179,9 +171,7 @@ body {
     box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
 }
 
-/* ========================================= */
 /* --- CONTENUTO PRINCIPALE E PANNELLI --- */
-/* ========================================= */
 .main-content {
     flex: 1;
     min-width: 0;
@@ -231,9 +221,7 @@ body {
     margin-right: 6px;
 }
 
-/* ========================================= */
 /* --- COSTRUZIONE MODULI (FORM) --- */
-/* ========================================= */
 .modulo-amministrazione,
 .form-impostazioni {
     margin-top: 20px;
@@ -321,9 +309,7 @@ body {
     box-shadow: 0 8px 25px rgba(168, 85, 247, 0.35);
 }
 
-/* ========================================= */
 /* --- COMPONENTI SEZIONE IMPOSTAZIONI --- */
-/* ========================================= */
 .contenitore-impostazioni {
     background: rgba(35, 40, 48, 0.4);
     backdrop-filter: blur(15px);
@@ -372,9 +358,7 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ========================================= */
 /* --- STRUTTURA LOGISTICA TICKET ASSISTENZA --- */
-/* ========================================= */
 .lista-ticket-contenitore {
     display: flex;
     flex-direction: column;
@@ -445,7 +429,6 @@ body {
     font-size: 13px;
 }
 
-/* Dettagli dello storico dei ticket chiusi */
 .corpo-ticket-storico {
     display: flex;
     flex-direction: column;
@@ -536,9 +519,7 @@ body {
     border: 1px solid rgba(239, 68, 68, 0.3);
 }
 
-/* ========================================= */
 /* --- GESTIONE NOTIFICHE E MESSAGGI --- */
-/* ========================================= */
 .box-notifica {
     padding: 15px 20px;
     border-radius: 10px;
@@ -563,9 +544,7 @@ body {
     color: #ef4444;
 }
 
-/* ========================================= */
 /* --- SISTEMA DI LOGOUT E UTILITY --- */
-/* ========================================= */
 .logout-wrapper {
     margin-top: 45px;
     display: flex;
@@ -596,9 +575,7 @@ body {
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
 }
 
-/* ========================================= */
-/* --- PIÈ DI PAGINA (FOOTER) --- */
-/* ========================================= */
+/* --- FOOTER --- */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
@@ -613,26 +590,35 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* ========================================= */
-/* --- ADATTAMENTO MULTI-SCHERMO (MEDIA) --- */
-/* ========================================= */
+/* --- ADATTAMENTO MULTI-SCHERMO --- */
 @media (max-width: 900px) {
-    .dashboard-container {
-        flex-direction: column;
-        padding: 20px 10px;
-    }
-
-    .sidebar {
-        width: 100%;
-        min-width: 100%;
-    }
-
-    .info-riga {
-        max-width: 100%;
-    }
+    .dashboard-container { flex-direction: column; padding: 20px 10px; }
+    .sidebar { width: 100%; min-width: 100%; }
+    .info-riga { max-width: 100%; }
 }
 
 @media (max-width: 768px) {
+    /* Navbar */
+    .navbar {
+        height: auto;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .titolo {
+        font-size: 24px;
+        flex-grow: 1;
+    }
+
+    .titolo img {
+        height: 1.5em;
+    }
+
+    body {
+        padding-top: 130px;
+    }
+
+    /* Dashboard UI */
     .riga-modulo-doppia {
         grid-template-columns: 1fr;
         gap: 16px;
