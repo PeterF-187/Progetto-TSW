@@ -16,7 +16,7 @@ body {
     color: white;
 }
 
-/* --- NAVBAR --- */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -71,8 +71,7 @@ body {
     transform: translateY(-3px);
 }
 
-
-/* --- PAGINA --- */
+/* Pagina Checkout */
 .checkout-page-container {
     display: flex;
     flex-direction: column;
@@ -127,7 +126,7 @@ body {
     line-height: 1.6;
 }
 
-/* --- BOTTONE DI AZIONE --- */
+/* Bottone di azione */
 .btn-home {
     display: inline-block;
     background: #56cdce;
@@ -155,7 +154,7 @@ body {
     transform: translateY(-1px);
 }
 
-/* --- GESTIONE COPIE KEY --- */
+/* Gestione copie Key */
 .product-key-box {
     width: 100%;
     display: flex;
@@ -202,7 +201,7 @@ body {
     border: 1px solid rgba(86, 205, 206, 0.1);
 }
 
-/* --- FOOTER --- */
+/* Footer */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
@@ -235,9 +234,22 @@ body {
 .footer-column ul li a { color: #56cdce; text-decoration: none; transition: 0.3s; }
 .footer-column ul li a:hover { color: #a855f7; padding-left: 5px; }
 
-.social-icons { display: flex; gap: 15px; font-size: 24px; }
-.social-icons a { color: #56cdce; transition: transform 0.3s, color 0.3s; }
-.social-icons a:hover { color: #a855f7; transform: translateY(-5px); }
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.social-icons a {
+    color: #56cdce;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #a855f7;
+}
 
 .footer-bottom {
     text-align: center;
@@ -248,7 +260,6 @@ body {
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* --- DOWNLOAD APP --- */
 .footer-column .app-buttons {
     display: flex !important;
     flex-direction: column !important;
@@ -267,14 +278,6 @@ body {
     text-decoration: none !important;
     width: 220px !important;
     transition: all 0.3s ease-in-out !important;
-}
-
-.footer-column .btn-app i {
-    font-size: 28px !important;
-    margin-right: 15px !important;
-    color: #56cdce !important;
-    min-width: 30px;
-    text-align: center;
 }
 
 .footer-column .btn-text {
@@ -303,11 +306,10 @@ body {
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
-.footer-column .btn-app:hover i, .footer-column .btn-app:hover .btn-text strong { color: #a855f7 !important; }
+.footer-column .btn-app:hover .btn-text strong { color: #a855f7 !important; }
 
-/* --- RESPONSIVE E ANIMAZIONI --- */
+/* Responsive e Animazioni */
 @media (max-width: 768px) {
-    /* Navbar */
     .navbar {
         height: auto;
         padding: 15px 20px;
@@ -328,7 +330,6 @@ body {
         padding-top: 130px;
     }
 
-    /* Pagina */
     .checkout-page-container h2 {
         font-size: 28px;
     }
@@ -343,7 +344,6 @@ body {
         font-size: 70px;
     }
 
-    /* Footer */
     .footer-container {
         flex-direction: column;
         text-align: center;
@@ -354,7 +354,7 @@ body {
     }
 
     .footer-column .app-buttons {
-        align-items: center;
+        align-items: center !important;
     }
 }
 
@@ -366,7 +366,8 @@ body {
 
     to {
         transform: scale(1);
-        opacity: 1; }
+        opacity: 1;
+    }
 }
 
 @keyframes fadeInPage {

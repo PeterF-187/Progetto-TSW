@@ -16,7 +16,7 @@ body {
     color: white;
 }
 
-/* --- NAVBAR --- */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -34,7 +34,7 @@ body {
     border-bottom: 1px solid rgba(163, 126, 215, 0.2);
 }
 
-/* --- LOGO --- */
+/* Logo */
 .titolo {
     text-decoration: none;
     font-size: 32px;
@@ -72,7 +72,7 @@ body {
     transform: translateY(-3px);
 }
 
-/* --- MENU E ICONE --- */
+/* Menu */
 .navbar nav ul {
     display: flex;
     list-style: none;
@@ -92,15 +92,11 @@ body {
     color: #56cdce;
 }
 
-.suggestion-item.selected {
-    background-color: #eee;
-    cursor: pointer;
-}
-
 .search-container {
     flex: 1;
     max-width: 500px;
     margin: 0 30px;
+    position: relative;
 }
 
 .search-container form {
@@ -112,7 +108,7 @@ body {
 
 .search-container input {
     width: 100%;
-    padding: 10px 45px 10px 20px;
+    padding: 10px 85px 10px 20px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(163, 126, 215, 0.3);
     border-radius: 25px;
@@ -134,127 +130,149 @@ body {
 
 .search-container button {
     position: absolute;
-    right: 15px;
-    background: none;
+    right: 5px;
+    background: #a37ed7;
     border: none;
-    color: #a37ed7;
+    color: white;
     cursor: pointer;
-    font-size: 16px;
-    transition: 0.3s;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 15px;
+    border-radius: 20px;
+    transition: background 0.3s ease;
 }
 
 .search-container input:focus + button {
-    color: #56cdce;
+    background: #56cdce;
 }
 
 .search-container button:hover {
-    transform: scale(1.2);
+    background: #56cdce;
 }
 
-#suggestions{
-    display:none;
+/* Dropdown */
+#suggestions {
+    display: none;
     position: absolute;
-    top: 50px;
+    top: 110%;
     left: 0;
     width: 100%;
     background: #2f363c;
-    border: 1px solid rgba(163,126,215,0.3);
+    border: 1px solid rgba(163, 126, 215, 0.3);
     border-radius: 15px;
     overflow: hidden;
     z-index: 10000;
-    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
-.search-item{
+.suggestion-item.selected {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.suggestion-item {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 15px;
     padding: 12px;
+    cursor: pointer;
     text-decoration: none;
     color: white;
-    transition: .2s;
+    transition: 0.2s;
 }
 
-.search-item:hover{
-    background: rgba(86,205,206,.15);
+.suggestion-item:hover {
+    background: rgba(86, 205, 206, 0.15);
 }
 
-.search-item img{
+.suggestion-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suggestion-img img {
     width: 50px;
     height: 50px;
     object-fit: cover;
     border-radius: 8px;
 }
 
-.search-item span{
+.suggestion-title {
     font-size: 15px;
 }
 
-/* --- EFFETTI ICONE --- */
+.suggestion-price {
+    font-size: 14px;
+    color: #56cdce;
+    white-space: nowrap;
+}
+
+.no-suggestion {
+    padding: 12px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Link navbar */
 .icon-link {
-    font-size: 22px;
+    font-size: 14px;
+    font-weight: 500;
     display: flex;
     align-items: center;
     color: #a37ed7;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
+    text-decoration: none;
 }
 
 .icon-link.carrello:hover {
     color: #56cdce;
-    transform:  scale(1.2);
 }
 
 .icon-link.preferiti:hover {
     color: #ff4d4d;
-    animation: pulse 0.8s infinite;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.3); }
-    100% { transform: scale(1); }
-}
-
-/* --- SEZIONE FAQ --- */
-.faq-container{
+/* FAQ */
+.faq-container {
     max-width: 1000px;
     margin: 120px auto 50px auto;
     padding: 0 20px;
 }
 
-.faq-container h1{
+.faq-container h1 {
     text-align: center;
     color: #56cdce;
     margin-bottom: 40px;
     font-size: 40px;
 }
 
-.faq-item{
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(163,126,215,0.2);
+.faq-item {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(163, 126, 215, 0.2);
     border-radius: 15px;
     padding: 25px;
     margin-bottom: 20px;
     transition: .3s;
 }
 
-.faq-item:hover{
+.faq-item:hover {
     border-color: #56cdce;
     transform: translateY(-3px);
 }
 
-.faq-item h2{
+.faq-item h2 {
     color: #a37ed7;
     margin-bottom: 15px;
     font-size: 22px;
 }
 
-.faq-item p{
-    color: rgba(255,255,255,0.8);
+.faq-item p {
+    color: rgba(255, 255, 255, 0.8);
     line-height: 1.7;
 }
 
-/* --- FOOTER --- */
+/* Footer */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
@@ -310,18 +328,19 @@ body {
 
 .social-icons {
     display: flex;
-    gap: 15px;
-    font-size: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
 }
 
 .social-icons a {
     color: #56cdce;
-    transition: transform 0.3s, color 0.3s;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .social-icons a:hover {
     color: #a855f7;
-    transform: translateY(-5px);
 }
 
 .footer-bottom {
@@ -353,14 +372,6 @@ body {
     transition: all 0.3s ease-in-out !important;
 }
 
-.footer-column .btn-app i {
-    font-size: 28px !important;
-    margin-right: 15px !important;
-    color: #56cdce !important;
-    min-width: 30px;
-    text-align: center;
-}
-
 .footer-column .btn-text {
     display: flex !important;
     flex-direction: column !important;
@@ -387,15 +398,14 @@ body {
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
-.footer-column .btn-app:hover i,
 .footer-column .btn-app:hover .btn-text strong {
     color: #a855f7 !important;
 }
 
-/* --- RESPONSIVE MOBILE --- */
+/* Responsive */
 @media (max-width: 768px) {
-    /* Navbar */
-    .navbar { height: auto;
+    .navbar {
+        height: auto;
         padding: 15px 20px;
         flex-wrap: wrap;
         gap: 15px;
@@ -432,8 +442,6 @@ body {
         padding-top: 160px;
     }
 
-
-    /* Contenuto */
     .faq-container {
         margin-top: 40px;
     }
@@ -442,7 +450,6 @@ body {
         font-size: 32px;
     }
 
-    /* Footer */
     .footer-container {
         flex-direction: column;
         text-align: center;

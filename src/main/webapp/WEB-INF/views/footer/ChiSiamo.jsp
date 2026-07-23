@@ -1,11 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <html>
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/footer.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
-    <title>Come Acquistare</title>
+    <title>Chi siamo</title>
 </head>
 <body>
 
@@ -25,9 +23,7 @@
                    autocomplete="off"
                    spellcheck="false"/>
 
-            <button type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+            <button type="submit">Cerca</button>
         </form>
         <div id="suggestions"></div>
     </div>
@@ -38,8 +34,8 @@
     <script src="${pageContext.request.contextPath}/JS/search.js"></script>
     <nav>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/wishlist" class="icon-link preferiti" title="Preferiti"><i class="fa-solid fa-heart icon"></i></a></li>
-            <li><a href="${pageContext.request.contextPath}/carrello" class="icon-link carrello" title="Carrello"><i class="fa-solid fa-cart-shopping icon"></i></a></li>
+            <li><a href="${pageContext.request.contextPath}/wishlist" class="icon-link preferiti" title="Preferiti">Preferiti</a></li>
+            <li><a href="${pageContext.request.contextPath}/carrello" class="icon-link carrello" title="Carrello">Carrello</a></li>
             <%
                 String username = (String) session.getAttribute("username");
             %>
@@ -65,9 +61,9 @@
     <p>Benvenuto su GameOrbit, il punto di riferimento nello spazio digitale per tutti gli appassionati di videogiochi.
         Siamo una piattaforma nata da videogiocatori, per i videogiocatori. Il nostro obiettivo è abbattere le distanze tra te e le tue avventure preferite, offrendoti un accesso immediato, sicuro e conveniente alle migliori product-key del mercato per PC e console.
     </p>
-        <br><br>
+    <br><br>
     <h3>La Nostra Missione</h3>
-       <br>
+    <br>
     <p>In un universo gaming in continua espansione, vogliamo essere la tua rotta più veloce. Selezioniamo e distribuiamo codici digitali ufficiali e garantiti, eliminando i tempi di attesa della spedizione fisica: acquisti con un clic, riscatti sulla tua piattaforma preferita (Steam, Epic Games, PlayStation, Xbox) e sei subito pronto a giocare.
     </p>
     <br><br>
@@ -90,7 +86,6 @@
 
             <div class="app-buttons">
                 <a href="#" class="btn-app">
-                    <i class="fa-brands fa-google-play"></i>
                     <div class="btn-text">
                         <span>Disponibile su</span>
                         <strong>Google Play</strong>
@@ -98,7 +93,6 @@
                 </a>
 
                 <a href="#" class="btn-app">
-                    <i class="fa-brands fa-apple"></i>
                     <div class="btn-text">
                         <span>Scarica da</span>
                         <strong>App Store</strong>
@@ -131,11 +125,11 @@
         <div class="footer-column">
             <h3>Seguici</h3>
             <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-discord"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-twitch"></i></a>
+                <a href="#">Discord</a>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">Twitch</a>
             </div>
         </div>
     </div>

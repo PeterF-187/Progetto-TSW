@@ -18,7 +18,7 @@ body {
     flex-direction: column;
 }
 
-/* --- NAVBAR --- */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -98,7 +98,7 @@ body {
     user-select: none;
 }
 
-/* --- STRUTTURA LOGISTICA E GRIGLIE --- */
+/* Struttura e Griglie */
 .nascosto {
     display: none !important;
 }
@@ -137,7 +137,7 @@ body {
     grid-column: span 2;
 }
 
-/* --- PANNELLI CONTENITORI --- */
+/* Pannelli Contenitori */
 .box-gestione {
     background: rgba(35, 40, 48, 0.4);
     backdrop-filter: blur(15px);
@@ -161,11 +161,7 @@ body {
     padding-bottom: 15px;
 }
 
-.titolo-sottosezione i {
-    color: #56cdce;
-}
-
-/* --- ARCHITETTURA FORM --- */
+/* Form */
 .form-amministrazione {
     display: flex;
     flex-direction: column;
@@ -261,7 +257,7 @@ body {
     margin: 0;
 }
 
-/* --- SELEZIONI DI TIPO RADIO --- */
+/* Radio */
 .riga-radio {
     display: flex;
     flex-direction: row;
@@ -328,7 +324,7 @@ body {
     box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
 }
 
-/* --- MATRICE CHECKBOX VIDEOGIOCO --- */
+/* Checkbox */
 .contenitore-matrice-checkbox {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -387,7 +383,7 @@ body {
 
 .contenitore-spunta:hover { color: #ffffff; }
 
-/* --- PULSANTI E NOTIFICHE --- */
+/* Pulsanti e Notifiche */
 .azioni-form { margin-top: 5px; }
 
 .pulsante-invia {
@@ -427,7 +423,7 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- FOOTER --- */
+/* Footer non RESPONSIVE */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
@@ -443,7 +439,7 @@ body {
     font-weight: 500;
 }
 
-/* --- RESPONSIVITÀ (MEDIA QUERIES) --- */
+/* Responsive */
 @media (max-width: 1100px) {
     .contenitore-matrice-checkbox {
         grid-template-columns: repeat(2, 1fr);
@@ -473,7 +469,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    /* Navbar per Area Admin */
     .navbar {
         height: auto;
         padding: 15px 20px;

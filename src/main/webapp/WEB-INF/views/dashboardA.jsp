@@ -4,7 +4,6 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboardA.css">
   <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
   <title>Dashboard Admin - GameOrbit</title>
@@ -59,16 +58,16 @@
         <div class="box-notifica ${param.status == 'success' ? 'notifica-successo':'notifica-errore'}">
           <c:choose>
             <c:when test="${param.status == 'success'}">
-              <i class="fa-solid fa-circle-check"></i> Modifica salvata con successo!
+              Modifica salvata con successo!
             </c:when>
             <c:when test="${param.status == 'wrong_pass'}">
-              <i class="fa-solid fa-circle-xmark"></i> Password attuale errata.
+              Password attuale errata.
             </c:when>
             <c:when test="${param.status == 'no_match'}">
-              <i class="fa-solid fa-triangle-exclamation"></i> Le password non coincidono.
+              Le password non coincidono.
             </c:when>
             <c:otherwise>
-              <i class="fa-solid fa-circle-xmark"></i> Errore durante la modifica.
+              Errore durante la modifica.
             </c:otherwise>
           </c:choose>
         </div>
@@ -78,7 +77,7 @@
         <!-- Cambio password -->
         <div class="scheda-impostazioni">
           <h3 class="subsection-title">
-            <i class="fa-solid fa-lock icona-sezione"></i> Cambio Password
+            Cambio Password
           </h3>
           <p class="section-description">
             Inserisci la password attuale prima di scegliere quella nuova.
@@ -98,7 +97,7 @@
         <!-- 2FA -->
         <div class="scheda-impostazioni">
           <h3 class="subsection-title">
-            <i class="fa-solid fa-shield-halved icona-sezione"></i> Autenticazione a due fattori
+            Autenticazione a due fattori
           </h3>
           <p class="section-description">
             Ricevi una mail di conferma ad ogni nuovo accesso.
@@ -123,66 +122,66 @@
       <div class="box-gestione">
         <!-- Ticket Aperti -->
         <h2 class="titolo-sottosezione">
-          <i class="fa-solid fa-folder-open"></i> Ticket Aperti (In Attesa)
+          Ticket Aperti (In Attesa)
         </h2>
 
         <c:choose>
-          <c:when test="${empty ticketAperti}">
-            <p class="descrizione-sezione">Nessun ticket da gestire al momento.</p>
-          </c:when>
-          <c:otherwise>
-            <div class="lista-ticket-contenitore aperti-admin">
-              <c:forEach var="t" items="${ticketAperti}">
-                <article class="scheda-ticket aperto-admin">
-                  <div class="intestazione-ticket">
-                    <span class="tipo-ticket">[${t.tipo}]</span>
-                    <span class="data-ticket">
+        <c:when test="${empty ticketAperti}">
+        <p class="descrizione-sezione">Nessun ticket da gestire al momento.</p>
+        </c:when>
+        <c:otherwise>
+        <div class="lista-ticket-contenitore aperti-admin">
+          <c:forEach var="t" items="${ticketAperti}">
+            <article class="scheda-ticket aperto-admin">
+              <div class="intestazione-ticket">
+                <span class="tipo-ticket">[${t.tipo}]</span>
+                <span class="data-ticket">
                   Aperto da: <strong><c:out value="${t.username}"/></strong> in data:
                   <fmt:formatDate value="${t.data}" pattern="dd/MM/yyyy"/>
                 </span>
-                    <span class="etichetta-stato ticket-aperto">Aperto</span>
+                <span class="etichetta-stato ticket-aperto">Aperto</span>
+              </div>
+
+              <div class="corpo-ticket admin">
+                <p>
+                  <strong>Messaggio Utente:</strong><br>
+                  <c:out value="${t.motivazione}"/>
+                </p>
+              </div>
+
+              <!-- Modulo di evasione e risposta via email -->
+              <form action="${pageContext.request.contextPath}/rispondiTicket" method="POST" class="modulo-amministrazione modulo-ticket-admin">
+                <input type="hidden" name="idTicket" value="${t.id_Ticket}">
+
+                <div class="riga-modulo-doppia">
+                  <div class="gruppo-modulo">
+                    <label class="etichetta-gruppo">Testo della Risposta da inviare via Mail:</label>
+                    <textarea name="rispostaAdmin" rows="3" class="input-testo-personalizzato textarea-ticket" placeholder="Scrivi qui le istruzioni o la risoluzione per l'utente..." required></textarea>
                   </div>
-
-                  <div class="corpo-ticket admin">
-                    <p>
-                      <strong>Messaggio Utente:</strong><br>
-                      <c:out value="${t.motivazione}"/>
-                    </p>
+                  <div class="gruppo-modulo">
+                    <label class="etichetta-gruppo">Cambia Stato Pratica:</label>
+                    <select name="nuovoStato" class="selettore-personalizzato" required>
+                      <option value="Aperto">Lascia in gestione (Rimani Aperto)</option>
+                      <option value="Chiuso">Risolto (Invia mail e Chiudi Ticket)</option>
+                    </select>
                   </div>
+                </div>
 
-                  <!-- Modulo di evasione e risposta via email -->
-                  <form action="${pageContext.request.contextPath}/rispondiTicket" method="POST" class="modulo-amministrazione modulo-ticket-admin">
-                    <input type="hidden" name="idTicket" value="${t.id_Ticket}">
-
-                    <div class="riga-modulo-doppia">
-                      <div class="gruppo-modulo">
-                        <label class="etichetta-gruppo">Testo della Risposta da inviare via Mail:</label>
-                        <textarea name="rispostaAdmin" rows="3" class="input-testo-personalizzato textarea-ticket" placeholder="Scrivi qui le istruzioni o la risoluzione per l'utente..." required></textarea>
-                      </div>
-                      <div class="gruppo-modulo">
-                        <label class="etichetta-gruppo">Cambia Stato Pratica:</label>
-                        <select name="nuovoStato" class="selettore-personalizzato" required>
-                          <option value="Aperto">Lascia in gestione (Rimani Aperto)</option>
-                          <option value="Chiuso">Risolto (Invia mail e Chiudi Ticket)</option>
-                        </select>
-                      </div>
-                    </div>
-
-                    <div class="azioni-modulo admin-ticket">
-                      <button type="submit" class="pulsante-invia">
-                        <i class="fa-solid fa-reply"></i> Spedisci Risposta all'Utente
-                      </button>
-                    </div>
-                  </form>
-                </article>
-              </c:forEach>
-            </div>
-          </c:otherwise>
+                <div class="azioni-modulo admin-ticket">
+                  <button type="submit" class="pulsante-invia">
+                    Spedisci Risposta all'Utente
+                  </button>
+                </div>
+              </form>
+            </article>
+          </c:forEach>
+        </div>
+        </c:otherwise>
         </c:choose>
 
         <!-- Ticket Chiusi -->
         <h2 class="titolo-sottosezione sezione-chiusi">
-          <i class="fa-solid fa-folder-closed"></i> Storico Ticket Chiusi
+          Storico Ticket Chiusi
         </h2>
 
         <c:choose>

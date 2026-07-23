@@ -1,12 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="model.Obj.TipoMetodo" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="model.Obj.TipoMetodo" %>
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/dashboard.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
     <title>Dashboard utente</title>
@@ -174,27 +173,25 @@
                 <div class="box-notifica ${param.status == 'success' ? 'notifica-successo' : 'notifica-errore'}">
                     <c:choose>
                         <c:when test="${param.status == 'success'}">
-                            <i class="fa-solid fa-circle-check"></i> Modifica salvata con successo!
+                            Modifica salvata con successo!
                         </c:when>
                         <c:when test="${param.status == 'wrong_pass'}">
-                            <i class="fa-solid fa-circle-xmark"></i> Password attuale errata.
+                            Password attuale errata.
                         </c:when>
                         <c:when test="${param.status == 'no_match'}">
-                            <i class="fa-solid fa-triangle-exclamation"></i> Le password non coincidono.
+                            Le password non coincidono.
                         </c:when>
                         <c:otherwise>
-                            <i class="fa-solid fa-circle-xmark"></i> Errore durante la modifica.
+                            Errore durante la modifica.
                         </c:otherwise>
                     </c:choose>
                 </div>
             </c:if>
 
             <div class="contenitore-impostazioni">
-                <!-- CAMBIO PASSWORD -->
+                <!-- Cambio password -->
                 <div class="scheda-impostazioni">
-                    <h3 class="subsection-title">
-                        <i class="fa-solid fa-lock icona-sezione"></i> Cambio Password
-                    </h3>
+                    <h3 class="subsection-title">Cambio Password</h3>
                     <p class="section-description">Inserisci la password attuale prima di scegliere quella nuova.</p>
 
                     <form action="${pageContext.request.contextPath}/impostazioni" method="POST" class="form-impostazioni">
@@ -211,7 +208,7 @@
                 <!-- 2FA -->
                 <div class="scheda-impostazioni">
                     <h3 class="subsection-title">
-                        <i class="fa-solid fa-shield-halved icona-sezione"></i> Autenticazione a due fattori
+                        Autenticazione a due fattori
                     </h3>
                     <p class="section-description">Ricevi una mail di conferma ad ogni nuovo accesso.</p>
 
@@ -234,7 +231,6 @@
             <!-- Form Nuovo Ticket -->
             <div class="scatola-gestione scatola-ticket">
                 <h3 class="titolo-sottosezione">
-                    <i class="fa-solid fa-envelope-open-text icona-sezione"></i>
                     Apri Nuovo Ticket
                 </h3>
 
@@ -274,7 +270,6 @@
 
                     <div class="azioni-modulo">
                         <button type="submit" class="pulsante-invia">
-                            <i class="fa-solid fa-paper-plane"></i>
                             Invia Ticket all'Assistenza
                         </button>
                     </div>
@@ -287,7 +282,6 @@
                         var divProdotto = document.getElementById("divSelezioneProdotto");
                         var inputProdotto = document.getElementById("idProdottoTicket");
 
-                        // 🔥 MODIFICATO: Ora rimuove e aggiunge coerentemente la classe "nascosto"
                         if (selettore.value === "acquisto") {
                             divProdotto.classList.remove("nascosto");
                             inputProdotto.required = true;
@@ -303,7 +297,6 @@
             <!-- Storico Ticket -->
             <div class="scatola-gestione">
                 <h3 class="titolo-sottosezione">
-                    <i class="fa-solid fa-clock-rotate-left icona-sezione"></i>
                     I tuoi Ticket
                 </h3>
                 <c:choose>
@@ -356,14 +349,12 @@
             <p>Scarica l'app ufficiale di GameOrbit per non perdere nessuna offerta.</p>
             <div class="app-buttons">
                 <a href="#" class="btn-app">
-                    <i class="fa-brands fa-google-play"></i>
                     <div class="btn-text">
                         <span>Disponibile su</span>
                         <strong>Google Play</strong>
                     </div>
                 </a>
                 <a href="#" class="btn-app">
-                    <i class="fa-brands fa-apple"></i>
                     <div class="btn-text">
                         <span>Scarica da</span>
                         <strong>App Store</strong>
@@ -399,11 +390,11 @@
         <div class="footer-column">
             <h3>Seguici</h3>
             <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-discord"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-twitch"></i></a>
+                <a href="#">Discord</a>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">Twitch</a>
             </div>
         </div>
     </div>

@@ -14,13 +14,11 @@ body {
     padding-top: 85px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     color: white;
-
-    /* FIX FOOTER: Trasforma il body in una colonna flessibile */
     display: flex;
     flex-direction: column;
 }
 
-/* --- NAVBAR --- */
+/* Navbar */
 .navbar {
     position: fixed;
     top: 0;
@@ -75,14 +73,12 @@ body {
     transform: translateY(-3px);
 }
 
-/* --- AUTH SECTION --- */
+/* Auth Section */
 .auth-section {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 60px 20px;
-
-    /* FIX FOOTER: Fa in modo che questa sezione occupi tutto lo spazio vuoto, spingendo il footer in basso */
     flex: 1;
 }
 
@@ -187,12 +183,12 @@ body {
     display: none !important;
 }
 
-/* --- FOOTER --- */
+/* Footer */
 .footer {
     background-color: #2f363c;
     border-top: 2px solid #a855f7;
     padding: 60px 40px 20px;
-    margin-top: auto; /* Aiuta a tenere il footer in basso */
+    margin-top: auto;
     width: 100%;
 }
 
@@ -221,9 +217,22 @@ body {
 .footer-column ul li a { color: #56cdce; text-decoration: none; transition: 0.3s; }
 .footer-column ul li a:hover { color: #a855f7; padding-left: 5px; }
 
-.social-icons { display: flex; gap: 15px; font-size: 24px; }
-.social-icons a { color: #56cdce; transition: transform 0.3s, color 0.3s; }
-.social-icons a:hover { color: #a855f7; transform: translateY(-5px); }
+.social-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.social-icons a {
+    color: #56cdce;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.social-icons a:hover {
+    color: #a855f7;
+}
 
 .footer-bottom {
     text-align: center;
@@ -254,14 +263,6 @@ body {
     transition: all 0.3s ease-in-out !important;
 }
 
-.footer-column .btn-app i {
-    font-size: 28px !important;
-    margin-right: 15px !important;
-    color: #56cdce !important;
-    min-width: 30px;
-    text-align: center;
-}
-
 .footer-column .btn-text {
     display: flex !important;
     flex-direction: column !important;
@@ -288,11 +289,12 @@ body {
     box-shadow: 0 5px 15px rgba(168, 85, 247, 0.2);
 }
 
-.footer-column .btn-app:hover i, .footer-column .btn-app:hover .btn-text strong { color: #a855f7 !important; }
+.footer-column .btn-app:hover .btn-text strong {
+    color: #a855f7 !important;
+}
 
-/* --- RESPONSIVE --- */
+/* Responsive */
 @media (max-width: 768px) {
-    /* Navbar */
     .navbar {
         height: auto;
         padding: 15px 20px;
@@ -313,13 +315,11 @@ body {
         padding-top: 130px;
     }
 
-    /* Auth UI */
     .auth-container {
         flex-direction: column;
         align-items: center;
     }
 
-    /* Footer */
     .footer-container {
         flex-direction: column;
         text-align: center;

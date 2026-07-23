@@ -5,7 +5,6 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/admin.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
     <title>Admin - GameOrbit</title>
@@ -44,13 +43,13 @@
 
         <% if ("success".equals(request.getParameter("status"))) { %>
         <div class="box-notifica notifica-successo">
-            <i class="fa-solid fa-circle-check"></i> Operazione completata con successo!
+            Operazione completata con successo!
         </div>
         <% } %>
 
         <% if ("error".equals(request.getParameter("status"))) { %>
         <div class="box-notifica notifica-errore">
-            <i class="fa-solid fa-circle-xmark"></i> Si è verificato un errore durante l'inserimento o la modifica.
+            Si è verificato un errore durante l'inserimento o la modifica.
         </div>
         <% } %>
 
@@ -59,7 +58,7 @@
             <!-- Utente permessi -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
-                    <i class="fa-solid fa-user-gear"></i> Modifica Permessi e Stato Conto
+                    Modifica Permessi e Stato Conto
                 </h2>
                 <form action="${pageContext.request.contextPath}/admin" method="POST" class="form-amministrazione">
                     <input type="hidden" name="action" value="modificaUtente">
@@ -122,7 +121,7 @@
             <!-- Inserimento SH -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
-                    <i class="fa-solid fa-building"></i> Nuova Software House
+                    Nuova Software House
                 </h2>
                 <form action="${pageContext.request.contextPath}/admin" method="POST" class="form-amministrazione">
                     <input type="hidden" name="action" value="insertSH">
@@ -151,7 +150,7 @@
             <!-- Inserimento publisher -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
-                    <i class="fa-solid fa-rectangle-ad"></i> Nuovo Publisher
+                    Nuovo Publisher
                 </h2>
                 <form action="${pageContext.request.contextPath}/admin" method="POST" class="form-amministrazione">
                     <input type="hidden" name="action" value="insertPublisher">
@@ -192,7 +191,7 @@
             <!-- Inserimento sviluppatori -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
-                    <i class="fa-solid fa-code"></i> Team Sviluppatori
+                    Team Sviluppatori
                 </h2>
                 <form action="${pageContext.request.contextPath}/admin" method="POST" class="form-amministrazione">
                     <input type="hidden" name="action" value="insertSviluppatori">
@@ -237,7 +236,7 @@
             <!-- Inserimento franchise -->
             <section class="box-gestione">
                 <h2 class="titolo-sottosezione">
-                    <i class="fa-solid fa-star"></i> Nuovo Franchise
+                    Nuovo Franchise
                 </h2>
                 <form action="${pageContext.request.contextPath}/admin" method="POST" class="form-amministrazione">
                     <input type="hidden" name="action" value="insertFranchise">
@@ -256,7 +255,7 @@
             <!-- Inserimento gioco -->
             <section class="box-gestione blocco-larghezza-piena">
                 <h2 class="titolo-sottosezione">
-                    <i class="fa-solid fa-gamepad"></i> Inserimento Nuovo Videogioco
+                    Inserimento Nuovo Videogioco
                 </h2>
 
                 <form action="${pageContext.request.contextPath}/insertVideogioco" method="POST" class="form-amministrazione-video">
@@ -412,7 +411,7 @@
                     </div>
 
                     <div class="azioni-form">
-                        <button type="submit" class="pulsante-invia"><i class="fa-solid fa-plus"></i> Inserisci Gioco nel Catalogo</button>
+                        <button type="submit" class="pulsante-invia">Inserisci Gioco nel Catalogo</button>
                     </div>
                 </form>
             </section>

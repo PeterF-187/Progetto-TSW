@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/carrello.css">
     <link rel="icon" type="image/png" href="${pageContext.request.contextPath}/img/Logo.png">
     <title>Game Orbit</title>
@@ -26,9 +25,7 @@
                    autocomplete="off"
                    spellcheck="false"/>
 
-            <button type="submit">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
+            <button type="submit">Cerca</button>
         </form>
         <div id="suggestions"></div>
     </div>
@@ -39,8 +36,8 @@
     <script src="${pageContext.request.contextPath}/JS/search.js"></script>
     <nav>
         <ul>
-            <li><a href="${pageContext.request.contextPath}/wishlist" class="icon-link preferiti" title="Preferiti"><i class="fa-solid fa-heart icon"></i></a></li>
-            <li><a href="${pageContext.request.contextPath}/carrello" class="icon-link carrello" title="Carrello"><i class="fa-solid fa-cart-shopping icon"></i></a></li>
+            <li><a href="${pageContext.request.contextPath}/wishlist" class="icon-link preferiti" title="Preferiti">Preferiti</a></li>
+            <li><a href="${pageContext.request.contextPath}/carrello" class="icon-link carrello" title="Carrello">Carrello</a></li>
             <%
                 String username = (String) session.getAttribute("username");
             %>
@@ -92,9 +89,7 @@
                         <form action="${pageContext.request.contextPath}/carrello" method="POST">
                             <input type="hidden" name="idProdotto" value="${gioco.id_prodotto}">
                             <input type="hidden" name="action" value="remove">
-                            <button type="submit" class="btn-remove-item" title="Rimuovi dal carrello">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
+                            <button type="submit" class="btn-remove-item" title="Rimuovi dal carrello">Rimuovi</button>
                         </form>
                     </div>
                 </div>
@@ -144,13 +139,12 @@
 
                         <c:if test="${checkoutDisabilitato}">
                             <div class="alert-box error" id="checkoutAlertBox" style="display: none; margin-top: 10px;">
-                                <i class="fa-solid fa-triangle-exclamation"></i> ${motivoBlocco}
+                                    ${motivoBlocco}
                             </div>
                         </c:if>
                     </c:when>
                     <c:otherwise>
                         <div class="alert-box info">
-                            <i class="fa-solid fa-circle-info"></i>
                             <a href="${pageContext.request.contextPath}/login">Accedi</a> per verificare e utilizzare il tuo saldo virtuale.
                         </div>
                     </c:otherwise>
@@ -204,7 +198,6 @@
                             btnProceed.disabled = true; // Blocca se il saldo ha problemi
                         }
                     }
-                    // Nota: se seleziona 'aggiungi_metodo' o 'carta', sblocca semplicemente il bottone per permettere l'azione al click
                 });
             }
 
@@ -235,14 +228,12 @@
             <p>Scarica l'app ufficiale di GameOrbit per non perdere nessuna offerta.</p>
             <div class="app-buttons">
                 <a href="#" class="btn-app">
-                    <i class="fa-brands fa-google-play"></i>
                     <div class="btn-text">
                         <span>Disponibile su</span>
                         <strong>Google Play</strong>
                     </div>
                 </a>
                 <a href="#" class="btn-app">
-                    <i class="fa-brands fa-apple"></i>
                     <div class="btn-text">
                         <span>Scarica da</span>
                         <strong>App Store</strong>
@@ -274,11 +265,11 @@
         <div class="footer-column">
             <h3>Seguici</h3>
             <div class="social-icons">
-                <a href="#"><i class="fa-brands fa-discord"></i></a>
-                <a href="#"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#"><i class="fa-brands fa-twitter"></i></a>
-                <a href="#"><i class="fa-brands fa-twitch"></i></a>
+                <a href="#">Discord</a>
+                <a href="#">Facebook</a>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">Twitch</a>
             </div>
         </div>
     </div>
